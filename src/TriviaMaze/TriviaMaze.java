@@ -1,3 +1,5 @@
+package TriviaMaze;
+
 public class TriviaMaze {
 
     private Room[][] myMaze = new Room[5][5];

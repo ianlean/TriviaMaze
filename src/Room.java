@@ -27,4 +27,9 @@ public class Room {
     public boolean getHasPlayer() {
         return hasPlayer;
     }
+
+    @Override
+    public String toString() {
+        return "|_|";
+    }
 }

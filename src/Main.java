@@ -9,7 +9,6 @@ public class Main {
         while(true) {
             askDirection(gameMaze);
             System.out.println(gameMaze);
-            System.out.println("wanna quit? Type y or n");
         }
     }
 

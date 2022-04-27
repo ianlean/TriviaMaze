@@ -10,25 +10,26 @@ import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.logging.Logger;
 
 public class RoomPanel extends JPanel implements ActionListener, KeyListener
 {
-    private static final int DEFAULT_WIDTH = 800;
-    private static final int DEFAULT_HEIGHT = 800;
+    private static final int DEFAULT_WIDTH = 500;
+    private static final int DEFAULT_HEIGHT = 500;
 
     private BufferedImage myWallImage;
     private BufferedImage myDoNotEnterImage;
     private BufferedImage myIconImage;
     private BufferedImage myPathImage;
 
-//    private TexturePaint myWallTexture;
-//    private TexturePaint myDoNotEnterTexture;
-//    private TexturePaint myIconTexture;
-//    private TexturePaint myPathTexture;
+    private TexturePaint myWallTexture;
+    private TexturePaint myDoNotEnterTexture;
+    private TexturePaint myIconTexture;
+    private TexturePaint myPathTexture;
     RoomPanel() throws IOException
     {
+        this.setSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);
         loadImages();
+        loadTexture();
 
     }
     private void loadImages() throws IOException
@@ -37,48 +38,72 @@ public class RoomPanel extends JPanel implements ActionListener, KeyListener
         this.myDoNotEnterImage = ImageIO.read(new File("src/GUIPictures/doNotEnter.png"));
         this.myIconImage = ImageIO.read(new File("src/GUIPictures/Husky.png"));
         this.myPathImage = ImageIO.read(new File("src/GUIPictures/path.png"));
+
+
+    }
+    private void loadTexture()
+    {
+        this.myWallTexture = new TexturePaint
+                (this.myWallImage, new Rectangle(0,0, 50,50));
+        this.myIconTexture = new TexturePaint
+                (this.myIconImage, new Rectangle(220, 220, 50, 50));
+        this.myPathTexture = new TexturePaint
+                (this.myPathImage, new Rectangle(50, 50, 50, 50));
+        this.myDoNotEnterTexture = new TexturePaint
+                (this.myDoNotEnterImage, new Rectangle(180, 0, 50, 50));
     }
     private void draw(Graphics theGraphic)
     {
         Graphics2D graphics2D = (Graphics2D) theGraphic;
         drawWall(graphics2D);
+        drawIcon(graphics2D);
     }
     private void drawWall(Graphics2D theWall)
     {
-        theWall.setPaint((Paint) myWallImage);
-        theWall.fillRect(0,0,100, 100);
-        theWall.fillRect(100,0,100, 100);
-        theWall.fillRect(200,0,100, 100);
-        theWall.fillRect(300,0,100, 100);
-        theWall.fillRect(500,0,100, 100);
-        theWall.fillRect(600,0,100, 100);
-        theWall.fillRect(700,0,100, 100);
-        theWall.fillRect(0,100,100, 100);
-        theWall.fillRect(0,200,100, 100);
-        theWall.fillRect(0,300,100, 100);
-        theWall.fillRect(0,500,100, 100);
-        theWall.fillRect(0,600,100, 100);
-        theWall.fillRect(0,700,100, 100);
-        theWall.fillRect(0,700,100, 100);
-        theWall.fillRect(100,700,100, 100);
-        theWall.fillRect(200,700,100, 100);
-        theWall.fillRect(300,700,100, 100);
-        theWall.fillRect(500,700,100, 100);
-        theWall.fillRect(600,700,100, 100);
-        theWall.fillRect(700,700,100, 100);
-        theWall.fillRect(700,0,100, 100);
-        theWall.fillRect(700,100,100, 100);
-        theWall.fillRect(700,200,100, 100);
-        theWall.fillRect(700,300,100, 100);
-        theWall.fillRect(700,500,100, 100);
-        theWall.fillRect(700,600,100, 100);
-        theWall.fillRect(700,700,100, 100);
+        theWall.setPaint(this.myWallTexture);
+        theWall.fillRect(0,0,50, 50);
+        theWall.fillRect(50,0,50, 50);
+        theWall.fillRect(100,0,50, 50);
+        theWall.fillRect(150,0,50, 50);
+        theWall.fillRect(300,0,50, 50);
+        theWall.fillRect(350,0,50, 50);
+        theWall.fillRect(400,0,50, 50);
+        theWall.fillRect(450,0,50, 50);
+        theWall.fillRect(0,50,50, 50);
+        theWall.fillRect(0,100,50, 50);
+        theWall.fillRect(0,150,50, 50);
+        theWall.fillRect(0,300,50, 50);
+        theWall.fillRect(0,350,50, 50);
+        theWall.fillRect(0,400,50, 50);
+        theWall.fillRect(0,450,50, 50);
+        theWall.fillRect(50,450,50, 50);
+        theWall.fillRect(100,450,50, 50);
+        theWall.fillRect(150,450,50, 50);
+        theWall.fillRect(300,450,50, 50);
+        theWall.fillRect(350,450,50, 50);
+        theWall.fillRect(400,450,50, 50);
+        theWall.fillRect(450,0,50, 50);
+        theWall.fillRect(450,50,50, 50);
+        theWall.fillRect(450,100,50, 50);
+        theWall.fillRect(450,150,50, 50);
+        theWall.fillRect(450,300,50, 50);
+        theWall.fillRect(450,350,50, 50);
+        theWall.fillRect(450,400,50, 50);
+        theWall.fillRect(450,450,50, 50);
+    }
+    private void drawIcon(Graphics2D theIcon)
+    {
+        theIcon.setPaint(this.myIconTexture);
+        theIcon.fillRect(220, 220, 50, 50);
     }
     @Override
     public void paintComponent(Graphics theGraphics)
     {
         super.paintComponent(theGraphics);
         draw(theGraphics);
+        this.addKeyListener(this);
+        this.setFocusable(true);
+        this.setFocusTraversalKeysEnabled(false);
     }
 
     @Override

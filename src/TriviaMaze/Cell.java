@@ -4,8 +4,7 @@ public class Cell
 {
     public enum RoomStatus
     {
-        UNLOCKED,
-        SEALED
+        UNLOCKED, LOCKED, SEALED
     }
     private RoomStatus myStatus;
     public Cell()

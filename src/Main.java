@@ -1,3 +1,5 @@
+import TriviaMaze.TriviaMaze;
+
 import java.util.Scanner;
 
 public class Main {

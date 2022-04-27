@@ -1,9 +1,12 @@
 public class Room {
     private final String myQuestion;
+
+    private final String myAnswer;
     private final boolean hasPlayer;
     private final boolean isWall;
-    public Room(String theQuestion, boolean thePlayer) {
+    public Room(String theQuestion,String theAnswer ,boolean thePlayer) {
         myQuestion = theQuestion;
+        myAnswer = theAnswer;
         hasPlayer = thePlayer;
         isWall = false;
     }
@@ -14,6 +17,7 @@ public class Room {
         isWall = true;
         hasPlayer = false;
         myQuestion = null;
+        myAnswer = null;
     }
 
     public String getMyQuestion() {

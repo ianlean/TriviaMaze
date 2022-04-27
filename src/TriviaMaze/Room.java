@@ -1,4 +1,6 @@
 package TriviaMaze;
 
-public class Room {
+public class Room extends Cell
+{
+
 }

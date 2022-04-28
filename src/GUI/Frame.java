@@ -6,7 +6,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.IOException;
 
-public class Frame extends JFrame implements KeyListener
+public class Frame extends JFrame
 {
     private final static int WIDTH = 1000;
     private final static int HEIGHT = 1000;
@@ -19,22 +19,15 @@ public class Frame extends JFrame implements KeyListener
         this.add(new RoomPanel());
         pack();
     }
-    public static void main(String[] args) throws IOException {
-        new Frame();
+    public static void main(String[] args) {
+        EventQueue.invokeLater(() ->
+        {
+            try {
+                new Frame();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
     }
 
-    @Override
-    public void keyTyped(KeyEvent e) {
-
-    }
-
-    @Override
-    public void keyPressed(KeyEvent e) {
-
-    }
-
-    @Override
-    public void keyReleased(KeyEvent e) {
-
-    }
 }

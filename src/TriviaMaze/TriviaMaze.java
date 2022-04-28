@@ -2,7 +2,7 @@ package TriviaMaze;
 
 public class TriviaMaze {
 
-    private Room[][] myMaze = new Room[5][5];
+    private Room[][] myMaze = new Room[10][10];
     private int myX;
 
     private int myY;

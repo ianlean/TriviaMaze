@@ -1,6 +1,7 @@
 package TriviaMaze;
 
-public class Room extends Cell{
+public class Room extends Cell
+{
     private final String myQuestion;
 
     private final String myAnswer;

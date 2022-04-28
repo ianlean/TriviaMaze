@@ -1,20 +1,23 @@
-public class Room {
+package TriviaMaze;
+
+public class Room extends Cell
+{
     private final String myQuestion;
 
     private final String myAnswer;
     private final boolean hasPlayer;
-    private final boolean isWall;
+    private RoomStatus myStatus;
     public Room(String theQuestion,String theAnswer ,boolean thePlayer) {
         myQuestion = theQuestion;
         myAnswer = theAnswer;
         hasPlayer = thePlayer;
-        isWall = false;
+        myStatus = RoomStatus.LOCKED;
     }
 
     public Room() {
         // This is constructor is for if we want
         // a room to be a wall
-        isWall = true;
+        myStatus = RoomStatus.SEALED;
         hasPlayer = false;
         myQuestion = null;
         myAnswer = null;

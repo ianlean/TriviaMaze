@@ -1,5 +1,7 @@
 package GUI;
 
+
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -41,9 +43,13 @@ public class Frame extends JFrame
 
 
         //creat menu bar
-        this.add(myMenuBar=createMenuBar());
+        myMenuBar=createMenuBar();
+        this.add(myMenuBar);
+        this.setJMenuBar(myMenuBar);
 
-        pack();
+        this.setLocationRelativeTo(null);
+        this.setVisible(true);
+        this.pack();
     }
 
     /**
@@ -51,6 +57,7 @@ public class Frame extends JFrame
      * @return the menu bar
      */
     private JMenuBar createMenuBar() {
+        JMenuBar myMenuBar = new JMenuBar();
         myMenuBar.add(createFileMenu());
         myMenuBar.add(createHelpMenu());
         return myMenuBar;
@@ -185,11 +192,12 @@ public class Frame extends JFrame
             @Override
             public void actionPerformed(ActionEvent e) {
                 final ImageIcon image=new ImageIcon(new ImageIcon
-                        (getClass().getResource("/GUIPictures/w,gif"))
-                        .getImage().getScaledInstance(60,40,Image.SCALE_DEFAULT));
+                     (getClass().getResource("/GUIPictures/w,gif"))
+                    .getImage().getScaledInstance(60,40,Image.SCALE_DEFAULT));
                 JOptionPane.showMessageDialog(null,"<Trivia Maze Game> by \n " +
                         "Ian McLean \nKevin Yang \nQinyu Tao","About",JOptionPane.INFORMATION_MESSAGE,image);
-
+                //JOptionPane.showMessageDialog(null,"<Trivia Maze Game> by \n" +
+                  //      "Ian McLean \nKevin Yang \nQinyu Tao","About",JOptionPane.INFORMATION_MESSAGE);
             }
         });
 

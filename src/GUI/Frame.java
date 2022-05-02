@@ -1,5 +1,7 @@
 package GUI;
 
+
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -16,6 +18,9 @@ public class Frame extends JFrame
     // the menu bar for the GUI
     private final JMenuBar myMenuBar ;
 
+    // the new game menu item
+    private JMenuItem myNewMenuItem;
+
     // the save menu item
     private JMenuItem mySaveMenuItem;
 
@@ -25,25 +30,41 @@ public class Frame extends JFrame
     // the exit menu item
     private JMenuItem myExitMenuItem;
 
+    // the volume menu item
+    private JMenuItem myVolumeMenuItem;
+
     // the about menu item
     private JMenuItem myAboutMenuItem;
 
     // the instruction menu item
     private JMenuItem myInstructionMenuItem;
 
+
+
+
     public Frame() throws IOException
     {
-        this.setTitle("Game");
+        this.setTitle("Maze Game");
+        final ImageIcon uwImage = new ImageIcon(new ImageIcon(getClass().getResource("/GUIPictures/w.gif"))
+                .getImage().getScaledInstance(60,40,Image.SCALE_DEFAULT));
+        this.setIconImage(uwImage.getImage());
         this.setSize(WIDTH, HEIGHT);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setVisible(true);
+
+        //creat menu bar
+        myMenuBar=createMenuBar();
+        this.add(myMenuBar);
+        this.setJMenuBar(myMenuBar);
+
+        // add room panel
         this.add(new RoomPanel());
 
 
-        //creat menu bar
-        this.add(myMenuBar=createMenuBar());
+        this.pack();
+        this.setLocationRelativeTo(null);
+        this.setResizable(false);
+        this.setVisible(true);
 
-        pack();
     }
 
     /**
@@ -51,18 +72,26 @@ public class Frame extends JFrame
      * @return the menu bar
      */
     private JMenuBar createMenuBar() {
+        JMenuBar myMenuBar = new JMenuBar();
         myMenuBar.add(createFileMenu());
+        myMenuBar.add(createOptionsMenu());
         myMenuBar.add(createHelpMenu());
         return myMenuBar;
     }
 
+
+
     /**
-     * create the File Menu, including save, load,and exit game
+     * create the File Menu, including new, save, load,and exit game
      * @return the file menu
      */
     private JMenu createFileMenu(){
         final JMenu myFileMenu=new JMenu("File");
         myFileMenu.setMnemonic(KeyEvent.VK_F);
+
+        createNewMenuItem();
+        myFileMenu.add(myNewMenuItem);
+        myFileMenu.addSeparator();
 
         createSaveMenuItem();
         myFileMenu.add(mySaveMenuItem);
@@ -81,11 +110,48 @@ public class Frame extends JFrame
     }
 
     /**
-     * a method to create load menu item
+     * a method to create new game menu item
+     * new game menu item allows the user to start a new game
+     */
+    private void createNewMenuItem() {
+        myNewMenuItem=new JMenuItem("New Game");
+        myNewMenuItem.setMnemonic(KeyEvent.VK_N);
+        myNewMenuItem.setEnabled(true);
+
+        //new game mouse listener, haven't done
+        myNewMenuItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
+    }
+
+    /**
+     *  a method to create save game menu item
+     *  save menu item allows the user to save the current game state
+     *
+     */
+    private void createSaveMenuItem() {
+        mySaveMenuItem=new JMenuItem("Save Game");
+        mySaveMenuItem.setMnemonic(KeyEvent.VK_S);
+        mySaveMenuItem.setEnabled(true);
+
+        //save mouse listener, haven't done
+        mySaveMenuItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
+    }
+
+    /**
+     * a method to create load game menu item
      * load menu item allows the user to load the previous game state
      */
     private void createLoadMenuItem() {
-        myLoadMenuItem=new JMenuItem("Load");
+        myLoadMenuItem=new JMenuItem("Load Game");
         myLoadMenuItem.setMnemonic(KeyEvent.VK_L);
         myLoadMenuItem.setEnabled(true);
 
@@ -98,24 +164,7 @@ public class Frame extends JFrame
         });
     }
 
-    /**
-     *  a method to create save menu item
-     *  save menu item allows the user to save the current game state
-     *
-     */
-    private void createSaveMenuItem() {
-        mySaveMenuItem=new JMenuItem("Save");
-        mySaveMenuItem.setMnemonic(KeyEvent.VK_S);
-        mySaveMenuItem.setEnabled(true);
 
-        //save mouse listener, haven't done
-        mySaveMenuItem.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-            }
-        });
-    }
 
     /**
      * a method to create exit menu item
@@ -131,6 +180,36 @@ public class Frame extends JFrame
             public void actionPerformed(ActionEvent e) {
                 System.exit(0);
 
+            }
+        });
+    }
+
+    /**
+     * create the option Menu, it can adjust the game volume
+     * @return the Option menu
+     */
+    private JMenu createOptionsMenu(){
+        final JMenu myOptionsMenu=new JMenu("Options");
+        myOptionsMenu.setMnemonic(KeyEvent.VK_O);
+
+        createVolumeMenuItem();
+        myOptionsMenu.add(myVolumeMenuItem);
+
+        return myOptionsMenu;
+
+    }
+
+    /**
+     * a method to create volume menu item
+     * this menu item can use a slider to adjust the game volume
+     */
+    private void createVolumeMenuItem() {
+        myVolumeMenuItem=new JMenuItem(" Adjust Volume");
+        myVolumeMenuItem.setMnemonic(KeyEvent.VK_V);
+
+        myVolumeMenuItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
             }
         });
     }
@@ -154,24 +233,7 @@ public class Frame extends JFrame
 
     }
 
-    /**
-     * a method to create instruction menu item
-     * this menu item shows the instruction for this maze game
-     */
-    private void createInstructionMenuItem() {
-        myInstructionMenuItem=new JMenuItem("Instruction");
-        myInstructionMenuItem.setMnemonic(KeyEvent.VK_I);
 
-        myInstructionMenuItem.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(null,"<Game Instruction> \n ",
-                        "Instruction",JOptionPane.INFORMATION_MESSAGE);
-            }
-        });
-
-
-    }
 
     /**
      * a method to create about menu item
@@ -184,12 +246,33 @@ public class Frame extends JFrame
         myAboutMenuItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                final ImageIcon image=new ImageIcon(new ImageIcon
-                        (getClass().getResource("/GUIPictures/w,gif"))
+                final ImageIcon uwImage = new ImageIcon(new ImageIcon(getClass().getResource("/GUIPictures/w.gif"))
                         .getImage().getScaledInstance(60,40,Image.SCALE_DEFAULT));
-                JOptionPane.showMessageDialog(null,"<Trivia Maze Game> by \n " +
-                        "Ian McLean \nKevin Yang \nQinyu Tao","About",JOptionPane.INFORMATION_MESSAGE,image);
 
+               JOptionPane.showMessageDialog(null,"<Trivia Maze Game> by \n" +
+                        "Ian McLean \nKevin Yang \nQinyu Tao","About",JOptionPane.INFORMATION_MESSAGE,uwImage);
+
+            }
+        });
+
+
+    }
+
+    /**
+     * a method to create instruction menu item
+     * this menu item shows the instruction for this maze game
+     */
+    private void createInstructionMenuItem() {
+        myInstructionMenuItem=new JMenuItem("Instruction");
+        myInstructionMenuItem.setMnemonic(KeyEvent.VK_I);
+
+        myInstructionMenuItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                final ImageIcon uwImage = new ImageIcon(new ImageIcon(getClass().getResource("/GUIPictures/w.gif"))
+                        .getImage().getScaledInstance(60,40,Image.SCALE_DEFAULT));
+                JOptionPane.showMessageDialog(null,"<Game Instruction> \n ",
+                        "Instruction",JOptionPane.INFORMATION_MESSAGE,uwImage);
             }
         });
 

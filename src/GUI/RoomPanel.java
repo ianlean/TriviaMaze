@@ -1,5 +1,7 @@
 package GUI;
 
+import TriviaMaze.TriviaMaze;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -15,6 +17,7 @@ public class RoomPanel extends JPanel implements ActionListener, KeyListener
 {
     private static final int DEFAULT_WIDTH = 500;
     private static final int DEFAULT_HEIGHT = 500;
+    private TriviaMaze myMaze;
     Timer myT = new Timer(5, this);
     private double myX = 220, myY = 220, myVelX = 0, myVelY = 0;
     private BufferedImage myWallImage;
@@ -27,9 +30,10 @@ public class RoomPanel extends JPanel implements ActionListener, KeyListener
     private TexturePaint myIconTexture;
     private TexturePaint myPathTexture;
 
-    public RoomPanel() throws IOException
+    RoomPanel() throws IOException
     {
         this.setSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);
+        this.setBackground(Color.white);
         this.myT.start();
         this.myIconImage = ImageIO.read(new File("src/GUIPictures/Husky.png"));
         loadImages();
@@ -49,18 +53,18 @@ public class RoomPanel extends JPanel implements ActionListener, KeyListener
     {
         this.myWallTexture = new TexturePaint
                 (this.myWallImage, new Rectangle(0,0, 50,50));
-        this.myPathTexture = new TexturePaint
-                (this.myPathImage, new Rectangle(50, 50, 50, 50));
+//        this.myPathTexture = new TexturePaint
+//                (this.myPathImage, new Rectangle(50, 50, 50, 50));
         this.myDoNotEnterTexture = new TexturePaint
-                (this.myDoNotEnterImage, new Rectangle(180, 0, 50, 50));
+                (this.myDoNotEnterImage, new Rectangle(180, 0, 100, 100));
     }
-//    private void draw(final Graphics theGraphic)
-//    {
-//        Graphics2D graphics2D = (Graphics2D) theGraphic;
-//        graphics2D.drawImage(this.myIconImage, (int) myX, (int) myY, null);
-//        drawWall(graphics2D);
-//        drawIcon(graphics2D);
-//    }
+    private void drawDoNotEnter(final Graphics2D theDoNotEnter)
+    {
+        theDoNotEnter.drawImage(this.myDoNotEnterImage, 210, 0, null);
+        theDoNotEnter.drawImage(this.myDoNotEnterImage, 0, 210, null);
+        theDoNotEnter.drawImage(this.myDoNotEnterImage, 210, 420, null);
+        theDoNotEnter.drawImage(this.myDoNotEnterImage, 420, 210, null);
+    }
     private void drawWall(final Graphics2D theWall)
     {
         theWall.setPaint(this.myWallTexture);
@@ -100,6 +104,7 @@ public class RoomPanel extends JPanel implements ActionListener, KeyListener
         super.paintComponent(theGraphics);
         Graphics2D g2 = (Graphics2D) theGraphics;
         drawWall(g2);
+        drawDoNotEnter(g2);
         g2.drawImage(this.myIconImage, (int) myX, (int) myY, null);
     }
     public Dimension getPreferredSize() { return new Dimension(DEFAULT_WIDTH, DEFAULT_HEIGHT); }

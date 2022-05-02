@@ -3,42 +3,66 @@ package GUI;
 
 
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.io.IOException;
 
-public class Frame extends JFrame
+public class Frame extends JFrame implements ActionListener
 {
     private final static int WIDTH = 1000;
     private final static int HEIGHT = 1000;
 
-    // the menu bar for the GUI
+
+    /** the menu bar for the GUI */
     private final JMenuBar myMenuBar ;
 
-    // the new game menu item
+    /** the new game menu item */
     private JMenuItem myNewMenuItem;
 
-    // the save menu item
+    /** the save menu item */
     private JMenuItem mySaveMenuItem;
 
-    // the load menu item
+    /** the load menu item */
     private JMenuItem myLoadMenuItem;
 
-    // the exit menu item
+    /** the exit menu item */
     private JMenuItem myExitMenuItem;
 
-    // the volume menu item
+    /** the volume menu item*/
     private JMenuItem myVolumeMenuItem;
 
-    // the about menu item
+    /** the theme menu item*/
+    private JMenuItem myThemeMenuItem;
+
+    /** the about menu item*/
     private JMenuItem myAboutMenuItem;
 
-    // the instruction menu item
+    /** the instruction menu item*/
     private JMenuItem myInstructionMenuItem;
 
+    /** volume slider minimum */
+    private static final int VOLUME_MINIMUM=0;
+
+    /** volume slider maximum */
+    private static final int VOLUME_MAXIMUM=100;
+
+    /** volume slider major spacing */
+    private static final int MAJOR_SPACING = 25;
+
+    /** volume slider minor spacing */
+    private static final int MINOR_SPACING = 5;
+
+    /** volume slider initial value position. */
+    private static final int VOLUME_INITIAL = 50;
+
+    /** theme choice button */
+    private final JButton Red=new JButton("Red");
+    private final JButton Yellow=new JButton("Yellow");
+    private final JButton Green=new JButton("Green");
 
 
 
@@ -49,6 +73,8 @@ public class Frame extends JFrame
                 .getImage().getScaledInstance(60,40,Image.SCALE_DEFAULT));
         this.setIconImage(uwImage.getImage());
         this.setSize(WIDTH, HEIGHT);
+       this.setBackground(Color.white);
+        //myPanel.setBackground(Color.white);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         //creat menu bar
@@ -57,7 +83,7 @@ public class Frame extends JFrame
         this.setJMenuBar(myMenuBar);
 
         // add room panel
-        this.add(new RoomPanel());
+        this.add(new RoomPanel(),BorderLayout.WEST);
 
 
         this.pack();
@@ -175,44 +201,70 @@ public class Frame extends JFrame
         myExitMenuItem.setMnemonic(KeyEvent.VK_E);
         myExitMenuItem.setEnabled(true);
 
-        myExitMenuItem.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                System.exit(0);
-
-            }
-        });
+        myExitMenuItem.addActionListener(e -> System.exit(0));
     }
 
     /**
-     * create the option Menu, it can adjust the game volume
+     * create the option Menu
+     * it can adjust the game volume and theme(background)
      * @return the Option menu
      */
     private JMenu createOptionsMenu(){
         final JMenu myOptionsMenu=new JMenu("Options");
         myOptionsMenu.setMnemonic(KeyEvent.VK_O);
 
-        createVolumeMenuItem();
+
+
+        myVolumeMenuItem = new JMenuItem("Volume");
+        myVolumeMenuItem.setMnemonic(KeyEvent.VK_V);
         myOptionsMenu.add(myVolumeMenuItem);
+
+        //volume slider
+        final JSlider volumeSlider = new JSlider(SwingConstants.HORIZONTAL,
+                VOLUME_MINIMUM, VOLUME_MAXIMUM, VOLUME_INITIAL);
+
+        volumeSlider.setMajorTickSpacing(MAJOR_SPACING);
+        volumeSlider.setMinorTickSpacing(MINOR_SPACING);
+        volumeSlider.setPaintLabels(true);
+        volumeSlider.setPaintTicks(true);
+        myOptionsMenu.add(volumeSlider);
+        myOptionsMenu.addSeparator();
+        // haven't finished
+        volumeSlider.addChangeListener(theEvent -> {
+            final JSlider volume = (JSlider) theEvent.getSource();
+            if (!volume.getValueIsAdjusting()) {
+                final int volumeValue = volume.getValue();
+            }
+
+        });
+
+        // theme menu item to change the background
+        myThemeMenuItem = new JMenuItem("Theme");
+        myThemeMenuItem.setMnemonic(KeyEvent.VK_T);
+        myOptionsMenu.add(myThemeMenuItem);
+
+        myOptionsMenu.add(Red);
+        myOptionsMenu.add(Yellow);
+        myOptionsMenu.add(Green);
+        Red.addActionListener(e -> setBackgroundRed());
+        Yellow.addActionListener(e -> setBackgroundYellow());
+        Green.addActionListener(e -> setBackgroundGreen());
+
 
         return myOptionsMenu;
 
     }
 
-    /**
-     * a method to create volume menu item
-     * this menu item can use a slider to adjust the game volume
-     */
-    private void createVolumeMenuItem() {
-        myVolumeMenuItem=new JMenuItem(" Adjust Volume");
-        myVolumeMenuItem.setMnemonic(KeyEvent.VK_V);
-
-        myVolumeMenuItem.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-            }
-        });
+    private void setBackgroundRed() {
+        this.setBackground(Color.RED);
     }
+    private void setBackgroundYellow() {
+        this.setBackground(Color.YELLOW);
+    }
+    private void setBackgroundGreen() {
+        this.setBackground(Color.GREEN);
+    }
+
 
     /**
      * create the Help Menu, including About and Instruction
@@ -291,4 +343,8 @@ public class Frame extends JFrame
         });
     }
 
+    @Override
+    public void actionPerformed(ActionEvent e) {
+
+    }
 }

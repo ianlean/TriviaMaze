@@ -16,6 +16,7 @@ public class Frame extends JFrame implements ActionListener
     private final static int WIDTH = 1000;
     private final static int HEIGHT = 1000;
 
+   // private JPanel myPanel =new JPanel();
 
     /** the menu bar for the GUI */
     private final JMenuBar myMenuBar ;
@@ -84,6 +85,8 @@ public class Frame extends JFrame implements ActionListener
 
         // add room panel
         this.add(new RoomPanel(),BorderLayout.WEST);
+        this.add(new RoomPanel(),BorderLayout.EAST);
+        this.add(new RoomPanel(),BorderLayout.SOUTH);
 
 
         this.pack();

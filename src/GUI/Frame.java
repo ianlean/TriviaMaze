@@ -2,9 +2,9 @@ package GUI;
 
 
 
+import TriviaMaze.TriviaMaze;
+
 import javax.swing.*;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -16,7 +16,9 @@ public class Frame extends JFrame implements ActionListener
     private final static int WIDTH = 1000;
     private final static int HEIGHT = 1000;
 
-   // private JPanel myPanel =new JPanel();
+    private TriviaMaze myMaze = new TriviaMaze(10);
+
+    // private JPanel myPanel =new JPanel();
 
     /** the menu bar for the GUI */
     private final JMenuBar myMenuBar ;
@@ -74,7 +76,7 @@ public class Frame extends JFrame implements ActionListener
                 .getImage().getScaledInstance(60,40,Image.SCALE_DEFAULT));
         this.setIconImage(uwImage.getImage());
         this.setSize(WIDTH, HEIGHT);
-       this.setBackground(Color.white);
+        this.setBackground(Color.white);
         //myPanel.setBackground(Color.white);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -85,13 +87,11 @@ public class Frame extends JFrame implements ActionListener
 
         // add room panel
         this.add(new RoomPanel(),BorderLayout.WEST);
-        this.add(new RoomPanel(),BorderLayout.EAST);
-        this.add(new RoomPanel(),BorderLayout.SOUTH);
+        this.add(new Maze(this.myMaze));
 
 
         this.pack();
         this.setLocationRelativeTo(null);
-        this.setResizable(false);
         this.setVisible(true);
 
     }
@@ -304,7 +304,7 @@ public class Frame extends JFrame implements ActionListener
                 final ImageIcon uwImage = new ImageIcon(new ImageIcon(getClass().getResource("/GUIPictures/w.gif"))
                         .getImage().getScaledInstance(60,40,Image.SCALE_DEFAULT));
 
-               JOptionPane.showMessageDialog(null,"<Trivia Maze Game> by \n" +
+                JOptionPane.showMessageDialog(null,"<Trivia Maze Game> by \n" +
                         "Ian McLean \nKevin Yang \nQinyu Tao","About",JOptionPane.INFORMATION_MESSAGE,uwImage);
 
             }

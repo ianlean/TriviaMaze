@@ -5,7 +5,7 @@ import java.util.Scanner;
 public class Main {
 
     public static void main(String[] args) {
-        TriviaMaze gameMaze = new TriviaMaze();
+        TriviaMaze gameMaze = new TriviaMaze(8);
         Scanner keyBoard = new Scanner(System.in);
         System.out.println(gameMaze);
         while(true) {
@@ -27,14 +27,16 @@ public class Main {
                 moved = theMaze.move(theMaze.getMyY(), theMaze.getMyX() + 1);
 
             } else if (direction.equalsIgnoreCase("s")) {
-               moved = theMaze.move(theMaze.getMyY() + 1, theMaze.getMyX());
+                moved = theMaze.move(theMaze.getMyY() + 1, theMaze.getMyX());
 
             } else if (direction.equalsIgnoreCase("n")) {
                 moved = theMaze.move(theMaze.getMyY() - 1, theMaze.getMyX());
 
             }
             if (!moved) {
-                System.out.println("Not a valid direction try again");
+                System.out.println("Movement blocked");
+                System.out.println(theMaze);
+                promptDirection();
                 direction = scan.next();
             }
         }

@@ -5,7 +5,8 @@ public class Room extends Cell
     private final String myQuestion;
 
     private final String myAnswer;
-    private final boolean hasPlayer;
+    private boolean hasPlayer;
+
     private RoomStatus myStatus;
     public Room(String theQuestion,String theAnswer ,boolean thePlayer) {
         myQuestion = theQuestion;
@@ -31,8 +32,41 @@ public class Room extends Cell
         return hasPlayer;
     }
 
+    public void setHasPlayer(final boolean thePlayer) {
+        this.hasPlayer = thePlayer;
+    }
+
+    public String getMyAnswer() {return myAnswer;}
+
+    public RoomStatus getMyStatus() {return myStatus;}
+
+    public void setStatus(RoomStatus theStatus)
+    {
+        this.myStatus = theStatus;
+    }
+
+    public void seal() {this.setStatus(RoomStatus.SEALED);}
+
+    public void unlock() {
+        if (this.myStatus == RoomStatus.SEALED) {
+            throw new RuntimeException("Attempted to unlock a sealed door");
+        } else if(this.myStatus == RoomStatus.UNLOCKED) {
+            throw new RuntimeException("Room is already unlocked");
+        } else {
+            this.myStatus = RoomStatus.UNLOCKED;
+        }
+    }
+
     @Override
     public String toString() {
-        return "|_|";
+        if (this.hasPlayer) {
+            return "|C|";
+        } else if (this.getMyStatus() == RoomStatus.SEALED) {
+            return "|X|";
+        } else if(this.getMyStatus() == RoomStatus.LOCKED) {
+            return "|?|";
+        } else {
+            return "|_|";
+        }
     }
 }

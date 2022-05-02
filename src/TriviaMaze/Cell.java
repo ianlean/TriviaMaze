@@ -6,11 +6,11 @@ public class Cell
     {
         UNLOCKED, LOCKED, SEALED
     }
-    private RoomStatus myStatus;
-    public Cell()
-    {
-        this.myStatus = RoomStatus.SEALED;
-    }
+    protected RoomStatus myStatus;
+//    public Cell()
+//    {
+//        this.myStatus = RoomStatus.SEALED;
+//    }
     public void setStatus(RoomStatus theStatus)
     {
         this.myStatus = theStatus;

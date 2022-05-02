@@ -6,7 +6,8 @@ public class Room extends Cell
 
     private final String myAnswer;
     private final boolean hasPlayer;
-    private RoomStatus myStatus;
+
+//    private RoomStatus myStatus;
     public Room(String theQuestion,String theAnswer ,boolean thePlayer) {
         myQuestion = theQuestion;
         myAnswer = theAnswer;
@@ -29,6 +30,22 @@ public class Room extends Cell
 
     public boolean getHasPlayer() {
         return hasPlayer;
+    }
+
+    public String getMyAnswer() {return myAnswer;}
+
+    public RoomStatus getMyStatus() {return myStatus;}
+
+    public void seal() {this.setStatus(RoomStatus.SEALED);}
+
+    public void unlock() {
+        if (this.myStatus == RoomStatus.SEALED) {
+            throw new RuntimeException("Attempted to unlock a sealed door");
+        } else if(this.myStatus == RoomStatus.UNLOCKED) {
+            throw new RuntimeException("Room is already unlocked");
+        } else {
+            this.myStatus = RoomStatus.UNLOCKED;
+        }
     }
 
     @Override

@@ -34,7 +34,7 @@ public class Main {
 
             }
             if (!moved) {
-                System.out.println("Not a valid direction try again");
+                System.out.println("Movement blocked");
                 direction = scan.next();
             }
         }

@@ -110,8 +110,8 @@ public class RoomPanel extends JPanel implements ActionListener, KeyListener
     @Override
     public void actionPerformed(ActionEvent e)
     {
-        if (this.myX < 50 || this.myX > 450) this.myVelX = -this.myVelX;
-        if (this.myY < 50 || this.myY > 450) this.myVelY = -this.myVelY;
+        if (this.myX < 80 || this.myX > 345) this.myVelX = -this.myVelX;
+        if (this.myY < 80 || this.myY > 345) this.myVelY = -this.myVelY;
         repaint();
         this.myX += this.myVelX;
         this.myY += this.myVelY;

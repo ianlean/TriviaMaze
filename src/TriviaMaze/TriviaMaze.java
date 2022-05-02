@@ -119,4 +119,25 @@ public class TriviaMaze {
     public int getMyY() {
         return myY;
     }
+
+    public int row()
+    {
+        return this.myMaze.length;
+    }
+    public int column()
+    {
+        return this.myMaze.length;
+    }
+
+    public Cell.RoomStatus getStatus(int theX, int theY)
+    {
+        return this.myMaze[theX][theY].getMyStatus();
+//        if (theX >= 0 && theX < this.myMaze.length
+//                && this.myY >= 0 && this.myY < this.myMaze[theX].length)
+//        {
+//            return this.myMaze[theX][theY].getMyStatus();
+//        }
+//        else
+//            return Cell.RoomStatus.SEALED;
+    }
 }

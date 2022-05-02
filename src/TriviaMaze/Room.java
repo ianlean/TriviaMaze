@@ -5,9 +5,9 @@ public class Room extends Cell
     private final String myQuestion;
 
     private final String myAnswer;
-    private final boolean hasPlayer;
+    private boolean hasPlayer;
 
-//    private RoomStatus myStatus;
+    private RoomStatus myStatus;
     public Room(String theQuestion,String theAnswer ,boolean thePlayer) {
         myQuestion = theQuestion;
         myAnswer = theAnswer;
@@ -32,9 +32,18 @@ public class Room extends Cell
         return hasPlayer;
     }
 
+    public void setHasPlayer(final boolean thePlayer) {
+        this.hasPlayer = thePlayer;
+    }
+
     public String getMyAnswer() {return myAnswer;}
 
     public RoomStatus getMyStatus() {return myStatus;}
+
+    public void setStatus(RoomStatus theStatus)
+    {
+        this.myStatus = theStatus;
+    }
 
     public void seal() {this.setStatus(RoomStatus.SEALED);}
 
@@ -50,6 +59,14 @@ public class Room extends Cell
 
     @Override
     public String toString() {
-        return "|_|";
+        if (this.hasPlayer) {
+            return "|C|";
+        } else if (this.getMyStatus() == RoomStatus.SEALED) {
+            return "|X|";
+        } else if(this.getMyStatus() == RoomStatus.LOCKED) {
+            return "|?|";
+        } else {
+            return "|_|";
+        }
     }
 }

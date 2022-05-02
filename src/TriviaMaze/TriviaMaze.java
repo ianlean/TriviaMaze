@@ -4,26 +4,53 @@ import java.util.Scanner;
 
 public class TriviaMaze {
 
-    private Room[][] myMaze = new Room[10][10];
+    private Room[][] myMaze;
     private int myX;
     private int myY;
     private Room characterSpot;
-    public TriviaMaze() { // for developing purposes I am auto-filling rooms
-        initializeMaze();
+    public TriviaMaze(final int theSize) { // for developing purposes I am auto-filling rooms
+        myMaze = new Room[theSize][theSize];
+        generateMaze();
+
     }
 
-    private void initializeMaze() {
-        // we want the far left corner to be where the player starts
+//    private void initializeMaze() {
+//        // we want the far left corner to be where the player starts
+//        characterSpot = myMaze[0][0] = new Room("What is 1+1?", "2", true);
+//        myMaze[0][0].unlock();
+//        myX = 0;
+//        myY = 0;
+//        for (int row = 0; row < myMaze.length; row++) { //we want to fill the maze with rooms to go in
+//            for (int col = 0; col < myMaze[row].length; col++) {
+//                if (row == 0 && col == 0) {continue;}
+//                myMaze[row][col] = new Room("What is 1+1?", "2", false);
+//            }
+//        }
+//    }
+
+    private void generateMaze()
+    {
+        for (int row = 0; row < this.myMaze.length; row++)
+        {
+            for (int col = 0; col < this.myMaze.length; col++)
+            {
+                this.myMaze[row][col] = new Room("what is 1+1", "2", false);
+                if (row == 0 || col == 0 ||
+                row == this.myMaze.length - 1 || col == this.myMaze.length - 1 ||
+                row - col == 0 || row - col == 1)
+                {
+                    this.myMaze[row][col].setStatus(Cell.RoomStatus.LOCKED);
+                } else {
+                    this.myMaze[row][col].setStatus(Cell.RoomStatus.SEALED);
+                }
+            }
+        }
         characterSpot = myMaze[0][0] = new Room("What is 1+1?", "2", true);
+        characterSpot.setHasPlayer(true);
         myMaze[0][0].unlock();
         myX = 0;
         myY = 0;
-        for (int row = 0; row < myMaze.length; row++) { //we want to fill the maze with rooms to go in
-            for (int col = 0; col < myMaze[row].length; col++) {
-                if (row == 0 && col == 0) {continue;}
-                myMaze[row][col] = new Room("What is 1+1?", "2", false);
-            }
-        }
+        myMaze[0][0].setStatus(Cell.RoomStatus.UNLOCKED);
     }
 
     public boolean move(final int theRow, final int theCol) {
@@ -47,9 +74,11 @@ public class TriviaMaze {
         }
     }
     private void changeDirection(final int theRow, final int theCol) {
+        characterSpot.setHasPlayer(false);
         characterSpot = myMaze[theRow][theCol]; //this method means we have confirmed
         myX = theCol;                           // the direction we want to move in
         myY = theRow;
+        characterSpot.setHasPlayer(true);
     }
 
     private boolean answerQuestion(final Room theRoom) {
@@ -57,6 +86,7 @@ public class TriviaMaze {
                                                 //answers the question correctly
         System.out.println(theRoom.getMyQuestion());
         if(scan.next().equalsIgnoreCase(theRoom.getMyAnswer())) {
+            theRoom.unlock();
             System.out.println("Correct!");
             return true;
         }
@@ -75,11 +105,7 @@ public class TriviaMaze {
         for (int row = 0; row < myMaze.length; row++) {
             s.append("\n");
             for (int col = 0; col < myMaze[row].length; col++) {
-                if (myMaze[row][col] == characterSpot) {
-                    s.append(" C  ");
-                } else {
-                    s.append(myMaze[row][col].toString()).append(" ");
-                }
+                s.append(myMaze[row][col].toString()).append(" ");
             }
         }
         return s.toString();

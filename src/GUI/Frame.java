@@ -2,10 +2,9 @@ package GUI;
 
 
 
-import TriviaMaze.TriviaMaze;
+import TriviaMaze.*;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -17,7 +16,9 @@ public class Frame extends JFrame
     private final static int WIDTH = 2000;
     private final static int HEIGHT = 2000;
 
-    private TriviaMaze myMaze = new TriviaMaze(10);
+    private final TriviaMaze myMaze = new TriviaMaze(10);
+
+    private final Controller myController = new Controller(myMaze);
 
     // private JPanel myPanel =new JPanel();
 
@@ -74,6 +75,7 @@ public class Frame extends JFrame
 
     public Frame() throws IOException
     {
+
         this.setTitle("Maze Game");
         final ImageIcon uwImage = new ImageIcon(new ImageIcon(getClass().getResource("/GUIPictures/w.gif"))
                 .getImage().getScaledInstance(60,40,Image.SCALE_DEFAULT));
@@ -92,15 +94,15 @@ public class Frame extends JFrame
         roomView.setLocation(0, 0);
         this.add(mazeView);
         mazeView.setLocation(500, 0);
-        JPanel buttonPanel = createButtonPanel();
+        JPanel buttonPanel = createButtonPanel(myController);
         this.add(buttonPanel);
         buttonPanel.setBounds(1000,0, 300, 100);
-//        this.add(createTextPanel());
-
-        this.pack();
+        JPanel textPanel = createTextPanel();
+        this.add(textPanel);
+        textPanel.setBounds(1000, 100, 800, 400);
         this.setLocationRelativeTo(null);
         this.setVisible(true);
-
+        this.pack();
     }
 
     /**
@@ -341,7 +343,7 @@ public class Frame extends JFrame
 
     }
 
-    private JPanel createButtonPanel() {
+    private JPanel createButtonPanel(final Controller theController) {
         JPanel buttonPanel = new JPanel();
         JButton up = new JButton("Up");
         JButton down = new JButton("Down");
@@ -351,16 +353,35 @@ public class Frame extends JFrame
         styleButtons(down);
         styleButtons(left);
         styleButtons(right);
-        up.addActionListener(e -> {mazeView.decrementY();mazeView.repaint();});
-        down.addActionListener(e -> {mazeView.incrementY();mazeView.repaint();});
-        right.addActionListener(e -> {mazeView.incrementX();mazeView.repaint();});
-        left.addActionListener(e -> {mazeView.decrementX();mazeView.repaint();});
+        up.addActionListener(e -> {
+            if (theController.askDirection("n")) {
+                mazeView.decrementY();
+                mazeView.repaint();
+            }
+        });
+        down.addActionListener(e -> {
+            if (theController.askDirection("s")) {
+                mazeView.incrementY();
+                mazeView.repaint();
+            }
+        });
+        right.addActionListener(e -> {
+            if (theController.askDirection("e")) {
+                mazeView.incrementX();
+                mazeView.repaint();
+            }
+        });
+        left.addActionListener(e -> {
+            if (theController.askDirection("w")) {
+                mazeView.decrementX();
+                mazeView.repaint();
+            }
+        });
         buttonPanel.add(up);
         buttonPanel.add(down);
         buttonPanel.add(left);
         buttonPanel.add(right);
         buttonPanel.setSize(100, 100);
-        //buttonPanel.setBackground(Color.BLACK);
         return buttonPanel;
     }
 
@@ -372,13 +393,10 @@ public class Frame extends JFrame
 
     private static JPanel createTextPanel() {
         JPanel textPanel = new JPanel();
-        JTextField outputText = new JTextField();
-        JTextArea inputText = new JTextArea();
+        JTextField outputText = new JTextField(50);
+        JTextField inputText = new JTextField(50);
         outputText.setEnabled(false);
         inputText.setEnabled(true);
-        textPanel.add(outputText);
-        textPanel.add(inputText);
-        textPanel.setBackground(Color.GREEN);
         textPanel.setSize(200, 200);
         return textPanel;
     }

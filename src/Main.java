@@ -4,15 +4,15 @@ import java.util.Scanner;
 
 public class Main {
 
-    public static void main(String[] args) {
-        TriviaMaze gameMaze = new TriviaMaze(8);
-        Scanner keyBoard = new Scanner(System.in);
-        System.out.println(gameMaze);
-        while(true) {
-            askDirection(gameMaze);
-            System.out.println(gameMaze);
-        }
-    }
+//    public static void main(String[] args) {
+//        TriviaMaze gameMaze = new TriviaMaze(8);
+//        Scanner keyBoard = new Scanner(System.in);
+//        System.out.println(gameMaze);
+//        while(true) {
+//            askDirection(gameMaze);
+//            System.out.println(gameMaze);
+//        }
+//    }
 
     public static void askDirection(TriviaMaze theMaze) {
         boolean moved = false;

@@ -5,16 +5,17 @@ package GUI;
 import TriviaMaze.TriviaMaze;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
 
-public class Frame extends JFrame implements ActionListener
+public class Frame extends JFrame
 {
-    private final static int WIDTH = 1000;
-    private final static int HEIGHT = 1000;
+    private final static int WIDTH = 2000;
+    private final static int HEIGHT = 2000;
 
     private TriviaMaze myMaze = new TriviaMaze(10);
 
@@ -47,6 +48,8 @@ public class Frame extends JFrame implements ActionListener
     /** the instruction menu item*/
     private JMenuItem myInstructionMenuItem;
 
+    private Maze mazeView = new Maze(this.myMaze);
+
     /** volume slider minimum */
     private static final int VOLUME_MINIMUM=0;
 
@@ -76,19 +79,23 @@ public class Frame extends JFrame implements ActionListener
                 .getImage().getScaledInstance(60,40,Image.SCALE_DEFAULT));
         this.setIconImage(uwImage.getImage());
         this.setSize(WIDTH, HEIGHT);
-        this.setBackground(Color.white);
-        //myPanel.setBackground(Color.white);
+        this.getContentPane().setLayout(null);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
         //creat menu bar
         myMenuBar=createMenuBar();
         this.add(myMenuBar);
         this.setJMenuBar(myMenuBar);
 
         // add room panel
-        this.add(new RoomPanel(),BorderLayout.WEST);
-        this.add(new Maze(this.myMaze));
-
+        RoomPanel roomView = new RoomPanel();
+        this.add(roomView);
+        roomView.setLocation(0, 0);
+        this.add(mazeView);
+        mazeView.setLocation(500, 0);
+        JPanel buttonPanel = createButtonPanel();
+        this.add(buttonPanel);
+        buttonPanel.setBounds(1000,0, 300, 100);
+//        this.add(createTextPanel());
 
         this.pack();
         this.setLocationRelativeTo(null);
@@ -334,6 +341,47 @@ public class Frame extends JFrame implements ActionListener
 
     }
 
+    private JPanel createButtonPanel() {
+        JPanel buttonPanel = new JPanel();
+        JButton up = new JButton("Up");
+        JButton down = new JButton("Down");
+        JButton left = new JButton("Left");
+        JButton right = new JButton("Right");
+        styleButtons(up);
+        styleButtons(down);
+        styleButtons(left);
+        styleButtons(right);
+        up.addActionListener(e -> {mazeView.decrementY();mazeView.repaint();});
+        down.addActionListener(e -> {mazeView.incrementY();mazeView.repaint();});
+        right.addActionListener(e -> {mazeView.incrementX();mazeView.repaint();});
+        left.addActionListener(e -> {mazeView.decrementX();mazeView.repaint();});
+        buttonPanel.add(up);
+        buttonPanel.add(down);
+        buttonPanel.add(left);
+        buttonPanel.add(right);
+        buttonPanel.setSize(100, 100);
+        //buttonPanel.setBackground(Color.BLACK);
+        return buttonPanel;
+    }
+
+    private static void styleButtons(final JButton theButton) {
+        theButton.setBackground(new Color(131, 39, 145));
+        theButton.setForeground(Color.BLACK);
+        theButton.setFont(new Font("Tahoma", Font.BOLD, 12));
+    }
+
+    private static JPanel createTextPanel() {
+        JPanel textPanel = new JPanel();
+        JTextField outputText = new JTextField();
+        JTextArea inputText = new JTextArea();
+        outputText.setEnabled(false);
+        inputText.setEnabled(true);
+        textPanel.add(outputText);
+        textPanel.add(inputText);
+        textPanel.setBackground(Color.GREEN);
+        textPanel.setSize(200, 200);
+        return textPanel;
+    }
 
     public static void main(String[] args) {
         EventQueue.invokeLater(() ->
@@ -344,11 +392,6 @@ public class Frame extends JFrame implements ActionListener
                 e.printStackTrace();
             }
         });
-    }
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-
     }
 }
 

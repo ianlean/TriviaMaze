@@ -21,6 +21,9 @@ public class Maze extends JPanel
     private TexturePaint myIconTexture;
     private TexturePaint myGreenFlagTexture;
 
+    private int myXCoord = 0;
+    private int myYCoord = 0;
+
     Maze(TriviaMaze theMaze) throws IOException
     {
         this.myMaze = theMaze;
@@ -58,7 +61,7 @@ public class Maze extends JPanel
                 Image resizeFlag = this.myGreenFlag.getScaledInstance(50, 50, Image.SCALE_DEFAULT);
                 graphics2D.drawImage(resizeFlag, 500, 500, null);
                 Image resizeIcon = this.myIcon.getScaledInstance(50, 50, Image.SCALE_DEFAULT);
-                graphics2D.drawImage(resizeIcon, 0, 0, null);
+                graphics2D.drawImage(resizeIcon, myXCoord, myYCoord, null);
             }
         }
 //        graphics2D.setPaint(this.myIconTexture);
@@ -71,5 +74,21 @@ public class Maze extends JPanel
     {
         super.paintComponent(theGraphics);
         drawMaze(theGraphics);
+    }
+
+    public void incrementX() {
+        this.myXCoord+=55;
+    }
+
+    public void decrementX() {
+        this.myXCoord-=55;
+    }
+
+    public void incrementY() {
+        this.myYCoord+=55;
+    }
+
+    public void decrementY() {
+        this.myYCoord-=55;
     }
 }

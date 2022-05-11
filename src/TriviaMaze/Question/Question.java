@@ -1,9 +1,20 @@
 package TriviaMaze.Question;
 
-public class Question
+public abstract class Question
 {
-    private QuestionType myQuestionType;
-    private String myQuestionBody;
-    private String myCorrectAnswer;
-    private String myFakeAnswers;
+    protected String myQuestionBody;
+    protected String myCorrectAnswer;
+    protected String myFakeAnswers;
+
+    public Question(String theQuestionBody, String theAnswer) {
+        myQuestionBody = theQuestionBody;
+        myCorrectAnswer = theAnswer;
+    }
+
+    public abstract String getQuestion();
+
+
+    public abstract String getCorrectAnswer();
+
+    public abstract String[] getOtherAnswers();
 }

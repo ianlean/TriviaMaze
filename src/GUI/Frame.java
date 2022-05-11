@@ -17,7 +17,8 @@ public class Frame extends JFrame
     private final static int WIDTH = 2000;
     private final static int HEIGHT = 2000;
 
-    private final TriviaMaze myMaze = new TriviaMaze(10);
+    private final static int MAZE_SIZE = 8;
+    private final TriviaMaze myMaze = new TriviaMaze(MAZE_SIZE);
 
     private final Controller myController = new Controller(myMaze);
 

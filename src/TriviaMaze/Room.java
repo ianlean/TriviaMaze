@@ -1,17 +1,19 @@
 package TriviaMaze;
 
+import TriviaMaze.Question.Question;
+
 import java.sql.Connection;
 import java.sql.SQLException;
 //import org.sqlite.SQLiteDataSource;
 public class Room extends Cell
 {
-    private final String myQuestion;
+    private final Question myQuestion;
 
     private final String myAnswer;
     private boolean hasPlayer;
 
     private RoomStatus myStatus;
-    public Room(String theQuestion,String theAnswer ,boolean thePlayer) {
+    public Room(Question theQuestion, String theAnswer , boolean thePlayer) {
         myQuestion = theQuestion;
         myAnswer = theAnswer;
         hasPlayer = thePlayer;
@@ -27,7 +29,7 @@ public class Room extends Cell
         myAnswer = null;
     }
 
-    public String getMyQuestion() {
+    public Question getMyQuestion() {
         return myQuestion;
     }
 

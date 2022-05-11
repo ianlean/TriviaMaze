@@ -1,18 +1,25 @@
 package TriviaMaze.Question;
 
-public class TrueFalseType implements QuestionType
+import TriviaMaze.Database;
+
+import java.util.Random;
+
+public class TrueFalseType extends Question
 {
-    @Override
-    public String getQuestion() {
-        return null;
+
+    public TrueFalseType(String theBody, String theAnswer)
+    {
+        super(theBody, theAnswer);
     }
 
-    @Override
+    public String getQuestion()
+    {
+        return this.myQuestionBody;
+    }
     public String getCorrectAnswer() {
         return null;
     }
 
-    @Override
     public String[] getOtherAnswers() {
         return new String[0];
     }

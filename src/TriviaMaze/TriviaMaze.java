@@ -6,6 +6,7 @@ import org.sqlite.SQLiteDataSource;
 
 public class TriviaMaze {
 
+    private GenerateQuestion generator;
     private final Room[][] myMaze;
     private int myX;
     private int myY;
@@ -16,17 +17,8 @@ public class TriviaMaze {
 
     public TriviaMaze(final int theSize) throws SQLException { // for developing purposes I am auto-filling rooms
         myMaze = new Room[theSize][theSize];
+        generator = new GenerateQuestion();
         generateMaze();
-        ds.setUrl("jdbc:sqlite:trivia.db");
-        conn = ds.getConnection();
-        Statement stmt = conn.createStatement();
-        String query = "SELECT * FROM truefalse";
-        ResultSet rs = stmt.executeQuery(query);
-        String theQuestion = rs.getString("question");
-        String theBool = rs.getString("correctbool");
-        int id = rs.getInt( "question");
-
-        System.out.println(theQuestion +" " + theBool);
     }
     private void generateMaze()
     {
@@ -34,7 +26,7 @@ public class TriviaMaze {
         {
             for (int col = 0; col < this.myMaze.length; col++)
             {
-                this.myMaze[row][col] = new Room("what is 1+1", "2", false);
+                this.myMaze[row][col] = new Room(generator.generateRandomQuestion(), "2", false);
                 if (row == 0 || col == 0 ||
                 row == this.myMaze.length - 1 || col == this.myMaze.length - 1 ||
                 row - col == 0 || row - col == 1)
@@ -45,7 +37,7 @@ public class TriviaMaze {
                 }
             }
         }
-        characterSpot = myMaze[0][0] = new Room("What is 1+1?", "2", true);
+        characterSpot = myMaze[0][0] = new Room(null, "2", true);
         characterSpot.setHasPlayer(true);
         myMaze[0][0].unlock();
         myX = 0;

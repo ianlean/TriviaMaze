@@ -1,17 +1,16 @@
 package TriviaMaze.Question;
 
-public class ShortAnswer implements QuestionType{
-    @Override
+public class ShortAnswer {
+
     public String getQuestion() {
         return null;
     }
 
-    @Override
+
     public String getCorrectAnswer() {
         return null;
     }
 
-    @Override
     public String[] getOtherAnswers() {
         return new String[0];
     }

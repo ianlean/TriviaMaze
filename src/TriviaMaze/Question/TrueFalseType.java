@@ -20,6 +20,7 @@ public class TrueFalseType implements QuestionType
     {
 
 
+        return null;
     }
 
     @Override

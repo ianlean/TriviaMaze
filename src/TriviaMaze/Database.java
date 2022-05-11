@@ -75,6 +75,7 @@ public class Database
     public int getMultipleChoice()
     {
 
+        return 0;
     }
 
 }

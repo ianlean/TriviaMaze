@@ -26,7 +26,7 @@ public class TriviaMaze {
         {
             for (int col = 0; col < this.myMaze.length; col++)
             {
-                this.myMaze[row][col] = new Room(generator.generateRandomQuestion(), "2", false);
+                this.myMaze[row][col] = new Room(generator.generateRandomQuestion(), false);
                 if (row == 0 || col == 0 ||
                 row == this.myMaze.length - 1 || col == this.myMaze.length - 1 ||
                 row - col == 0 || row - col == 1)
@@ -37,7 +37,7 @@ public class TriviaMaze {
                 }
             }
         }
-        characterSpot = myMaze[0][0] = new Room(null, "2", true);
+        characterSpot = myMaze[0][0] = new Room(null, true);
         characterSpot.setHasPlayer(true);
         myMaze[0][0].unlock();
         myX = 0;
@@ -49,7 +49,7 @@ public class TriviaMaze {
         // we want to make sure this position can be moved to
         if (validMove(theRow, theCol) &&
                 myMaze[theRow][theCol].getMyStatus() != Cell.RoomStatus.SEALED) {
-            return checkQuestion(theRow, theCol);
+            return checkQuestion(theRow, theCol); // if its valid check its question
         } else { // let the caller know it is not valid
             return false;
         }
@@ -57,11 +57,12 @@ public class TriviaMaze {
 
     public boolean checkQuestion(final int theRow, final int theCol) {
         boolean answeredCorrect; //we want to ask a question if the room is locked,
+                                 //if its unlocked or the question is answered, move the player
         if (myMaze[theRow][theCol].getMyStatus() ==
             Cell.RoomStatus.UNLOCKED || (answerQuestion(myMaze[theRow][theCol]))) {
             changeDirection(theRow, theCol);
             return true;
-        } else {
+        } else {  // the question was answered wrong
             return false;
         }
     }
@@ -76,8 +77,8 @@ public class TriviaMaze {
     private boolean answerQuestion(final Room theRoom) {
         Scanner scan = new Scanner(System.in); //we want to make sure the user answers
                                                 //answers the question correctly
-        System.out.println(theRoom.getMyQuestion());
-        if(scan.next().equalsIgnoreCase(theRoom.getMyAnswer())) {
+        System.out.println(theRoom.getMyQuestion().getQuestion());
+        if(scan.next().equalsIgnoreCase(theRoom.getMyQuestion().getCorrectAnswer())) {
             theRoom.unlock();
             System.out.println("Correct!");
             return true;

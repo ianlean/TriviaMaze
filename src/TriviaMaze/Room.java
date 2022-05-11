@@ -8,14 +8,11 @@ import java.sql.SQLException;
 public class Room extends Cell
 {
     private final Question myQuestion;
-
-    private final String myAnswer;
     private boolean hasPlayer;
 
     private RoomStatus myStatus;
-    public Room(Question theQuestion, String theAnswer , boolean thePlayer) {
+    public Room(Question theQuestion, boolean thePlayer) {
         myQuestion = theQuestion;
-        myAnswer = theAnswer;
         hasPlayer = thePlayer;
         myStatus = RoomStatus.LOCKED;
     }
@@ -26,7 +23,6 @@ public class Room extends Cell
         myStatus = RoomStatus.SEALED;
         hasPlayer = false;
         myQuestion = null;
-        myAnswer = null;
     }
 
     public Question getMyQuestion() {
@@ -40,8 +36,6 @@ public class Room extends Cell
     public void setHasPlayer(final boolean thePlayer) {
         this.hasPlayer = thePlayer;
     }
-
-    public String getMyAnswer() {return myAnswer;}
 
     public RoomStatus getMyStatus() {return myStatus;}
 

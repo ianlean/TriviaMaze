@@ -17,15 +17,6 @@ public class TriviaMaze {
     public TriviaMaze(final int theSize) throws SQLException { // for developing purposes I am auto-filling rooms
         myMaze = new Room[theSize][theSize];
         generateMaze();
-        ds.setUrl("jdbc:sqlite:identifier.sqlite");
-        conn = ds.getConnection();
-        Statement stmt = conn.createStatement();
-        String query = "SELECT * FROM tf";
-        ResultSet rs = stmt.executeQuery(query);
-        String name = rs.getString("theQuestion");
-        int id = rs.getInt( "theQuestion");
-
-        System.out.println(name +" " + id);
     }
     private void generateMaze()
     {

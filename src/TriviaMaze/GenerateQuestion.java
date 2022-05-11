@@ -2,11 +2,13 @@ package TriviaMaze;
 
 import TriviaMaze.Question.Question;
 import TriviaMaze.Question.QuestionType;
+import TriviaMaze.Question.TrueFalseType;
 
 import java.util.Random;
 
 public class GenerateQuestion
 {
+    private static Database database = new Database();
     private Random myRandom;
 
     public GenerateQuestion()
@@ -26,6 +28,10 @@ public class GenerateQuestion
     public Question createQuestion(final String theType) {
         QuestionType type;
         Question question;
-        return null;
+        switch (theType)
+        {
+            case "tf":
+                type = new TrueFalseType();
+        }
     }
 }

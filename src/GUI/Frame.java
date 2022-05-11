@@ -10,6 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
+import java.sql.SQLException;
 
 public class Frame extends JFrame
 {
@@ -73,8 +74,7 @@ public class Frame extends JFrame
 
 
 
-    public Frame() throws IOException
-    {
+    public Frame() throws IOException, SQLException {
 
         this.setTitle("Maze Game");
         final ImageIcon uwImage = new ImageIcon(new ImageIcon(getClass().getResource("/GUIPictures/w.gif"))
@@ -406,7 +406,7 @@ public class Frame extends JFrame
         {
             try {
                 new Frame();
-            } catch (IOException e) {
+            } catch (IOException | SQLException e) {
                 e.printStackTrace();
             }
         });

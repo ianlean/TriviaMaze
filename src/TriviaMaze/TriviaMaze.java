@@ -1,33 +1,23 @@
 package TriviaMaze;
 
+import java.sql.*;
 import java.util.Scanner;
+import org.sqlite.SQLiteDataSource;
 
 public class TriviaMaze {
 
-    private Room[][] myMaze;
+    private final Room[][] myMaze;
     private int myX;
     private int myY;
     private Room characterSpot;
-    public TriviaMaze(final int theSize) { // for developing purposes I am auto-filling rooms
+    private Connection conn;
+
+    private final SQLiteDataSource ds = new SQLiteDataSource();
+
+    public TriviaMaze(final int theSize) throws SQLException { // for developing purposes I am auto-filling rooms
         myMaze = new Room[theSize][theSize];
         generateMaze();
-
     }
-
-//    private void initializeMaze() {
-//        // we want the far left corner to be where the player starts
-//        characterSpot = myMaze[0][0] = new Room("What is 1+1?", "2", true);
-//        myMaze[0][0].unlock();
-//        myX = 0;
-//        myY = 0;
-//        for (int row = 0; row < myMaze.length; row++) { //we want to fill the maze with rooms to go in
-//            for (int col = 0; col < myMaze[row].length; col++) {
-//                if (row == 0 && col == 0) {continue;}
-//                myMaze[row][col] = new Room("What is 1+1?", "2", false);
-//            }
-//        }
-//    }
-
     private void generateMaze()
     {
         for (int row = 0; row < this.myMaze.length; row++)
@@ -91,7 +81,7 @@ public class TriviaMaze {
             return true;
         }
         theRoom.seal();
-        System.out.println("WRONG! YOU STUPID IDIOT! This door is now sealed for good.");
+        System.out.println("Sealed");
         return false;
     }
 
@@ -132,12 +122,5 @@ public class TriviaMaze {
     public Cell.RoomStatus getStatus(int theX, int theY)
     {
         return this.myMaze[theX][theY].getMyStatus();
-//        if (theX >= 0 && theX < this.myMaze.length
-//                && this.myY >= 0 && this.myY < this.myMaze[theX].length)
-//        {
-//            return this.myMaze[theX][theY].getMyStatus();
-//        }
-//        else
-//            return Cell.RoomStatus.SEALED;
     }
 }

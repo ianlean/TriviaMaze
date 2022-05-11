@@ -1,5 +1,8 @@
 package TriviaMaze;
 
+import java.sql.Connection;
+import java.sql.SQLException;
+//import org.sqlite.SQLiteDataSource;
 public class Room extends Cell
 {
     private final String myQuestion;

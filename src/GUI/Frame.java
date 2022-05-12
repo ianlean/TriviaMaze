@@ -3,6 +3,7 @@ package GUI;
 
 
 import TriviaMaze.*;
+import TriviaMaze.Question.Question;
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,9 +19,19 @@ public class Frame extends JFrame
     private final static int HEIGHT = 2000;
 
     private final static int MAZE_SIZE = 8;
-    private final TriviaMaze myMaze = new TriviaMaze(MAZE_SIZE);
+//    private final TriviaMaze myMaze = new TriviaMaze(MAZE_SIZE);
 
-    private final Controller myController = new Controller(myMaze);
+    TextPanel textBoxes;
+
+    static final Controller myController;
+
+    static {
+        try {
+            myController = new Controller(MAZE_SIZE);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     // private JPanel myPanel =new JPanel();
 
@@ -51,7 +62,15 @@ public class Frame extends JFrame
     /** the instruction menu item*/
     private JMenuItem myInstructionMenuItem;
 
-    private Maze mazeView = new Maze(this.myMaze);
+    static Maze mazeView;
+
+    static {
+        try {
+            mazeView = new Maze(myController.getGameMaze());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     /** volume slider minimum */
     private static final int VOLUME_MINIMUM=0;
@@ -73,7 +92,7 @@ public class Frame extends JFrame
     private final JButton Yellow=new JButton("Yellow");
     private final JButton Green=new JButton("Green");
 
-
+    static String myCur;
 
     public Frame() throws IOException, SQLException {
 
@@ -98,9 +117,9 @@ public class Frame extends JFrame
         JPanel buttonPanel = createButtonPanel(myController);
         this.add(buttonPanel);
         buttonPanel.setBounds(1000,0, 300, 100);
-        JPanel textPanel = createTextPanel();
-        this.add(textPanel);
-        textPanel.setBounds(1000, 100, 800, 400);
+        textBoxes = new TextPanel();
+        this.add(textBoxes);
+        textBoxes.setBounds(500, 500, 800, 400);
         this.setLocationRelativeTo(null);
         this.setVisible(true);
         this.pack();
@@ -298,8 +317,6 @@ public class Frame extends JFrame
 
     }
 
-
-
     /**
      * a method to create about menu item
      * this menu item shows the information about this maze game
@@ -355,27 +372,43 @@ public class Frame extends JFrame
         styleButtons(left);
         styleButtons(right);
         up.addActionListener(e -> {
-            if (theController.askDirection("n")) {
-                mazeView.decrementY();
-                mazeView.repaint();
+            Question q = theController.findQuestion("n");
+            if (q != null) {
+                textBoxes.addText(q.getQuestion());
+                textBoxes.currentAnswer = q.getCorrectAnswer();
+                myCur = "n";
+            } else {
+                textBoxes.addText("This door is sealed jackass");
             }
         });
         down.addActionListener(e -> {
-            if (theController.askDirection("s")) {
-                mazeView.incrementY();
-                mazeView.repaint();
+            Question q = theController.findQuestion("s");
+            if (q != null) {
+                textBoxes.addText(q.getQuestion());
+                textBoxes.currentAnswer = q.getCorrectAnswer();
+                myCur = "s";
+            } else {
+                textBoxes.addText("This door is sealed jackass");
             }
         });
         right.addActionListener(e -> {
-            if (theController.askDirection("e")) {
-                mazeView.incrementX();
-                mazeView.repaint();
+            Question q = theController.findQuestion("e");
+            if (q != null) {
+                textBoxes.addText(q.getQuestion());
+                textBoxes.currentAnswer = q.getCorrectAnswer();
+                myCur = "e";
+            } else {
+                textBoxes.addText("This door is sealed jackass");
             }
         });
         left.addActionListener(e -> {
-            if (theController.askDirection("w")) {
-                mazeView.decrementX();
-                mazeView.repaint();
+            Question q = theController.findQuestion("w");
+            if (q != null) {
+            textBoxes.addText(q.getQuestion());
+            textBoxes.currentAnswer = q.getCorrectAnswer();
+            myCur = "w";
+            } else {
+                textBoxes.addText("This door is sealed jackass");
             }
         });
         buttonPanel.add(up);
@@ -391,17 +424,6 @@ public class Frame extends JFrame
         theButton.setForeground(Color.BLACK);
         theButton.setFont(new Font("Tahoma", Font.BOLD, 12));
     }
-
-    private static JPanel createTextPanel() {
-        JPanel textPanel = new JPanel();
-        JTextField outputText = new JTextField(50);
-        JTextField inputText = new JTextField(50);
-        outputText.setEnabled(false);
-        inputText.setEnabled(true);
-        textPanel.setSize(200, 200);
-        return textPanel;
-    }
-
     public static void main(String[] args) {
         EventQueue.invokeLater(() ->
         {

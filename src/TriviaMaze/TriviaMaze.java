@@ -2,6 +2,8 @@ package TriviaMaze;
 
 import java.sql.*;
 import java.util.Scanner;
+
+import TriviaMaze.Question.Question;
 import org.sqlite.SQLiteDataSource;
 
 public class TriviaMaze {
@@ -45,52 +47,20 @@ public class TriviaMaze {
         myMaze[0][0].setStatus(Cell.RoomStatus.UNLOCKED);
     }
 
-    public boolean move(final int theRow, final int theCol) {
-        // we want to make sure this position can be moved to
-        if (validMove(theRow, theCol) &&
-                myMaze[theRow][theCol].getMyStatus() != Cell.RoomStatus.SEALED) {
-            return checkQuestion(theRow, theCol); // if its valid check its question
-        } else { // let the caller know it is not valid
-            return false;
+    public void changeDirection(final int theRow, final int theCol) {
+        if (validMove(theRow, theCol)) {
+            characterSpot.setHasPlayer(false);
+            characterSpot = myMaze[theRow][theCol]; //this method means we have confirmed
+            myX = theCol;                           // the direction we want to move in
+            myY = theRow;
+            characterSpot.setHasPlayer(true);
+            myMaze[myY][myX].setStatus(Cell.RoomStatus.UNLOCKED);
         }
     }
-
-    public boolean checkQuestion(final int theRow, final int theCol) {
-        boolean answeredCorrect; //we want to ask a question if the room is locked,
-                                 //if its unlocked or the question is answered, move the player
-        if (myMaze[theRow][theCol].getMyStatus() ==
-            Cell.RoomStatus.UNLOCKED || (answerQuestion(myMaze[theRow][theCol]))) {
-            changeDirection(theRow, theCol);
-            return true;
-        } else {  // the question was answered wrong
-            return false;
-        }
-    }
-    private void changeDirection(final int theRow, final int theCol) {
-        characterSpot.setHasPlayer(false);
-        characterSpot = myMaze[theRow][theCol]; //this method means we have confirmed
-        myX = theCol;                           // the direction we want to move in
-        myY = theRow;
-        characterSpot.setHasPlayer(true);
-    }
-
-    private boolean answerQuestion(final Room theRoom) {
-        Scanner scan = new Scanner(System.in); //we want to make sure the user answers
-                                                //answers the question correctly
-        System.out.println(theRoom.getMyQuestion().getQuestion());
-        if(scan.next().equalsIgnoreCase(theRoom.getMyQuestion().getCorrectAnswer())) {
-            theRoom.unlock();
-            System.out.println("Correct!");
-            return true;
-        }
-        theRoom.seal();
-        System.out.println("Sealed");
-        return false;
-    }
-
-    private boolean validMove(final int theRow, final int theCol) {
+    public boolean validMove(final int theRow, final int theCol) {
         return theRow >= 0 && theRow < myMaze.length //checking if this is in bounds
-                && theCol >= 0 && theCol < myMaze[theRow].length;
+                && theCol >= 0 && theCol < myMaze[theRow].length
+                && myMaze[theRow][theCol].getMyStatus() != Cell.RoomStatus.SEALED;
     }
 
     public String toString() {
@@ -122,8 +92,28 @@ public class TriviaMaze {
         return this.myMaze.length;
     }
 
-    public Cell.RoomStatus getStatus(int theX, int theY)
+    public Cell.RoomStatus getStatus(int theRow, int theCol)
     {
-        return this.myMaze[theX][theY].getMyStatus();
+        return this.myMaze[theRow][theCol].getMyStatus();
+    }
+
+    public Question getQuestion(int theRow, int theCol) {
+        if (validMove(theRow, theCol)) {
+            return myMaze[theRow][theCol].getMyQuestion();
+        } else {
+            return null;
+        }
+    }
+
+    public Room getRoom(int theRow, int theCol) {
+        if (validMove(theRow, theCol)) {
+            return myMaze[theRow][theCol];
+        } else {
+            return null;
+        }
+    }
+
+    public Room getCharacterSpot() {
+        return characterSpot;
     }
 }

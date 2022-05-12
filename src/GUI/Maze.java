@@ -45,11 +45,11 @@ public class Maze extends JPanel
             {
                 Rectangle2D rectangle =
                         new Rectangle2D.Double(i * 55, j * 55, 55, 55);
-                if (this.myMaze.getStatus(i, j) == Cell.RoomStatus.UNLOCKED)
+                if (this.myMaze.getStatus(j, i) == Cell.RoomStatus.UNLOCKED)
                 {
                     graphics2D.setColor(Color.WHITE);
                 }
-                else if (this.myMaze.getStatus(i, j) == Cell.RoomStatus.SEALED)
+                else if (this.myMaze.getStatus(j, i) == Cell.RoomStatus.SEALED)
                 {
                     graphics2D.setColor(Color.BLACK);
                 }

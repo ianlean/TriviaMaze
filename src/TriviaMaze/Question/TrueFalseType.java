@@ -14,7 +14,10 @@ public class TrueFalseType extends Question
 
     public String getQuestion()
     {
+
         return this.myQuestionBody;
+
+
     }
     public String getCorrectAnswer() {
         return this.myCorrectAnswer;

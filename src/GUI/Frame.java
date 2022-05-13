@@ -10,7 +10,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.io.IOException;
+import java.io.*;
+import java.lang.Character;
 import java.sql.SQLException;
 
 public class Frame extends JFrame
@@ -195,13 +196,31 @@ public class Frame extends JFrame
         mySaveMenuItem.setMnemonic(KeyEvent.VK_S);
         mySaveMenuItem.setEnabled(true);
 
-        //save mouse listener, haven't done
+
         mySaveMenuItem.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) {
+            public void actionPerformed(ActionEvent event) {
+                FileDialog fd = new FileDialog(new JFrame(), "Save Game", FileDialog.SAVE);
+                fd.setVisible(true);
+                if (fd.getFile() == null) return;
+                String fileName = fd.getFile();
+                File file = new File(fd.getDirectory(), fileName);
+                file.setWritable(true);
+                try {
+                    ObjectOutputStream out = new ObjectOutputStream(
+                            new BufferedOutputStream(new FileOutputStream(file)));
+                    out.writeObject(mazeView.getCharacter());
+                    //out.writeObject(TriviaMaze.getCharacterSpot());
+                    //out.writeObject(mazeView.getCharacterSpot());
+                    out.close();
 
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    System.out.println(e);
+                    return;
+                }
             }
-        });
+            });
     }
 
     /**
@@ -213,10 +232,27 @@ public class Frame extends JFrame
         myLoadMenuItem.setMnemonic(KeyEvent.VK_L);
         myLoadMenuItem.setEnabled(true);
 
-        //load mouse listener, haven't done
         myLoadMenuItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                FileDialog fd = new FileDialog(new JFrame(), "Load Game", FileDialog.LOAD);
+                fd.setVisible(true);
+                if (fd.getFile() == null) return;
+                String fileName = fd.getFile();
+                File file = new File(fd.getDirectory(), fileName);
+                try{
+                    ObjectInputStream in=new ObjectInputStream
+                            (new BufferedInputStream(new FileInputStream(file)));
+//                    Room characterSpot=(Room) in.readObject();
+//                    TriviaMaze.setCharacterSpot(characterSpot);
+                    Character character=(Character) in.readObject();
+                       mazeView.setCharacter(character);
+//                    Room characterSpot=(Room) in.readObject();
+//                    mazeView.setCharacterSpot(characterSpot);
+                } catch (ClassNotFoundException | IOException ex) {
+                    ex.printStackTrace();
+                    return;
+                }
 
             }
         });
@@ -451,4 +487,3 @@ public class Frame extends JFrame
         });
     }
 }
-

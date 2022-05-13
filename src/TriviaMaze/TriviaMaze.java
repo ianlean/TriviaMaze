@@ -12,7 +12,7 @@ public class TriviaMaze {
     private final Room[][] myMaze;
     private int myX;
     private int myY;
-    private Room characterSpot;
+    private static Room characterSpot;
     private Connection conn;
 
     private final SQLiteDataSource ds = new SQLiteDataSource();
@@ -105,11 +105,16 @@ public class TriviaMaze {
         }
     }
 
-    public Room getRoom(int theRow, int theCol) {
+    public  Room getRoom(int theRow, int theCol) {
             return myMaze[theRow][theCol];
     }
 
-    public Room getCharacterSpot() {
+    public static Room getCharacterSpot() {
         return characterSpot;
     }
+    public static void setCharacterSpot(Room theCharactetSpot){
+        characterSpot=theCharactetSpot;
+
+    }
+
 }

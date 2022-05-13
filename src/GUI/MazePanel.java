@@ -8,10 +8,9 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-import TriviaMaze.Cell;
 import TriviaMaze.TriviaMaze;
 
-public class Maze extends JPanel
+public class MazePanel extends JPanel
 {
     private static final int DEFAULT_WIDTH = 500;
     private static final int DEFAULT_HEIGHT = 500;
@@ -24,16 +23,16 @@ public class Maze extends JPanel
     private int myXCoord = 0;
     private int myYCoord = 0;
 
-    Maze(TriviaMaze theMaze) throws IOException
+    MazePanel(TriviaMaze theMaze) throws IOException
     {
         this.myMaze = theMaze;
         this.setSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);
         this.myIcon = ImageIO.read(new File("src/GUIPictures/Icon.png"));
         this.myGreenFlag = ImageIO.read(new File("src/GUIPictures/GreenFlag.png"));
         this.myIconTexture = new TexturePaint
-                (this.myIcon, new Rectangle(0, 0, 50, 50));
+                (this.myIcon, new Rectangle(0, 0, 55, 55));
         this.myGreenFlagTexture = new TexturePaint
-                (this.myGreenFlag, new Rectangle(0, 0, 50, 50));
+                (this.myGreenFlag, new Rectangle(0, 0, 55, 55));
     }
     private void drawMaze(Graphics theG)
     {
@@ -58,17 +57,17 @@ public class Maze extends JPanel
                 graphics2D.fill(rectangle);
                 graphics2D.setPaint(Color.ORANGE);
                 graphics2D.draw(rectangle);
-                Image resizeFlag = this.myGreenFlag.getScaledInstance(50, 50, Image.SCALE_DEFAULT);
-                graphics2D.drawImage(resizeFlag, 500, 500, null);
-                Image resizeIcon = this.myIcon.getScaledInstance(50, 50, Image.SCALE_DEFAULT);
+                Image resizeFlag = this.myGreenFlag.getScaledInstance(55, 55, Image.SCALE_DEFAULT);
+                graphics2D.drawImage(resizeFlag, 550, 550, null);
+                Image resizeIcon = this.myIcon.getScaledInstance(55, 55, Image.SCALE_DEFAULT);
                 graphics2D.drawImage(resizeIcon, myXCoord, myYCoord, null);
             }
         }
 //        graphics2D.setPaint(this.myIconTexture);
 //        graphics2D.setPaint(this.myGreenFlagTexture);
         graphics2D.fillRect(50, 50, 50, 50);
-        graphics2D.fillRect(50 * (this.myMaze.row() - 1),
-                50 * (this.myMaze.column() - 1), 55, 55);
+        graphics2D.fillRect(50 * (this.myMaze.row()),
+                50 * (this.myMaze.column()), 55, 55);
     }
     public void paintComponent(Graphics theGraphics)
     {

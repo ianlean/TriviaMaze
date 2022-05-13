@@ -2,40 +2,76 @@ package TriviaMaze;
 
 import TriviaMaze.Question.Question;
 
-import java.sql.Connection;
-import java.sql.SQLException;
-//import org.sqlite.SQLiteDataSource;
-public class Room extends Cell
+public class Room
 {
-    private final Question myQuestion;
+    public enum RoomStatus
+    {
+        UNLOCKED, LOCKED, SEALED
+    }
+    private RoomStatus status;
+    private int x, y;
+    private Question myQuestion;
 
-    private final String myAnswer;
-    private boolean hasPlayer;
+    // private final String myAnswer;
+    // private boolean hasPlayer;
 
     private RoomStatus myStatus;
-    public Room(Question theQuestion, String theAnswer , boolean thePlayer) {
-        myQuestion = theQuestion;
-        myAnswer = theAnswer;
-        hasPlayer = thePlayer;
-        myStatus = RoomStatus.LOCKED;
+    public Room()
+    {
+        setStatus(RoomStatus.SEALED);
+    }
+//    public Room(Question theQuestion, String theAnswer , boolean thePlayer) {
+//        myQuestion = theQuestion;
+//        myAnswer = theAnswer;
+//        hasPlayer = thePlayer;
+//        myStatus = RoomStatus.LOCKED;
+//    }
+    public Room(int x, int y)
+    {
+        this();
+        this.setX(x);
+        this.setY(y);
+    }
+    public Room(Question question, int x, int y)
+    {
+        this(x, y);
+        this.myQuestion = question;
     }
 
-    public Room() {
-        // This is constructor is for if we want
-        // a room to be a wall
-        myStatus = RoomStatus.SEALED;
-        hasPlayer = false;
-        myQuestion = null;
-        myAnswer = null;
+//    public Room() {
+//        // This is constructor is for if we want
+//        // a room to be a wall
+//        myStatus = RoomStatus.SEALED;
+//        hasPlayer = false;
+//        myQuestion = null;
+//        myAnswer = null;
+//    }
+    public void setX(int x)
+    {
+        this.x = x;
+    }
+    public void setY(int y)
+    {
+        this.y = y;
+    }
+
+    public int getX()
+    {
+        return x;
+    }
+
+    public int getY()
+    {
+        return y;
     }
 
     public Question getMyQuestion() {
         return myQuestion;
     }
 
-    public boolean getHasPlayer() {
-        return hasPlayer;
-    }
+    // public boolean getHasPlayer() {
+//        return hasPlayer;
+//    }
 
     public void setHasPlayer(final boolean thePlayer) {
         this.hasPlayer = thePlayer;

@@ -24,12 +24,11 @@ public class GenerateQuestion
     }
 
     public Question createQuestion(final String theType) {
-        Question question = null;
-        switch (theType)
-        {
-            case "tf":
-                question = database.getTrueFalseQuestion();
-        }
+        Question question = switch (theType) {
+            case "tf" -> database.getTrueFalseQuestion();
+            case "multi" -> database.getMultipleChoice();
+            default -> null;
+        };
         return question;
     }
 }

@@ -51,7 +51,7 @@ public class Frame extends JFrame
     /** the instruction menu item*/
     private JMenuItem myInstructionMenuItem;
 
-    private Maze mazeView = new Maze(this.myMaze);
+    private MazePanel mazeView = new MazePanel(this.myMaze);
 
     /** volume slider minimum */
     private static final int VOLUME_MINIMUM=0;

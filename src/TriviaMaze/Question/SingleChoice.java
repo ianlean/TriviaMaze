@@ -1,6 +1,6 @@
 package TriviaMaze.Question;
 
-public class SingleChoice {
+public class SingleChoice implements QuestionType{
     public String getQuestion() {
         return null;
     }

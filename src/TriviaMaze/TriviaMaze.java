@@ -106,11 +106,7 @@ public class TriviaMaze {
     }
 
     public Room getRoom(int theRow, int theCol) {
-        if (validMove(theRow, theCol)) {
             return myMaze[theRow][theCol];
-        } else {
-            return null;
-        }
     }
 
     public Room getCharacterSpot() {

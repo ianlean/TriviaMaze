@@ -372,43 +372,59 @@ public class Frame extends JFrame
         styleButtons(left);
         styleButtons(right);
         up.addActionListener(e -> {
-            Question q = theController.findQuestion("n");
-            if (q != null) {
-                textBoxes.addText(q.getQuestion());
-                textBoxes.currentAnswer = q.getCorrectAnswer();
+            Room r = theController.findRoom("n");
+            if (r.getMyQuestion() != null && r.getMyStatus() == Cell.RoomStatus.LOCKED) {
+                textBoxes.addText(r.getMyQuestion().getQuestion());
+                textBoxes.currentAnswer = r.getMyQuestion().getCorrectAnswer();
                 myCur = "n";
+            } else if (r.getMyStatus() == Cell.RoomStatus.UNLOCKED) {
+                myController.askDirection("n");
+                Frame.mazeView.decrementY();
+                Frame.mazeView.repaint();
             } else {
-                textBoxes.addText("This door is sealed jackass");
+                textBoxes.addText("This door is sealed.");
             }
         });
         down.addActionListener(e -> {
-            Question q = theController.findQuestion("s");
-            if (q != null) {
-                textBoxes.addText(q.getQuestion());
-                textBoxes.currentAnswer = q.getCorrectAnswer();
+            Room r = theController.findRoom("s");
+            if (r.getMyQuestion() != null && r.getMyStatus() == Cell.RoomStatus.LOCKED) {
+                textBoxes.addText(r.getMyQuestion().getQuestion());
+                textBoxes.currentAnswer = r.getMyQuestion().getCorrectAnswer();
                 myCur = "s";
+            } else if (r.getMyStatus() == Cell.RoomStatus.UNLOCKED) {
+                myController.askDirection("s");
+                Frame.mazeView.incrementY();
+                Frame.mazeView.repaint();
             } else {
-                textBoxes.addText("This door is sealed jackass");
+                textBoxes.addText("This door is sealed.");
             }
         });
         right.addActionListener(e -> {
-            Question q = theController.findQuestion("e");
-            if (q != null) {
-                textBoxes.addText(q.getQuestion());
-                textBoxes.currentAnswer = q.getCorrectAnswer();
+            Room r = theController.findRoom("e");
+            if (r.getMyQuestion() != null && r.getMyStatus() == Cell.RoomStatus.LOCKED) {
+                textBoxes.addText(r.getMyQuestion().getQuestion());
+                textBoxes.currentAnswer = r.getMyQuestion().getCorrectAnswer();
                 myCur = "e";
+            } else if (r.getMyStatus() == Cell.RoomStatus.UNLOCKED) {
+                myController.askDirection("e");
+                Frame.mazeView.incrementX();
+                Frame.mazeView.repaint();
             } else {
-                textBoxes.addText("This door is sealed jackass");
+                textBoxes.addText("This door is sealed.");
             }
         });
         left.addActionListener(e -> {
-            Question q = theController.findQuestion("w");
-            if (q != null) {
-            textBoxes.addText(q.getQuestion());
-            textBoxes.currentAnswer = q.getCorrectAnswer();
-            myCur = "w";
+            Room r = theController.findRoom("w");
+            if (r.getMyQuestion() != null && r.getMyStatus() == Cell.RoomStatus.LOCKED) {
+                textBoxes.addText(r.getMyQuestion().getQuestion());
+                textBoxes.currentAnswer = r.getMyQuestion().getCorrectAnswer();
+                myCur = "w";
+            } else if (r.getMyStatus() == Cell.RoomStatus.UNLOCKED) {
+                myController.askDirection("w");
+                Frame.mazeView.decrementX();
+                Frame.mazeView.repaint();
             } else {
-                textBoxes.addText("This door is sealed jackass");
+                textBoxes.addText("This door is sealed.");
             }
         });
         buttonPanel.add(up);

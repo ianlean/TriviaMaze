@@ -1,14 +1,19 @@
 package TriviaMaze.Question;
 
-public class ShortAnswer {
+public class ShortAnswer extends  Question{
 
+
+    public ShortAnswer(String theBody, String theAnswer)
+    {
+        super(theBody, theAnswer);
+    }
     public String getQuestion() {
-        return null;
+        return this.myQuestionBody;
     }
 
 
     public String getCorrectAnswer() {
-        return null;
+        return this.myCorrectAnswer;
     }
 
     public String[] getOtherAnswers() {

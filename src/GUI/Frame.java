@@ -196,7 +196,7 @@ public class Frame extends JFrame
         mySaveMenuItem.setMnemonic(KeyEvent.VK_S);
         mySaveMenuItem.setEnabled(true);
 
-
+        // haven't finished
         mySaveMenuItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {

@@ -41,23 +41,24 @@ public class TextPanel extends JPanel {
         theButton.addActionListener(e -> {
             if (myInputText.getText().equalsIgnoreCase(currentAnswer)) {
                 if (Frame.myCur.equals("n")) {
-                    addText("Correct");
+                    addText("Correct!");
                     myController.askDirection("n");
                     Frame.mazeView.decrementY();
                 } else if (Frame.myCur.equals("e")) {
-                    addText("Correct");
+                    addText("Correct!");
                     myController.askDirection("e");
                     Frame.mazeView.incrementX();
                 } else if (Frame.myCur.equals("s")) {
-                    addText("Correct");
+                    addText("Correct!");
                     myController.askDirection("s");
                     Frame.mazeView.incrementY();
                 } else if (Frame.myCur.equals("w")) {
-                    addText("Correct");
+                    addText("Correct!");
                     myController.askDirection("w");
                     Frame.mazeView.decrementX();
                 }
             } else {
+                addText("Wrong! This door is locked!");
                 Frame.myController.findRoom(myCur).setStatus(Cell.RoomStatus.SEALED);
             }
             Frame.mazeView.repaint();

@@ -3,6 +3,7 @@ import java.sql.*;
 import java.util.HashMap;
 
 import TriviaMaze.Question.Question;
+import TriviaMaze.Question.ShortAnswer;
 import TriviaMaze.Question.TrueFalseType;
 import org.sqlite.SQLiteDataSource;
 
@@ -75,8 +76,28 @@ public class Database
 
         return new TrueFalseType(qBody, answer);
     }
+    public Question getShortAnswerQuestion()
+    {
+        Question question;
+        String qBody = null;
+        String answer = null;
+        try
+        {
+            stmt = this.conn.createStatement();
+            rs = this.stmt.executeQuery("SELECT * FROM shortanswer ORDER BY RANDOM() LIMIT 1;");
+            qBody = rs.getString("question");
+            answer = rs.getString("correct");
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+
+        return new ShortAnswer(qBody, answer);
+    }
     public int getMultipleChoice()
     {
+
         return 0;
     }
 

@@ -16,12 +16,12 @@ public class GenerateQuestion
     }
     public Question generateRandomQuestion()
     {
-        return createQuestion("tf");
-//        return switch (myRandom.nextInt(2)) {
-//            case 0 -> createQuestion("tf");
-//            case 1 -> createQuestion("multi");
-//            default -> null;
-//        };
+       // return createQuestion("tf");
+        return switch (myRandom.nextInt(2)) {
+            case 0 -> createQuestion("tf");
+            case 1 -> createQuestion("sa");
+            default -> null;
+       };
     }
 
     public Question createQuestion(final String theType) {
@@ -30,6 +30,10 @@ public class GenerateQuestion
         {
             case "tf":
                 question = database.getTrueFalseQuestion();
+                break;
+            case "sa":
+                question = database.getShortAnswerQuestion();
+                break;
         }
         return question;
     }

@@ -1,9 +1,9 @@
 package GUI;
 
 
-
-import TriviaMaze.*;
-import TriviaMaze.Question.Question;
+import TriviaMaze.Cell;
+import TriviaMaze.Controller;
+import TriviaMaze.Room;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,8 +11,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.io.*;
-import java.lang.Character;
 import java.sql.SQLException;
+import java.util.Objects;
 
 public class Frame extends JFrame
 {
@@ -36,9 +36,6 @@ public class Frame extends JFrame
 
     // private JPanel myPanel =new JPanel();
 
-    /** the menu bar for the GUI */
-    private final JMenuBar myMenuBar ;
-
     /** the new game menu item */
     private JMenuItem myNewMenuItem;
 
@@ -50,12 +47,6 @@ public class Frame extends JFrame
 
     /** the exit menu item */
     private JMenuItem myExitMenuItem;
-
-    /** the volume menu item*/
-    private JMenuItem myVolumeMenuItem;
-
-    /** the theme menu item*/
-    private JMenuItem myThemeMenuItem;
 
     /** the about menu item*/
     private JMenuItem myAboutMenuItem;
@@ -98,14 +89,14 @@ public class Frame extends JFrame
     public Frame() throws IOException, SQLException {
 
         this.setTitle("Maze Game");
-        final ImageIcon uwImage = new ImageIcon(new ImageIcon(getClass().getResource("/GUIPictures/w.gif"))
+        final ImageIcon uwImage = new ImageIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource("/GUIPictures/w.gif")))
                 .getImage().getScaledInstance(60,40,Image.SCALE_DEFAULT));
         this.setIconImage(uwImage.getImage());
         this.setSize(WIDTH, HEIGHT);
         this.getContentPane().setLayout(null);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         //creat menu bar
-        myMenuBar=createMenuBar();
+        JMenuBar myMenuBar = createMenuBar();
         this.add(myMenuBar);
         this.setJMenuBar(myMenuBar);
 
@@ -115,7 +106,7 @@ public class Frame extends JFrame
         roomView.setLocation(0, 0);
         this.add(mazeView);
         mazeView.setLocation(500, 0);
-        JPanel buttonPanel = createButtonPanel(myController);
+        JPanel buttonPanel = createButtonPanel();
         this.add(buttonPanel);
         buttonPanel.setBounds(1000,0, 300, 100);
         textBoxes = new TextPanel();
@@ -178,12 +169,7 @@ public class Frame extends JFrame
         myNewMenuItem.setEnabled(true);
 
         //new game mouse listener, haven't done
-        myNewMenuItem.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-            }
-        });
+        myNewMenuItem.addActionListener(e -> {});
     }
 
     /**
@@ -216,8 +202,6 @@ public class Frame extends JFrame
 
                 } catch (IOException e) {
                     e.printStackTrace();
-                    System.out.println(e);
-                    return;
                 }
             }
             });
@@ -251,7 +235,6 @@ public class Frame extends JFrame
 //                    mazeView.setCharacterSpot(characterSpot);
                 } catch (ClassNotFoundException | IOException ex) {
                     ex.printStackTrace();
-                    return;
                 }
 
             }
@@ -282,8 +265,7 @@ public class Frame extends JFrame
         myOptionsMenu.setMnemonic(KeyEvent.VK_O);
 
 
-
-        myVolumeMenuItem = new JMenuItem("Volume");
+        JMenuItem myVolumeMenuItem = new JMenuItem("Volume");
         myVolumeMenuItem.setMnemonic(KeyEvent.VK_V);
         myOptionsMenu.add(myVolumeMenuItem);
 
@@ -307,7 +289,7 @@ public class Frame extends JFrame
         });
 
         // theme menu item to change the background
-        myThemeMenuItem = new JMenuItem("Theme");
+        JMenuItem myThemeMenuItem = new JMenuItem("Theme");
         myThemeMenuItem.setMnemonic(KeyEvent.VK_T);
         myOptionsMenu.add(myThemeMenuItem);
 
@@ -364,11 +346,14 @@ public class Frame extends JFrame
         myAboutMenuItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                final ImageIcon uwImage = new ImageIcon(new ImageIcon(getClass().getResource("/GUIPictures/w.gif"))
+                final ImageIcon uwImage = new ImageIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource("/GUIPictures/w.gif")))
                         .getImage().getScaledInstance(60,40,Image.SCALE_DEFAULT));
 
-                JOptionPane.showMessageDialog(null,"<Trivia Maze Game> by \n" +
-                        "Ian McLean \nKevin Yang \nQinyu Tao","About",JOptionPane.INFORMATION_MESSAGE,uwImage);
+                JOptionPane.showMessageDialog(null, """
+                        <Trivia Maze Game> by\s
+                        Ian McLean\s
+                        Kevin Yang\s
+                        Qinyu Tao""","About",JOptionPane.INFORMATION_MESSAGE,uwImage);
 
             }
         });
@@ -387,7 +372,7 @@ public class Frame extends JFrame
         myInstructionMenuItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                final ImageIcon uwImage = new ImageIcon(new ImageIcon(getClass().getResource("/GUIPictures/w.gif"))
+                final ImageIcon uwImage = new ImageIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource("/GUIPictures/w.gif")))
                         .getImage().getScaledInstance(60,40,Image.SCALE_DEFAULT));
                 JOptionPane.showMessageDialog(null,"<Game Instruction> \n ",
                         "Instruction",JOptionPane.INFORMATION_MESSAGE,uwImage);
@@ -397,7 +382,7 @@ public class Frame extends JFrame
 
     }
 
-    private JPanel createButtonPanel(final Controller theController) {
+    private JPanel createButtonPanel() {
         JPanel buttonPanel = new JPanel();
         JButton up = new JButton("Up");
         JButton down = new JButton("Down");
@@ -408,7 +393,7 @@ public class Frame extends JFrame
         styleButtons(left);
         styleButtons(right);
         up.addActionListener(e -> {
-            Room r = theController.findRoom("n");
+            Room r = Frame.myController.findRoom("n");
             if (r.getMyQuestion() != null && r.getMyStatus() == Cell.RoomStatus.LOCKED) {
                 textBoxes.addText(r.getMyQuestion().getQuestion());
                 textBoxes.currentAnswer = r.getMyQuestion().getCorrectAnswer();
@@ -422,7 +407,7 @@ public class Frame extends JFrame
             }
         });
         down.addActionListener(e -> {
-            Room r = theController.findRoom("s");
+            Room r = Frame.myController.findRoom("s");
             if (r.getMyQuestion() != null && r.getMyStatus() == Cell.RoomStatus.LOCKED) {
                 textBoxes.addText(r.getMyQuestion().getQuestion());
                 textBoxes.currentAnswer = r.getMyQuestion().getCorrectAnswer();
@@ -436,7 +421,7 @@ public class Frame extends JFrame
             }
         });
         right.addActionListener(e -> {
-            Room r = theController.findRoom("e");
+            Room r = Frame.myController.findRoom("e");
             if (r.getMyQuestion() != null && r.getMyStatus() == Cell.RoomStatus.LOCKED) {
                 textBoxes.addText(r.getMyQuestion().getQuestion());
                 textBoxes.currentAnswer = r.getMyQuestion().getCorrectAnswer();
@@ -450,7 +435,7 @@ public class Frame extends JFrame
             }
         });
         left.addActionListener(e -> {
-            Room r = theController.findRoom("w");
+            Room r = Frame.myController.findRoom("w");
             if (r.getMyQuestion() != null && r.getMyStatus() == Cell.RoomStatus.LOCKED) {
                 textBoxes.addText(r.getMyQuestion().getQuestion());
                 textBoxes.currentAnswer = r.getMyQuestion().getCorrectAnswer();

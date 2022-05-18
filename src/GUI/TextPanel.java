@@ -11,14 +11,14 @@ import static GUI.Frame.myCur;
 
 public class TextPanel extends JPanel {
 
-    private JTextField myOutputText;
-    private JTextField myInputText;
+    private final JTextField myOutputText;
+    private final JTextField myInputText;
     String currentAnswer;
-    private JButton myButton;
+
     public TextPanel() {
         this.myOutputText = new JTextField(50);
         this.myInputText = new JTextField(50);
-        myButton = new JButton("Enter");
+        JButton myButton = new JButton("Enter");
         this.add(myOutputText);
         this.add(myInputText);
         this.add(myButton);
@@ -40,22 +40,27 @@ public class TextPanel extends JPanel {
     public void makeButtonListener(final JButton theButton) {
         theButton.addActionListener(e -> {
             if (myInputText.getText().equalsIgnoreCase(currentAnswer)) {
-                if (Frame.myCur.equals("n")) {
-                    addText("Correct!");
-                    myController.askDirection("n");
-                    Frame.mazeView.decrementY();
-                } else if (Frame.myCur.equals("e")) {
-                    addText("Correct!");
-                    myController.askDirection("e");
-                    Frame.mazeView.incrementX();
-                } else if (Frame.myCur.equals("s")) {
-                    addText("Correct!");
-                    myController.askDirection("s");
-                    Frame.mazeView.incrementY();
-                } else if (Frame.myCur.equals("w")) {
-                    addText("Correct!");
-                    myController.askDirection("w");
-                    Frame.mazeView.decrementX();
+                switch (Frame.myCur) {
+                    case "n" -> {
+                        addText("Correct!");
+                        myController.askDirection("n");
+                        Frame.mazeView.decrementY();
+                    }
+                    case "e" -> {
+                        addText("Correct!");
+                        myController.askDirection("e");
+                        Frame.mazeView.incrementX();
+                    }
+                    case "s" -> {
+                        addText("Correct!");
+                        myController.askDirection("s");
+                        Frame.mazeView.incrementY();
+                    }
+                    case "w" -> {
+                        addText("Correct!");
+                        myController.askDirection("w");
+                        Frame.mazeView.decrementX();
+                    }
                 }
             } else {
                 addText("Wrong! This door is locked!");

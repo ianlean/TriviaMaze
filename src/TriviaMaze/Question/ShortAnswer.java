@@ -16,7 +16,4 @@ public class ShortAnswer extends  Question{
         return this.myCorrectAnswer;
     }
 
-    public String[] getOtherAnswers() {
-        return new String[0];
-    }
 }

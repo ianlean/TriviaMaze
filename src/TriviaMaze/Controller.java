@@ -1,9 +1,6 @@
 package TriviaMaze;
 
-import TriviaMaze.Question.Question;
-
 import java.sql.SQLException;
-import java.util.Scanner;
 
 public class Controller {
     private final TriviaMaze gameMaze;
@@ -34,24 +31,6 @@ public class Controller {
 
         }
         System.out.println(this.gameMaze);
-    }
-
-    public Question findQuestion(String theDirection) {
-        Question question = null;
-        if (theDirection.equalsIgnoreCase("w")) {
-            question = this.gameMaze.getQuestion(this.gameMaze.getMyY(), this.gameMaze.getMyX() - 1);
-
-        } else if (theDirection.equalsIgnoreCase("e")) {
-            question = this.gameMaze.getQuestion(this.gameMaze.getMyY(), this.gameMaze.getMyX() + 1);
-
-        } else if (theDirection.equalsIgnoreCase("s")) {
-            question = this.gameMaze.getQuestion(this.gameMaze.getMyY() + 1, this.gameMaze.getMyX());
-
-        } else if (theDirection.equalsIgnoreCase("n")) {
-            question = this.gameMaze.getQuestion(this.gameMaze.getMyY() - 1, this.gameMaze.getMyX());
-
-        }
-        return question;
     }
 
     public Room findRoom(String theDirection) {

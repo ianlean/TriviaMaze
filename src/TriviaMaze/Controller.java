@@ -18,7 +18,6 @@ public class Controller {
     }
 
     public void askDirection(String direction) {
-        promptDirection();
 
         if (direction.equalsIgnoreCase("w")) {
             this.gameMaze.changeDirection(this.gameMaze.getMyY(), this.gameMaze.getMyX() - 1);
@@ -68,11 +67,5 @@ public class Controller {
 
         }
         return room;
-    }
-
-    public static void promptDirection() {
-        System.out.println("---------------------------");
-        System.out.println("CHOOSE YOUR DIRECTION:\n");
-        System.out.println("N, E, S, W\n");
     }
 }

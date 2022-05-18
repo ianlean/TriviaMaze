@@ -16,7 +16,6 @@ public class GenerateQuestion
     }
     public Question generateRandomQuestion()
     {
-       // return createQuestion("tf");
         return switch (myRandom.nextInt(2)) {
             case 0 -> createQuestion("tf");
             case 1 -> createQuestion("sa");

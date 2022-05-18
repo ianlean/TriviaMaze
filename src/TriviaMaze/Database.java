@@ -1,16 +1,19 @@
 package TriviaMaze;
-import java.sql.*;
-import java.util.HashMap;
 
 import TriviaMaze.Question.Question;
 import TriviaMaze.Question.ShortAnswer;
 import TriviaMaze.Question.TrueFalseType;
 import org.sqlite.SQLiteDataSource;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
 
 public class Database
 {
-    private static Database myInstance = new Database();
+    private static final Database myInstance = new Database();
     private Connection conn = null;
     private Statement stmt = null;
     private ResultSet rs = null;
@@ -27,10 +30,6 @@ public class Database
             e.printStackTrace();
         }
 
-    }
-    public static Database getInstance()
-    {
-        return myInstance;
     }
 
     public void connect() throws SQLException
@@ -95,10 +94,4 @@ public class Database
 
         return new ShortAnswer(qBody, answer);
     }
-    public int getMultipleChoice()
-    {
-
-        return 0;
-    }
-
 }

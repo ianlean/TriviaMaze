@@ -1,9 +1,5 @@
 package TriviaMaze.Question;
 
-import TriviaMaze.Database;
-
-import java.util.Random;
-
 public class TrueFalseType extends Question
 {
 
@@ -23,7 +19,4 @@ public class TrueFalseType extends Question
         return this.myCorrectAnswer;
     }
 
-    public String[] getOtherAnswers() {
-        return new String[0];
-    }
 }

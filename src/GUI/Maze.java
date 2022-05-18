@@ -16,13 +16,11 @@ public class Maze extends JPanel
 {
     private static final int DEFAULT_WIDTH = 500;
     private static final int DEFAULT_HEIGHT = 500;
-    private TriviaMaze myMaze;
-    private BufferedImage myGreenFlag;
-    private BufferedImage myIcon;
-    private TexturePaint myIconTexture;
-    private TexturePaint myGreenFlagTexture;
+    private final TriviaMaze myMaze;
+    private final BufferedImage myGreenFlag;
+    private final BufferedImage myIcon;
 
-   private Character myCharacter;
+    private Character myCharacter;
     //private static Room characterSpot;
 
     private int myXCoord = 0;
@@ -34,9 +32,9 @@ public class Maze extends JPanel
         this.setSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);
         this.myIcon = ImageIO.read(new File("src/GUIPictures/Icon.png"));
         this.myGreenFlag = ImageIO.read(new File("src/GUIPictures/GreenFlag.png"));
-        this.myIconTexture = new TexturePaint
+        TexturePaint myIconTexture = new TexturePaint
                 (this.myIcon, new Rectangle(0, 0, 50, 50));
-        this.myGreenFlagTexture = new TexturePaint
+        TexturePaint myGreenFlagTexture = new TexturePaint
                 (this.myGreenFlag, new Rectangle(0, 0, 50, 50));
     }
     private void drawMaze(Graphics theG)

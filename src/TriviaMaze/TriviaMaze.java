@@ -1,23 +1,16 @@
 package TriviaMaze;
 
-import java.sql.*;
-import java.util.Scanner;
-
 import TriviaMaze.Question.Question;
-import org.sqlite.SQLiteDataSource;
 
 public class TriviaMaze {
 
-    private GenerateQuestion generator;
+    private final GenerateQuestion generator;
     private final Room[][] myMaze;
     private int myX;
     private int myY;
     private static Room characterSpot;
-    private Connection conn;
 
-    private final SQLiteDataSource ds = new SQLiteDataSource();
-
-    public TriviaMaze(final int theSize) throws SQLException { // for developing purposes I am auto-filling rooms
+    TriviaMaze(final int theSize) { // for developing purposes I am auto-filling rooms
         myMaze = new Room[theSize][theSize];
         generator = new GenerateQuestion();
         generateMaze();
@@ -47,7 +40,7 @@ public class TriviaMaze {
         myMaze[0][0].setStatus(Cell.RoomStatus.UNLOCKED);
     }
 
-    public void changeDirection(final int theRow, final int theCol) {
+    void changeDirection(final int theRow, final int theCol) {
         if (validMove(theRow, theCol)) {
             characterSpot.setHasPlayer(false);
             characterSpot = myMaze[theRow][theCol]; //this method means we have confirmed
@@ -57,7 +50,7 @@ public class TriviaMaze {
             myMaze[myY][myX].setStatus(Cell.RoomStatus.UNLOCKED);
         }
     }
-    public boolean validMove(final int theRow, final int theCol) {
+    boolean validMove(final int theRow, final int theCol) {
         return theRow >= 0 && theRow < myMaze.length //checking if this is in bounds
                 && theCol >= 0 && theCol < myMaze[theRow].length
                 && myMaze[theRow][theCol].getMyStatus() != Cell.RoomStatus.SEALED;
@@ -75,11 +68,11 @@ public class TriviaMaze {
     }
 
 
-    public int getMyX() {
+    int getMyX() {
         return myX;
     }
 
-    public int getMyY() {
+    int getMyY() {
         return myY;
     }
 
@@ -97,24 +90,8 @@ public class TriviaMaze {
         return this.myMaze[theRow][theCol].getMyStatus();
     }
 
-    public Question getQuestion(int theRow, int theCol) {
-        if (validMove(theRow, theCol)) {
-            return myMaze[theRow][theCol].getMyQuestion();
-        } else {
-            return null;
-        }
-    }
-
-    public  Room getRoom(int theRow, int theCol) {
+    Room getRoom(int theRow, int theCol) {
             return myMaze[theRow][theCol];
-    }
-
-    public static Room getCharacterSpot() {
-        return characterSpot;
-    }
-    public static void setCharacterSpot(Room theCharactetSpot){
-        characterSpot=theCharactetSpot;
-
     }
 
 }

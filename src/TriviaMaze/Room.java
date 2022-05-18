@@ -1,10 +1,6 @@
 package TriviaMaze;
 
 import TriviaMaze.Question.Question;
-
-import java.sql.Connection;
-import java.sql.SQLException;
-//import org.sqlite.SQLiteDataSource;
 public class Room extends Cell
 {
     private final Question myQuestion;
@@ -16,21 +12,8 @@ public class Room extends Cell
         hasPlayer = thePlayer;
         myStatus = RoomStatus.LOCKED;
     }
-
-    public Room() {
-        // This is constructor is for if we want
-        // a room to be a wall
-        myStatus = RoomStatus.SEALED;
-        hasPlayer = false;
-        myQuestion = null;
-    }
-
     public Question getMyQuestion() {
         return myQuestion;
-    }
-
-    public boolean getHasPlayer() {
-        return hasPlayer;
     }
 
     public void setHasPlayer(final boolean thePlayer) {

@@ -1,13 +1,12 @@
 package TriviaMaze;
 
 import TriviaMaze.Question.Question;
-import TriviaMaze.Question.TrueFalseType;
 
 import java.util.Random;
 
 public class GenerateQuestion
 {
-    private static Database database = new Database();
+    private static final Database database = new Database();
     private static Random myRandom;
 
     public GenerateQuestion()
@@ -25,16 +24,10 @@ public class GenerateQuestion
     }
 
     public Question createQuestion(final String theType) {
-        Question question = null;
-        switch (theType)
-        {
-            case "tf":
-                question = database.getTrueFalseQuestion();
-                break;
-            case "sa":
-                question = database.getShortAnswerQuestion();
-                break;
-        }
-        return question;
+        return switch (theType) {
+            case "tf" -> database.getTrueFalseQuestion();
+            case "sa" -> database.getShortAnswerQuestion();
+            default -> null;
+        };
     }
 }

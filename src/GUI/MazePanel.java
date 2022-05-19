@@ -12,7 +12,7 @@ import TriviaMaze.Cell;
 import TriviaMaze.TriviaMaze;
 //import TriviaMaze.*;
 
-public class Maze extends JPanel
+public class MazePanel extends JPanel
 {
     private static final int DEFAULT_WIDTH = 500;
     private static final int DEFAULT_HEIGHT = 500;
@@ -26,7 +26,7 @@ public class Maze extends JPanel
     private int myXCoord = 0;
     private int myYCoord = 0;
 
-    Maze(TriviaMaze theMaze) throws IOException
+    MazePanel(TriviaMaze theMaze) throws IOException
     {
         this.myMaze = theMaze;
         this.setSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);

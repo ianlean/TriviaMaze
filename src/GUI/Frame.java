@@ -22,7 +22,7 @@ public class Frame extends JFrame
     private final static int MAZE_SIZE = 8;
 //    private final TriviaMaze myMaze = new TriviaMaze(MAZE_SIZE);
 
-    TextPanel textBoxes;
+    static TextPanel textBoxes;
 
     static final Controller myController;
 
@@ -90,7 +90,7 @@ public class Frame extends JFrame
 
         this.setTitle("Maze Game");
         final ImageIcon uwImage = new ImageIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource("/GUIPictures/w.gif")))
-                .getImage().getScaledInstance(60,40,Image.SCALE_DEFAULT));
+                .getImage().getScaledInstance(60, 40, Image.SCALE_DEFAULT));
         this.setIconImage(uwImage.getImage());
         this.setSize(WIDTH, HEIGHT);
         this.getContentPane().setLayout(null);
@@ -106,9 +106,11 @@ public class Frame extends JFrame
         roomView.setLocation(0, 0);
         this.add(mazeView);
         mazeView.setLocation(500, 0);
-        JPanel buttonPanel = createButtonPanel();
+        //add button panel
+        JPanel buttonPanel = new ButtonPanel();
         this.add(buttonPanel);
-        buttonPanel.setBounds(1000,0, 300, 100);
+        buttonPanel.setBounds(1000, 0, 300, 100);
+        //add question/answer panel
         textBoxes = new TextPanel();
         this.add(textBoxes);
         textBoxes.setBounds(500, 500, 800, 400);
@@ -128,8 +130,6 @@ public class Frame extends JFrame
         myMenuBar.add(createHelpMenu());
         return myMenuBar;
     }
-
-
 
     /**
      * create the File Menu, including new, save, load,and exit game
@@ -380,86 +380,6 @@ public class Frame extends JFrame
         });
 
 
-    }
-
-    private JPanel createButtonPanel() {
-        JPanel buttonPanel = new JPanel();
-        JButton up = new JButton("Up");
-        JButton down = new JButton("Down");
-        JButton left = new JButton("Left");
-        JButton right = new JButton("Right");
-        styleButtons(up);
-        styleButtons(down);
-        styleButtons(left);
-        styleButtons(right);
-        up.addActionListener(e -> {
-            Room r = Frame.myController.findRoom("n");
-            if (r.getMyQuestion() != null && r.getMyStatus() == Cell.RoomStatus.LOCKED) {
-                textBoxes.addText(r.getMyQuestion().getQuestion());
-                textBoxes.currentAnswer = r.getMyQuestion().getCorrectAnswer();
-                myCur = "n";
-            } else if (r.getMyStatus() == Cell.RoomStatus.UNLOCKED) {
-                myController.askDirection("n");
-                Frame.mazeView.decrementY();
-                Frame.mazeView.repaint();
-            } else {
-                textBoxes.addText("This door is sealed.");
-            }
-        });
-        down.addActionListener(e -> {
-            Room r = Frame.myController.findRoom("s");
-            if (r.getMyQuestion() != null && r.getMyStatus() == Cell.RoomStatus.LOCKED) {
-                textBoxes.addText(r.getMyQuestion().getQuestion());
-                textBoxes.currentAnswer = r.getMyQuestion().getCorrectAnswer();
-                myCur = "s";
-            } else if (r.getMyStatus() == Cell.RoomStatus.UNLOCKED) {
-                myController.askDirection("s");
-                Frame.mazeView.incrementY();
-                Frame.mazeView.repaint();
-            } else {
-                textBoxes.addText("This door is sealed.");
-            }
-        });
-        right.addActionListener(e -> {
-            Room r = Frame.myController.findRoom("e");
-            if (r.getMyQuestion() != null && r.getMyStatus() == Cell.RoomStatus.LOCKED) {
-                textBoxes.addText(r.getMyQuestion().getQuestion());
-                textBoxes.currentAnswer = r.getMyQuestion().getCorrectAnswer();
-                myCur = "e";
-            } else if (r.getMyStatus() == Cell.RoomStatus.UNLOCKED) {
-                myController.askDirection("e");
-                Frame.mazeView.incrementX();
-                Frame.mazeView.repaint();
-            } else {
-                textBoxes.addText("This door is sealed.");
-            }
-        });
-        left.addActionListener(e -> {
-            Room r = Frame.myController.findRoom("w");
-            if (r.getMyQuestion() != null && r.getMyStatus() == Cell.RoomStatus.LOCKED) {
-                textBoxes.addText(r.getMyQuestion().getQuestion());
-                textBoxes.currentAnswer = r.getMyQuestion().getCorrectAnswer();
-                myCur = "w";
-            } else if (r.getMyStatus() == Cell.RoomStatus.UNLOCKED) {
-                myController.askDirection("w");
-                Frame.mazeView.decrementX();
-                Frame.mazeView.repaint();
-            } else {
-                textBoxes.addText("This door is sealed.");
-            }
-        });
-        buttonPanel.add(up);
-        buttonPanel.add(down);
-        buttonPanel.add(left);
-        buttonPanel.add(right);
-        buttonPanel.setSize(100, 100);
-        return buttonPanel;
-    }
-
-    private static void styleButtons(final JButton theButton) {
-        theButton.setBackground(new Color(131, 39, 145));
-        theButton.setForeground(Color.BLACK);
-        theButton.setFont(new Font("Tahoma", Font.BOLD, 12));
     }
     public static void main(String[] args) {
         EventQueue.invokeLater(() ->

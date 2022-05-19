@@ -5,9 +5,10 @@ import TriviaMaze.Question.Question;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
+import java.sql.SQLException;
 
-import static GUI.Frame.myController;
-import static GUI.Frame.myCur;
+import static GUI.Frame.*;
 
 public class TextPanel extends JPanel {
 
@@ -25,7 +26,6 @@ public class TextPanel extends JPanel {
         makeButtonListener(myButton);
         myOutputText.setEnabled(true);
         myInputText.setEnabled(true);
-        this.setSize(200, 200);
         this.setBackground(Color.black);
     }
 
@@ -62,12 +62,28 @@ public class TextPanel extends JPanel {
                         Frame.mazeView.decrementX();
                     }
                 }
+            } else if (myCur == null) {
+                addText("You can't go this way!");
             } else {
                 addText("Wrong! This door is locked!");
                 Frame.myController.findRoom(myCur).setStatus(Cell.RoomStatus.SEALED);
             }
+            endGame();
             Frame.mazeView.repaint();
             Frame.myCur = null;
         });
+    }
+
+    private void endGame() {
+        if (myController.getGameMaze().isGameOver()) {
+            this.removeAll();
+            JTextField endText = new  JTextField(50);
+            endText.setEnabled(true);
+//            endText.setFont(new Font("Tahoma", Font.BOLD, 40));
+            endText.setText("You won!");
+            this.add(endText);
+            validate();
+            repaint();
+        }
     }
 }

@@ -91,7 +91,6 @@ public class Database
         {
             e.printStackTrace();
         }
-
         return new ShortAnswer(qBody, answer);
     }
 }

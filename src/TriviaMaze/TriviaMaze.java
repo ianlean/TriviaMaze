@@ -10,6 +10,8 @@ public class TriviaMaze {
     private int myY;
     private static Room characterSpot;
 
+    private boolean gameOver = false;
+
     TriviaMaze(final int theSize) { // for developing purposes I am auto-filling rooms
         myMaze = new Room[theSize][theSize];
         generator = new GenerateQuestion();
@@ -49,6 +51,9 @@ public class TriviaMaze {
             characterSpot.setHasPlayer(true);
             myMaze[myY][myX].setStatus(Cell.RoomStatus.UNLOCKED);
         }
+        if (myX == 7 && myY == 7) {
+            gameOver = true;
+        }
     }
     boolean validMove(final int theRow, final int theCol) {
         return theRow >= 0 && theRow < myMaze.length //checking if this is in bounds
@@ -65,6 +70,10 @@ public class TriviaMaze {
             }
         }
         return s.toString();
+    }
+
+    public boolean isGameOver() {
+        return gameOver;
     }
 
 

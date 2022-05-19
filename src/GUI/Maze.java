@@ -101,13 +101,5 @@ public class Maze extends JPanel
     public void setCharacter(Character theCharacter){
         myCharacter=theCharacter;
     }
-//
-//    public static Room getCharacterSpot() {
-//        return characterSpot;
-//    }
-//    public static void setCharacterSpot(Room theCharactetSpot){
-//        characterSpot=theCharactetSpot;
-//
-//    }
 
 }

@@ -68,13 +68,14 @@ public class TextPanel extends JPanel {
                 addText("Wrong! This door is locked!");
                 Frame.myController.findRoom(myCur).setStatus(Cell.RoomStatus.SEALED);
             }
-            endGame();
+            endGameWon();
+            endGameLost();
             Frame.mazeView.repaint();
             Frame.myCur = null;
         });
     }
 
-    private void endGame() {
+    private void endGameWon() {
         if (myController.getGameMaze().isGameOver()) {
             this.removeAll();
             JTextField endText = new  JTextField(50);
@@ -86,4 +87,17 @@ public class TextPanel extends JPanel {
             repaint();
         }
     }
+    private void endGameLost() {
+        if (myController.getGameMaze().isGameLost()) {
+            this.removeAll();
+            JTextField endText = new  JTextField(50);
+            endText.setEnabled(true);
+//            endText.setFont(new Font("Tahoma", Font.BOLD, 40));
+            endText.setText("You lost!");
+            this.add(endText);
+            validate();
+            repaint();
+        }
+    }
+
 }

@@ -1,6 +1,8 @@
 package TriviaMaze;
 
-public class Cell
+import java.io.Serializable;
+
+public class Cell implements Serializable
 {
     public enum RoomStatus
     {

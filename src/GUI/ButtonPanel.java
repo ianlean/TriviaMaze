@@ -6,10 +6,12 @@ import TriviaMaze.Room;
 import javax.swing.*;
 
 import java.awt.*;
+import java.io.Serializable;
 
 import static GUI.Frame.*;
 
-public class ButtonPanel extends JPanel {
+public class ButtonPanel extends JPanel implements Serializable
+{
 
     public ButtonPanel() {
         JButton up = new JButton("Up");

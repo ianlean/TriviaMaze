@@ -7,12 +7,13 @@ import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.io.Serializable;
 
 import TriviaMaze.Cell;
 import TriviaMaze.TriviaMaze;
 import TriviaMaze.*;
 
-public class MazePanel extends JPanel
+public class MazePanel extends JPanel implements Serializable
 {
     private static final int DEFAULT_WIDTH = 500;
     private static final int DEFAULT_HEIGHT = 500;

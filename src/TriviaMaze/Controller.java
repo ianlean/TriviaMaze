@@ -1,8 +1,9 @@
 package TriviaMaze;
 
+import java.io.Serializable;
 import java.sql.SQLException;
 
-public class Controller {
+public class Controller implements Serializable {
     private final TriviaMaze gameMaze;
 
     public Controller(int theSize) throws SQLException {

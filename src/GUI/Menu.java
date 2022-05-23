@@ -11,9 +11,11 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.io.*;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Objects;
 
-public class Menu extends JMenuBar{
+public class Menu extends JMenuBar implements Serializable
+{
 
 
     private final static int MAZE_SIZE = 8;
@@ -148,13 +150,17 @@ public class Menu extends JMenuBar{
                 FileDialog fd = new FileDialog(new JFrame(), "Save Game", FileDialog.SAVE);
                 fd.setVisible(true);
                 if (fd.getFile() == null) return;
-                String fileName = fd.getFile().trim().endsWith(".bin") ?
-                                  fd.getFile().trim() : fd.getFile() + ".bin";
+                String fileName = fd.getFile();
                 try {
                     File f = new File(fd.getDirectory(), fileName);
+                    f.setWritable(true);
                     FileOutputStream file = new FileOutputStream(f);
                     ObjectOutputStream out =new ObjectOutputStream(file);
-                    out.writeObject(mazeView);
+
+                    //save the current location
+                   out.writeObject(myMaze.getSaveLocation());
+
+
                     out.close();
                     file.close();
                 } catch (FileNotFoundException e) {
@@ -188,7 +194,13 @@ public class Menu extends JMenuBar{
                     File f = new File(fd.getDirectory(), fd.getFile());
                     FileInputStream file=new FileInputStream(f);
                     ObjectInputStream in=new ObjectInputStream(file);
-                    mazeView=(MazePanel) in.readObject();
+
+                    //get the location in the file
+                    int[] saveLocation=(int[]) in.readObject();
+
+                    myMaze.setSaveLocation(saveLocation);
+
+
                     in.close();
                     file.close();
 

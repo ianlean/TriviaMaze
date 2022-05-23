@@ -9,7 +9,7 @@ import java.io.*;
 import java.sql.SQLException;
 import java.util.Objects;
 
-public class Frame extends JFrame
+public class Frame extends JFrame implements Serializable
 {
     private final static int WIDTH = 2000;
     private final static int HEIGHT = 2000;

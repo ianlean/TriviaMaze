@@ -12,8 +12,9 @@ import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.io.Serializable;
 
-public class RoomPanel extends JPanel implements ActionListener, KeyListener
+public class RoomPanel extends JPanel implements ActionListener, KeyListener, Serializable
 {
     private static final int DEFAULT_WIDTH = 500;
     private static final int DEFAULT_HEIGHT = 500;

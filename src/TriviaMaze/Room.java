@@ -1,7 +1,10 @@
 package TriviaMaze;
 
 import TriviaMaze.Question.Question;
-public class Room extends Cell
+
+import java.io.Serializable;
+
+public class Room extends Cell implements Serializable
 {
     private final Question myQuestion;
     private boolean hasPlayer;

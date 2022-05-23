@@ -6,11 +6,13 @@ import TriviaMaze.Question.Question;
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
+import java.io.Serializable;
 import java.sql.SQLException;
 
 import static GUI.Frame.*;
 
-public class TextPanel extends JPanel {
+public class TextPanel extends JPanel implements Serializable
+{
 
     private final JTextField myOutputText;
     private final JTextField myInputText;

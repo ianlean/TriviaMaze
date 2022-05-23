@@ -1,16 +1,16 @@
+
+
 package TriviaMaze;
 
 import TriviaMaze.Question.Question;
 
 import java.io.Serializable;
-
+import java.util.ArrayList;
 
 public class TriviaMaze implements Serializable {
 
-    private static final long serialVersionUID=4874303903866067117L;
-
     private final GenerateQuestion generator;
-    private static Room[][] myMaze ;
+    private final Room[][] myMaze;
     private int myX;
     private int myY;
     private static Room characterSpot;
@@ -30,8 +30,8 @@ public class TriviaMaze implements Serializable {
             {
                 this.myMaze[row][col] = new Room(generator.generateRandomQuestion(), false);
                 if (row == 0 || col == 0 ||
-                row == this.myMaze.length - 1 || col == this.myMaze.length - 1 ||
-                row - col == 0 || row - col == 1)
+                        row == this.myMaze.length - 1 || col == this.myMaze.length - 1 ||
+                        row - col == 0 || row - col == 1)
                 {
                     this.myMaze[row][col].setStatus(Cell.RoomStatus.LOCKED);
                 } else {
@@ -104,7 +104,23 @@ public class TriviaMaze implements Serializable {
         return this.myMaze[theRow][theCol].getMyStatus();
     }
 
-   public static Room getRoom(int theRow, int theCol) {return myMaze[theRow][theCol];}
+   public Room getRoom(int theRow, int theCol) {
+        return myMaze[theRow][theCol];
+    }
+
+    public int[] getSaveLocation(){
+        int[] saveLocation = new int[2];
+        saveLocation[0]=getMyX();
+        saveLocation[1]=getMyY();
+        return saveLocation;
+    }
+    public void setSaveLocation(int[] saveLocation){
+
+        myX=saveLocation[0];
+        myY=saveLocation[1];
+    }
+
+
 
 
 

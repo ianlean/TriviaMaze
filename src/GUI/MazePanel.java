@@ -10,7 +10,7 @@ import java.io.IOException;
 
 import TriviaMaze.Cell;
 import TriviaMaze.TriviaMaze;
-//import TriviaMaze.*;
+import TriviaMaze.*;
 
 public class MazePanel extends JPanel
 {
@@ -20,8 +20,8 @@ public class MazePanel extends JPanel
     private final BufferedImage myGreenFlag;
     private final BufferedImage myIcon;
 
-    private Character myCharacter;
-    //private static Room characterSpot;
+
+
 
     private int myXCoord = 0;
     private int myYCoord = 0;
@@ -94,12 +94,9 @@ public class MazePanel extends JPanel
         this.myYCoord-=55;
     }
 
-    public Character getCharacter(){
-        return myCharacter;
+
     }
 
-    public void setCharacter(Character theCharacter){
-        myCharacter=theCharacter;
-    }
 
-}
+
+

@@ -1,6 +1,8 @@
 package GUI;
 
 import TriviaMaze.Controller;
+import TriviaMaze.TriviaMaze;
+import TriviaMaze.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -33,6 +35,8 @@ public class Menu extends JMenuBar{
             throw new RuntimeException(e);
         }
     }
+
+    static TriviaMaze myMaze;
 
 
     /** the new game menu item */
@@ -144,20 +148,22 @@ public class Menu extends JMenuBar{
                 FileDialog fd = new FileDialog(new JFrame(), "Save Game", FileDialog.SAVE);
                 fd.setVisible(true);
                 if (fd.getFile() == null) return;
-                String fileName = fd.getFile();
-                File file = new File(fd.getDirectory(), fileName);
-                file.setWritable(true);
+                String fileName = fd.getFile().trim().endsWith(".bin") ?
+                                  fd.getFile().trim() : fd.getFile() + ".bin";
                 try {
-                    ObjectOutputStream out = new ObjectOutputStream(
-                            new BufferedOutputStream(new FileOutputStream(file)));
-                    out.writeObject(mazeView.getCharacter());
-                    //out.writeObject(TriviaMaze.getCharacterSpot());
-                    //out.writeObject(mazeView.getCharacterSpot());
+                    File f = new File(fd.getDirectory(), fileName);
+                    FileOutputStream file = new FileOutputStream(f);
+                    ObjectOutputStream out =new ObjectOutputStream(file);
+                    out.writeObject(mazeView);
                     out.close();
-
+                    file.close();
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+
+
             }
         });
     }
@@ -177,17 +183,16 @@ public class Menu extends JMenuBar{
                 FileDialog fd = new FileDialog(new JFrame(), "Load Game", FileDialog.LOAD);
                 fd.setVisible(true);
                 if (fd.getFile() == null) return;
-                String fileName = fd.getFile();
-                File file = new File(fd.getDirectory(), fileName);
                 try{
-                    ObjectInputStream in=new ObjectInputStream
-                            (new BufferedInputStream(new FileInputStream(file)));
-//                    Room characterSpot=(Room) in.readObject();
-//                    TriviaMaze.setCharacterSpot(characterSpot);
-                    Character character=(Character) in.readObject();
-                    mazeView.setCharacter(character);
-//                    Room characterSpot=(Room) in.readObject();
-//                    mazeView.setCharacterSpot(characterSpot);
+
+                    File f = new File(fd.getDirectory(), fd.getFile());
+                    FileInputStream file=new FileInputStream(f);
+                    ObjectInputStream in=new ObjectInputStream(file);
+                    mazeView=(MazePanel) in.readObject();
+                    in.close();
+                    file.close();
+
+
                 } catch (ClassNotFoundException | IOException ex) {
                     ex.printStackTrace();
                 }

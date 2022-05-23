@@ -2,10 +2,15 @@ package TriviaMaze;
 
 import TriviaMaze.Question.Question;
 
-public class TriviaMaze {
+import java.io.Serializable;
+
+
+public class TriviaMaze implements Serializable {
+
+    private static final long serialVersionUID=4874303903866067117L;
 
     private final GenerateQuestion generator;
-    private final Room[][] myMaze;
+    private static Room[][] myMaze ;
     private int myX;
     private int myY;
     private static Room characterSpot;
@@ -77,11 +82,11 @@ public class TriviaMaze {
     }
 
 
-    int getMyX() {
+    public int getMyX() {
         return myX;
     }
 
-    int getMyY() {
+    public int getMyY() {
         return myY;
     }
 
@@ -99,8 +104,8 @@ public class TriviaMaze {
         return this.myMaze[theRow][theCol].getMyStatus();
     }
 
-    Room getRoom(int theRow, int theCol) {
-            return myMaze[theRow][theCol];
-    }
+   public static Room getRoom(int theRow, int theCol) {return myMaze[theRow][theCol];}
+
+
 
 }

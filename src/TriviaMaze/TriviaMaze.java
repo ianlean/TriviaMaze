@@ -105,21 +105,21 @@ public class TriviaMaze
         {
             this.myGameOver = true;
         }
-        else if (this.getStatus(this.myMaze.length - 1, this.myMaze.length - 1) == SEALED
-                || !hasRoute())
-        {
-            this.myHasLost = true;
-        }
+//        else if (this.getStatus(this.myMaze.length - 1, this.myMaze.length - 1) == SEALED
+//                || !hasRoute())
+//        {
+//            this.myHasLost = true;
+//        }
     }
-    private boolean hasRoute()
+    public boolean hasRoute()
     {
         int[][] maze = getMaze();
         return gameOverHelper(maze, this.myX, this.myY);
     }
     private boolean gameOverHelper(final int[][] theMaze, final int theX, final int theY)
     {
-        if (!(theX >= 0 && theX < theMaze.length)
-                && (theY >= 0 && theY < theMaze.length)
+        if (!((theX >= 0 && theX < theMaze.length)
+                && (theY >= 0 && theY < theMaze.length))
                 || theMaze[theX][theY] == 0)
         {
             return false;
@@ -174,7 +174,7 @@ public class TriviaMaze
         return myGameOver;
     }
 
-    public boolean isGameLost() { return this.myHasLost; }
+    public boolean isGameLost() { return hasRoute(); }
 
     /**
      * a getter method to get the current row;

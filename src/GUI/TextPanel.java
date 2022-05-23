@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 import static GUI.Frame.*;
+import static TriviaMaze.Cell.RoomStatus.SEALED;
 
 public class TextPanel extends JPanel {
 
@@ -88,7 +89,7 @@ public class TextPanel extends JPanel {
         }
     }
     private void endGameLost() {
-        if (myController.getGameMaze().isGameLost()) {
+        if (!myController.getGameMaze().hasRoute()) {
             this.removeAll();
             JTextField endText = new  JTextField(50);
             endText.setEnabled(true);
@@ -99,5 +100,4 @@ public class TextPanel extends JPanel {
             repaint();
         }
     }
-
 }

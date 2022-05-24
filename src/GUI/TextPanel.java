@@ -68,9 +68,11 @@ public class TextPanel extends JPanel {
             } else {
                 addText("Wrong! This door is locked!");
                 Frame.myController.findRoom(myCur).setStatus(Cell.RoomStatus.SEALED);
+                endGameLost();
             }
             endGameWon();
-            endGameLost();
+            //endGameLost();
+            Frame.mazeView.validate();
             Frame.mazeView.repaint();
             Frame.myCur = null;
         });

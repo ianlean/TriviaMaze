@@ -105,11 +105,6 @@ public class TriviaMaze
         {
             this.myGameOver = true;
         }
-//        else if (this.getStatus(this.myMaze.length - 1, this.myMaze.length - 1) == SEALED
-//                || !hasRoute())
-//        {
-//            this.myHasLost = true;
-//        }
     }
     public boolean hasRoute()
     {
@@ -118,9 +113,7 @@ public class TriviaMaze
     }
     private boolean gameOverHelper(final int[][] theMaze, final int theX, final int theY)
     {
-        if (!((theX >= 0 && theX < theMaze.length)
-                && (theY >= 0 && theY < theMaze.length))
-                || theMaze[theX][theY] == 0)
+        if (!((theX >= 0 && theX < theMaze.length) && (theY >= 0 && theY < theMaze.length)) || theMaze[theX][theY] == 0)
         {
             return false;
         }
@@ -141,8 +134,8 @@ public class TriviaMaze
             {
                 switch (getStatus(i, j))
                 {
-                    case UNLOCKED, LOCKED -> maze[i][j] = 1;
-                    case SEALED -> maze[i][j] = 0;
+                    case UNLOCKED, LOCKED -> maze[j][i] = 1;
+                    case SEALED -> maze[j][i] = 0;
                 }
             }
         }

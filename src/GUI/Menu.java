@@ -157,16 +157,15 @@ public class Menu extends JMenuBar implements Serializable
                     FileOutputStream file = new FileOutputStream(f);
                     ObjectOutputStream out =new ObjectOutputStream(file);
 
-                    //save the current location
+                    // to do : save the current location
                    out.writeObject(myMaze.getSaveLocation());
 
 
                     out.close();
                     file.close();
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
                 } catch (IOException e) {
                     e.printStackTrace();
+                    return;
                 }
 
 
@@ -207,6 +206,7 @@ public class Menu extends JMenuBar implements Serializable
 
                 } catch (ClassNotFoundException | IOException ex) {
                     ex.printStackTrace();
+                    return;
                 }
 
             }

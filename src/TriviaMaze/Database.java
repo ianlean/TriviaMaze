@@ -44,9 +44,9 @@ public class Database
         {
             connect();
         }
-        catch (SQLException e)
+        catch (SQLException theE)
         {
-            e.printStackTrace();
+            theE.printStackTrace();
         }
 
     }
@@ -117,9 +117,9 @@ public class Database
             qBody = this.myRs.getString("question");
             answer = this.myRs.getString("correct");
         }
-        catch (SQLException e)
+        catch (SQLException theE)
         {
-            e.printStackTrace();
+            theE.printStackTrace();
         }
         return new ShortAnswer(qBody, answer);
     }

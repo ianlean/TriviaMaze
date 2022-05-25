@@ -2,7 +2,6 @@ package GUI;
 
 import TriviaMaze.Controller;
 import TriviaMaze.TriviaMaze;
-import TriviaMaze.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,35 +10,40 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.io.*;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Objects;
 
 public class Menu extends JMenuBar implements Serializable
 {
 
-
     private final static int MAZE_SIZE = 8;
 
     static Controller myController ;
-    static {
-        try {
+    static
+    {
+        try
+        {
             myController = new Controller(MAZE_SIZE);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+        }
+        catch (SQLException theE)
+        {
+            throw new RuntimeException(theE);
         }
     }
 
     static MazePanel mazeView;
-    static {
-        try {
+    static
+    {
+        try
+        {
             mazeView = new MazePanel(myController.getGameMaze());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        }
+        catch (IOException theE)
+        {
+            throw new RuntimeException(theE);
         }
     }
 
     static TriviaMaze myMaze;
-
 
     /** the new game menu item */
     private JMenuItem myNewMenuItem;
@@ -75,9 +79,9 @@ public class Menu extends JMenuBar implements Serializable
     private static final int VOLUME_INITIAL = 50;
 
     /** theme choice button */
-    private final JButton Red=new JButton("Red");
-    private final JButton Yellow=new JButton("Yellow");
-    private final JButton Green=new JButton("Green");
+    private final JButton Red = new JButton("Red");
+    private final JButton Yellow = new JButton("Yellow");
+    private final JButton Green = new JButton("Green");
 
 
 
@@ -85,39 +89,39 @@ public class Menu extends JMenuBar implements Serializable
      * create the menu bar for the game GUI
      * @return the menu bar
      */
-    public Menu() {
+    public Menu()
+    {
         this.add(createFileMenu());
         this.add(createOptionsMenu());
         this.add(createHelpMenu());
-
     }
 
     /**
      * create the File Menu, including new, save, load,and exit game
+     *
      * @return the file menu
      */
-    private JMenu createFileMenu(){
+    private JMenu createFileMenu()
+    {
         final JMenu myFileMenu=new JMenu("File");
         myFileMenu.setMnemonic(KeyEvent.VK_F);
 
         createNewMenuItem();
-        myFileMenu.add(myNewMenuItem);
+        myFileMenu.add(this.myNewMenuItem);
         myFileMenu.addSeparator();
 
         createSaveMenuItem();
-        myFileMenu.add(mySaveMenuItem);
+        myFileMenu.add(this.mySaveMenuItem);
         myFileMenu.addSeparator();
 
         createLoadMenuItem();
-        myFileMenu.add(myLoadMenuItem);
+        myFileMenu.add(this.myLoadMenuItem);
         myFileMenu.addSeparator();
 
         createExitMenuItem();
-        myFileMenu.add(myExitMenuItem);
-
+        myFileMenu.add(this.myExitMenuItem);
 
         return myFileMenu;
-
     }
 
     /**
@@ -125,12 +129,11 @@ public class Menu extends JMenuBar implements Serializable
      * new game menu item allows the user to start a new game
      */
     private void createNewMenuItem() {
-        myNewMenuItem=new JMenuItem("New Game");
-        myNewMenuItem.setMnemonic(KeyEvent.VK_N);
-        myNewMenuItem.setEnabled(true);
+        this.myNewMenuItem=new JMenuItem("New Game");
+        this.myNewMenuItem.setMnemonic(KeyEvent.VK_N);
+        this.myNewMenuItem.setEnabled(true);
 
-        //new game mouse listener, haven't done
-        myNewMenuItem.addActionListener(e -> {});
+        this.myNewMenuItem.addActionListener(e -> {});
     }
 
     /**
@@ -138,37 +141,35 @@ public class Menu extends JMenuBar implements Serializable
      *  save menu item allows the user to save the current game state
      *
      */
-    private void createSaveMenuItem() {
-        mySaveMenuItem=new JMenuItem("Save Game");
-        mySaveMenuItem.setMnemonic(KeyEvent.VK_S);
-        mySaveMenuItem.setEnabled(true);
+    private void createSaveMenuItem()
+    {
+        this.mySaveMenuItem=new JMenuItem("Save Game");
+        this.mySaveMenuItem.setMnemonic(KeyEvent.VK_S);
+        this.mySaveMenuItem.setEnabled(true);
 
         // haven't finished
-        mySaveMenuItem.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent event) {
-                FileDialog fd = new FileDialog(new JFrame(), "Save Game", FileDialog.SAVE);
-                fd.setVisible(true);
-                if (fd.getFile() == null) return;
-                String fileName = fd.getFile();
-                try {
-                    File f = new File(fd.getDirectory(), fileName);
-                    f.setWritable(true);
-                    FileOutputStream file = new FileOutputStream(f);
-                    ObjectOutputStream out =new ObjectOutputStream(file);
+        this.mySaveMenuItem.addActionListener(event ->
+        {
+            FileDialog fd = new FileDialog(new JFrame(), "Save Game", FileDialog.SAVE);
+            fd.setVisible(true);
+            if (fd.getFile() == null) return;
+            String fileName = fd.getFile();
+            try
+            {
+                File f = new File(fd.getDirectory(), fileName);
+                f.setWritable(true);
+                FileOutputStream file = new FileOutputStream(f);
+                ObjectOutputStream out =new ObjectOutputStream(file);
 
-                    // to do : save the current location
-                    out.writeObject(myMaze.getSaveLocation());
-
-
-                    out.close();
-                    file.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    return;
-                }
+                out.writeObject(myMaze.getSaveLocation());
 
 
+                out.close();
+                file.close();
+            }
+            catch (IOException theE)
+            {
+                theE.printStackTrace();
             }
         });
     }
@@ -177,39 +178,33 @@ public class Menu extends JMenuBar implements Serializable
      * a method to create load game menu item
      * load menu item allows the user to load the previous game state
      */
-    private void createLoadMenuItem() {
-        myLoadMenuItem=new JMenuItem("Load Game");
-        myLoadMenuItem.setMnemonic(KeyEvent.VK_L);
-        myLoadMenuItem.setEnabled(true);
+    private void createLoadMenuItem()
+    {
+        this.myLoadMenuItem=new JMenuItem("Load Game");
+        this.myLoadMenuItem.setMnemonic(KeyEvent.VK_L);
+        this.myLoadMenuItem.setEnabled(true);
 
-        myLoadMenuItem.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                FileDialog fd = new FileDialog(new JFrame(), "Load Game", FileDialog.LOAD);
-                fd.setVisible(true);
-                if (fd.getFile() == null) return;
-                try{
+        this.myLoadMenuItem.addActionListener(e ->
+        {
+            FileDialog fd = new FileDialog(new JFrame(), "Load Game", FileDialog.LOAD);
+            fd.setVisible(true);
+            if (fd.getFile() == null) return;
+            try
+            {
+                File f = new File(fd.getDirectory(), fd.getFile());
+                FileInputStream file=new FileInputStream(f);
+                ObjectInputStream in=new ObjectInputStream(file);
+                int[] saveLocation=(int[]) in.readObject();
 
-                    File f = new File(fd.getDirectory(), fd.getFile());
-                    FileInputStream file=new FileInputStream(f);
-                    ObjectInputStream in=new ObjectInputStream(file);
+                myMaze.setSaveLocation(saveLocation);
+                in.close();
+                file.close();
 
-                    //get the location in the file
-                    int[] saveLocation=(int[]) in.readObject();
-
-                    myMaze.setSaveLocation(saveLocation);
-
-
-                    in.close();
-                    file.close();
-
-
-                } catch (ClassNotFoundException | IOException ex) {
-                    ex.printStackTrace();
-                    return;
-                }
-
+            } catch (ClassNotFoundException | IOException ex)
+            {
+                ex.printStackTrace();
             }
+
         });
     }
 
@@ -217,12 +212,12 @@ public class Menu extends JMenuBar implements Serializable
      * a method to create exit menu item
      * exit menu item allows the user to exit the game
      */
-    private void createExitMenuItem() {
-        myExitMenuItem=new JMenuItem("Exit");
-        myExitMenuItem.setMnemonic(KeyEvent.VK_E);
-        myExitMenuItem.setEnabled(true);
-
-        myExitMenuItem.addActionListener(e -> System.exit(0));
+    private void createExitMenuItem()
+    {
+        this.myExitMenuItem=new JMenuItem("Exit");
+        this.myExitMenuItem.setMnemonic(KeyEvent.VK_E);
+        this.myExitMenuItem.setEnabled(true);
+        this.myExitMenuItem.addActionListener(e -> System.exit(0));
     }
 
     /**
@@ -230,16 +225,15 @@ public class Menu extends JMenuBar implements Serializable
      * it can adjust the game volume and theme(background)
      * @return the Option menu
      */
-    private JMenu createOptionsMenu(){
+    private JMenu createOptionsMenu()
+    {
         final JMenu myOptionsMenu=new JMenu("Options");
         myOptionsMenu.setMnemonic(KeyEvent.VK_O);
-
 
         JMenuItem myVolumeMenuItem = new JMenuItem("Volume");
         myVolumeMenuItem.setMnemonic(KeyEvent.VK_V);
         myOptionsMenu.add(myVolumeMenuItem);
 
-        //volume slider
         final JSlider volumeSlider = new JSlider(SwingConstants.HORIZONTAL,
                 VOLUME_MINIMUM, VOLUME_MAXIMUM, VOLUME_INITIAL);
 
@@ -255,7 +249,6 @@ public class Menu extends JMenuBar implements Serializable
             if (!volume.getValueIsAdjusting()) {
                 final int volumeValue = volume.getValue();
             }
-
         });
 
         // theme menu item to change the background
@@ -285,7 +278,6 @@ public class Menu extends JMenuBar implements Serializable
         this.setBackground(Color.GREEN);
     }
 
-
     /**
      * create the Help Menu, including About and Instruction
      * @return the Help menu
@@ -295,11 +287,11 @@ public class Menu extends JMenuBar implements Serializable
         myHelpMenu.setMnemonic(KeyEvent.VK_H);
 
         createAboutMenuItem();
-        myHelpMenu.add(myAboutMenuItem);
+        myHelpMenu.add(this.myAboutMenuItem);
         myHelpMenu.addSeparator();
 
         createInstructionMenuItem();
-        myHelpMenu.add(myInstructionMenuItem);
+        myHelpMenu.add(this.myInstructionMenuItem);
 
         return myHelpMenu;
 
@@ -309,16 +301,19 @@ public class Menu extends JMenuBar implements Serializable
      * a method to create about menu item
      * this menu item shows the information about this maze game
      */
-    private void createAboutMenuItem() {
-        myAboutMenuItem=new JMenuItem("About");
-        myAboutMenuItem.setMnemonic(KeyEvent.VK_A);
+    private void createAboutMenuItem()
+    {
+        this.myAboutMenuItem=new JMenuItem("About");
+        this.myAboutMenuItem.setMnemonic(KeyEvent.VK_A);
 
-        myAboutMenuItem.addActionListener(new ActionListener() {
+        myAboutMenuItem.addActionListener(new ActionListener()
+        {
             @Override
-            public void actionPerformed(ActionEvent e) {
-                final ImageIcon uwImage = new ImageIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource("/GUIPictures/w.gif")))
+            public void actionPerformed(ActionEvent e)
+            {
+                final ImageIcon uwImage = new ImageIcon
+                        (new ImageIcon(Objects.requireNonNull(getClass().getResource("/GUIPictures/w.gif")))
                         .getImage().getScaledInstance(60,40,Image.SCALE_DEFAULT));
-
                 JOptionPane.showMessageDialog(null, """
                         <Trivia Maze Game> by\s
                         Ian McLean\s
@@ -335,21 +330,22 @@ public class Menu extends JMenuBar implements Serializable
      * a method to create instruction menu item
      * this menu item shows the instruction for this maze game
      */
-    private void createInstructionMenuItem() {
-        myInstructionMenuItem=new JMenuItem("Instruction");
-        myInstructionMenuItem.setMnemonic(KeyEvent.VK_I);
+    private void createInstructionMenuItem()
+    {
+        this.myInstructionMenuItem=new JMenuItem("Instruction");
+        this.myInstructionMenuItem.setMnemonic(KeyEvent.VK_I);
 
-        myInstructionMenuItem.addActionListener(new ActionListener() {
+        this.myInstructionMenuItem.addActionListener(new ActionListener()
+        {
             @Override
-            public void actionPerformed(ActionEvent e) {
-                final ImageIcon uwImage = new ImageIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource("/GUIPictures/w.gif")))
+            public void actionPerformed(ActionEvent e)
+            {
+                final ImageIcon uwImage = new ImageIcon
+                        (new ImageIcon(Objects.requireNonNull(getClass().getResource("/GUIPictures/w.gif")))
                         .getImage().getScaledInstance(60,40,Image.SCALE_DEFAULT));
                 JOptionPane.showMessageDialog(null,"<Game Instruction> \n ",
                         "Instruction",JOptionPane.INFORMATION_MESSAGE,uwImage);
             }
         });
-
-
     }
-
 }

@@ -229,7 +229,7 @@ public class TriviaMaze
         saveLocation[1]=getMyY();
         return saveLocation;
     }
-    public void setSaveLocation(int[] saveLocation){
+    public void setSaveLocation(final int[] saveLocation){
 
         myX=saveLocation[0];
         myY=saveLocation[1];

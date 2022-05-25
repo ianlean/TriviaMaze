@@ -18,7 +18,7 @@ public class Frame extends JFrame
 //    private final TriviaMaze myMaze = new TriviaMaze(MAZE_SIZE);
 
 
-    static TextPanel textBoxes;
+    static TextPanel myTextBoxes;
 
     static final Controller myController;
     static {
@@ -58,9 +58,9 @@ public class Frame extends JFrame
         this.setJMenuBar(myMenuBar);
 
         // add room panel
-        RoomPanel roomView = new RoomPanel();
-        this.add(roomView);
-        roomView.setLocation(0, 0);
+//        RoomPanel roomView = new RoomPanel();
+//        this.add(roomView);
+//        roomView.setLocation(0, 0);
         this.add(mazeView);
         mazeView.setLocation(500, 0);
 
@@ -70,15 +70,13 @@ public class Frame extends JFrame
         buttonPanel.setBounds(1000, 0, 300, 100);
 
         //add question/answer panel
-        textBoxes = new TextPanel();
-        this.add(textBoxes);
-        textBoxes.setBounds(500, 500, 800, 400);
+        myTextBoxes = new TextPanel();
+        this.add(myTextBoxes);
+        myTextBoxes.setBounds(500, 500, 800, 400);
         this.setLocationRelativeTo(null);
         this.setVisible(true);
         this.pack();
     }
-
-
 
     public static void main(String[] args) {
         EventQueue.invokeLater(() ->

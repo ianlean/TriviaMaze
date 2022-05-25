@@ -66,11 +66,8 @@ public class MazePanel extends JPanel
                 graphics2D.drawImage(resizeIcon, myXCoord, myYCoord, null);
             }
         }
-//        graphics2D.setPaint(this.myIconTexture);
-//        graphics2D.setPaint(this.myGreenFlagTexture);
-        graphics2D.fillRect(50, 50, 50, 50);
-        graphics2D.fillRect(50 * (this.myMaze.row() - 1),
-                50 * (this.myMaze.column() - 1), 55, 55);
+        graphics2D.fillRect(55 * (this.myMaze.row() - 1),
+                55 * (this.myMaze.column() - 1), 55, 55);
     }
     public void paintComponent(Graphics theGraphics)
     {

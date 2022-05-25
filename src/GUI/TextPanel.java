@@ -1,21 +1,29 @@
 package GUI;
-
+/*
+ * Assignment: Course Project "Trivia Maze"
+ *
+ * Instructor: Tom Capaul
+ *
+ * */
 import TriviaMaze.Cell;
-import TriviaMaze.Question.Question;
-
 import javax.swing.*;
 import java.awt.*;
-import java.io.IOException;
-import java.sql.SQLException;
-
 import static GUI.Frame.*;
-import static TriviaMaze.Cell.RoomStatus.SEALED;
+/**
+ * This is a superclass called "Question"
+ * this class will contain different type of question's body and answer.
+ *
+ * @author Bohan Yang, Ian Mclean, Qinyu Tao
+ * @version May 25th 2022
+ */
 
-public class TextPanel extends JPanel {
+
+public class TextPanel extends JPanel
+{
 
     private final JTextField myOutputText;
     private final JTextField myInputText;
-    String currentAnswer;
+    protected String myCurrentAnswer;
 
     public TextPanel() {
         this.myOutputText = new JTextField(50);
@@ -25,77 +33,89 @@ public class TextPanel extends JPanel {
         this.add(myInputText);
         this.add(myButton);
         makeButtonListener(myButton);
-        myOutputText.setEnabled(true);
-        myInputText.setEnabled(true);
+        this.myOutputText.setEnabled(true);
+        this.myInputText.setEnabled(true);
         this.setBackground(Color.black);
     }
 
-    public void addText(String theText) {
+    public void addText(final String theText) {
         this.myOutputText.setText(theText);
     }
 
-    public String getText() {
-        return myInputText.getText();
-    }
+//    public String getText() {
+//        return myInputText.getText();
+//    }
 
-    public void makeButtonListener(final JButton theButton) {
+    public void makeButtonListener(final JButton theButton)
+    {
         theButton.addActionListener(e -> {
-            if (myInputText.getText().equalsIgnoreCase(currentAnswer)) {
-                switch (Frame.myCur) {
-                    case "n" -> {
+            if (this.myInputText.getText().equalsIgnoreCase(this.myCurrentAnswer))
+            {
+                switch (Frame.myCur)
+                {
+                    case "n" ->
+                    {
                         addText("Correct!");
                         myController.askDirection("n");
                         Frame.mazeView.decrementY();
                     }
-                    case "e" -> {
+                    case "e" ->
+                    {
                         addText("Correct!");
                         myController.askDirection("e");
                         Frame.mazeView.incrementX();
                     }
-                    case "s" -> {
+                    case "s" ->
+                    {
                         addText("Correct!");
                         myController.askDirection("s");
                         Frame.mazeView.incrementY();
                     }
-                    case "w" -> {
+                    case "w" ->
+                    {
                         addText("Correct!");
                         myController.askDirection("w");
                         Frame.mazeView.decrementX();
                     }
                 }
-            } else if (myCur == null) {
+            }
+            else if (myCur == null)
+            {
                 addText("You can't go this way!");
-            } else {
+            }
+            else
+            {
                 addText("Wrong! This door is locked!");
                 Frame.myController.findRoom(myCur).setStatus(Cell.RoomStatus.SEALED);
                 endGameLost();
             }
             endGameWon();
-            //endGameLost();
             Frame.mazeView.validate();
             Frame.mazeView.repaint();
             Frame.myCur = null;
         });
     }
 
-    private void endGameWon() {
-        if (myController.getGameMaze().isGameOver()) {
+    private void endGameWon()
+    {
+        if (myController.getGameMaze().isGameOver())
+        {
             this.removeAll();
             JTextField endText = new  JTextField(50);
             endText.setEnabled(true);
-//            endText.setFont(new Font("Tahoma", Font.BOLD, 40));
             endText.setText("You won!");
             this.add(endText);
             validate();
             repaint();
         }
     }
-    private void endGameLost() {
-        if (!myController.getGameMaze().hasRoute()) {
+    private void endGameLost()
+    {
+        if (!myController.getGameMaze().hasRoute())
+        {
             this.removeAll();
             JTextField endText = new  JTextField(50);
             endText.setEnabled(true);
-//            endText.setFont(new Font("Tahoma", Font.BOLD, 40));
             endText.setText("You lost!");
             this.add(endText);
             validate();

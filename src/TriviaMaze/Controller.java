@@ -33,29 +33,28 @@ public class Controller
         return this.myGameMaze;
     }
 
-    public void askDirection(String direction)
+    public void askDirection(final String theDirection)
     {
-        // promptDirection();
-        if (direction.equalsIgnoreCase("w"))
+        if (theDirection.equalsIgnoreCase("w"))
         {
             this.myGameMaze.changeDirection(this.myGameMaze.getMyY(), this.myGameMaze.getMyX() - 1);
         }
-        else if (direction.equalsIgnoreCase("e"))
+        else if (theDirection.equalsIgnoreCase("e"))
         {
             this.myGameMaze.changeDirection(this.myGameMaze.getMyY(), this.myGameMaze.getMyX() + 1);
         }
-        else if (direction.equalsIgnoreCase("s"))
+        else if (theDirection.equalsIgnoreCase("s"))
         {
             this.myGameMaze.changeDirection(this.myGameMaze.getMyY() + 1, this.myGameMaze.getMyX());
         }
-        else if (direction.equalsIgnoreCase("n"))
+        else if (theDirection.equalsIgnoreCase("n"))
         {
             this.myGameMaze.changeDirection(this.myGameMaze.getMyY() - 1, this.myGameMaze.getMyX());
         }
         System.out.println(this.myGameMaze);
     }
 
-    public Room findRoom(String theDirection)
+    public Room findRoom(final String theDirection)
     {
         Room room = null;
         if (theDirection.equalsIgnoreCase("w"))
@@ -76,10 +75,4 @@ public class Controller
         }
         return room;
     }
-
-//    public static void promptDirection() {
-//        System.out.println("---------------------------");
-//        System.out.println("CHOOSE YOUR DIRECTION:\n");
-//        System.out.println("N, E, S, W\n");
-//    }
 }

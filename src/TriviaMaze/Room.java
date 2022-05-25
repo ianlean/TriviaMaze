@@ -33,7 +33,7 @@ public class Room extends Cell
 //        this.myQuestion = theQuestion;
 //        this.myStatus = RoomStatus.LOCKED;
 //    }
-    public Room(final Question theQuestion, boolean thePlayer) {
+    public Room(final Question theQuestion, final boolean thePlayer) {
         myQuestion = theQuestion;
         hasPlayer = thePlayer;
         myStatus = RoomStatus.LOCKED;
@@ -69,28 +69,22 @@ public class Room extends Cell
         this.myStatus = theStatus;
     }
 
-    // public void seal() {this.setStatus(RoomStatus.SEALED);}
-
-    public void unlock() {
-        if (this.myStatus == RoomStatus.SEALED) {
+    /**
+     * Unlock a room
+     * */
+    public void unlock()
+    {
+        if (this.myStatus == RoomStatus.SEALED)
+        {
             throw new RuntimeException("Attempted to unlock a sealed door");
-        } else if(this.myStatus == RoomStatus.UNLOCKED) {
+        }
+        else if(this.myStatus == RoomStatus.UNLOCKED)
+        {
             throw new RuntimeException("Room is already unlocked");
-        } else {
+        }
+        else
+        {
             this.myStatus = RoomStatus.UNLOCKED;
         }
     }
-
-//    @Override
-//    public String toString() {
-//        if (this.myHasPlayer) {
-//            return "|C|";
-//        } else if (this.getMyStatus() == RoomStatus.SEALED) {
-//            return "|X|";
-//        } else if(this.getMyStatus() == RoomStatus.LOCKED) {
-//            return "|?|";
-//        } else {
-//            return "|_|";
-//        }
-//    }
 }

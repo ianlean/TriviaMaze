@@ -223,4 +223,16 @@ public class TriviaMaze
             return this.myMaze[theRow][theCol];
     }
 
+    public int[] getSaveLocation(){
+        int[] saveLocation = new int[2];
+        saveLocation[0]=getMyX();
+        saveLocation[1]=getMyY();
+        return saveLocation;
+    }
+    public void setSaveLocation(int[] saveLocation){
+
+        myX=saveLocation[0];
+        myY=saveLocation[1];
+    }
+
 }

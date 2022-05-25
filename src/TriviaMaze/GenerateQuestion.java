@@ -6,6 +6,9 @@ package TriviaMaze;
  *
  * */
 import TriviaMaze.Question.Question;
+
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.Random;
 /**
  * This is a class called "GenerateQuestion", that connects to
@@ -15,7 +18,7 @@ import java.util.Random;
  * @author Bohan Yang, Ian Mclean, Qinyu Tao
  * @version May 21st 2022
  */
-public class GenerateQuestion
+public class GenerateQuestion implements Serializable
 {
     /** database instance */
     private static final Database myDatabase = new Database();

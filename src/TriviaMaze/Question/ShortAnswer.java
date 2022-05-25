@@ -5,6 +5,10 @@ package TriviaMaze.Question;
  * Instructor: Tom Capaul
  *
  * */
+
+import java.io.Serial;
+import java.io.Serializable;
+
 /**
  * This is a subclass called "ShortAnswer" extended Question class,
  * this class will contain a short answer question and the question answer.
@@ -12,7 +16,7 @@ package TriviaMaze.Question;
  * @author Bohan Yang, Ian Mclean, Qinyu Tao
  * @version May 25th 2022
  */
-public class ShortAnswer extends Question
+public class ShortAnswer extends Question implements Serializable
 {
     /**
      * Construct the short answer class by calling superclass constructor

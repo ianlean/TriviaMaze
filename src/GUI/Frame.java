@@ -2,6 +2,7 @@ package GUI;
 
 
 import TriviaMaze.Controller;
+import TriviaMaze.TriviaMaze;
 
 import javax.swing.*;
 import java.awt.*;
@@ -10,18 +11,15 @@ import java.io.*;
 import java.sql.SQLException;
 import java.util.Objects;
 
-public class Frame extends JFrame
+public class Frame extends JFrame //implements Serializable
 {
     private final static int WIDTH = 2000;
     private final static int HEIGHT = 2000;
 
     final static int MAZE_SIZE = 8;
-//    private final TriviaMaze myMaze = new TriviaMaze(MAZE_SIZE);
-
-
     static TextPanel myTextBoxes;
 
-    static final Controller myController;
+    static Controller myController;
     static {
         try {
             myController = new Controller(MAZE_SIZE);
@@ -94,9 +92,7 @@ public class Frame extends JFrame
                 FileOutputStream file = new FileOutputStream(f);
                 ObjectOutputStream out =new ObjectOutputStream(file);
 
-                out.writeObject(this);
-
-
+                out.writeObject(myController.getGameMaze());
                 out.close();
                 file.close();
             }
@@ -124,9 +120,11 @@ public class Frame extends JFrame
                 FileInputStream file=new FileInputStream(f);
                 ObjectInputStream in=new ObjectInputStream(file);
 
-                Frame g= (Frame) in.readObject();
-                this.add(g);
-
+                TriviaMaze g= (TriviaMaze)in.readObject();
+                myController.setMyGameMaze(g);
+                this.repaint();
+                this.validate();
+                this.repaint();
                 in.close();
                 file.close();
 
@@ -137,18 +135,21 @@ public class Frame extends JFrame
 
         });
         buttonPanel.add(myLoad);
-
-
-
-
-
-
-
-
-
         this.setLocationRelativeTo(null);
         this.setVisible(true);
         this.pack();
+    }
+
+    public MazePanel getPan() {
+        return mazeView;
+    }
+
+    public TextPanel getMyTextBoxes() {
+        return myTextBoxes;
+    }
+
+    public Controller getController() {
+        return myController;
     }
 
     public static void main(String[] args) {

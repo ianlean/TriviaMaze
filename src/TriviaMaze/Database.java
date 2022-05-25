@@ -9,6 +9,8 @@ import TriviaMaze.Question.Question;
 import TriviaMaze.Question.ShortAnswer;
 import TriviaMaze.Question.TrueFalseType;
 import org.sqlite.SQLiteDataSource;
+
+import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -20,7 +22,7 @@ import java.sql.Statement;
  * @author Bohan Yang, Ian Mclean, Qinyu Tao
  * @version May 21st 2022
  */
-public class Database
+public class Database implements Serializable
 {
     // private static final Database myInstance = new Database();
     /** The connection instance to connect "jdbc:sqlite:trivia.db" */

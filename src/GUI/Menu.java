@@ -196,7 +196,7 @@ public class Menu extends JMenuBar implements Serializable
                 ObjectInputStream in=new ObjectInputStream(file);
                 int[] saveLocation=(int[]) in.readObject();
 
-                myMaze.setSaveLocation(saveLocation);
+               // myMaze.setSaveLocation(saveLocation);
                 in.close();
                 file.close();
 

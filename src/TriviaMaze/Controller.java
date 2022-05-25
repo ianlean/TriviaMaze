@@ -5,6 +5,7 @@ package TriviaMaze;
  * Instructor: Tom Capaul
  *
  * */
+import java.io.Serializable;
 import java.sql.SQLException;
 /**
  * This is a class called "Controller", that makes the updates on the trivia maze
@@ -13,10 +14,10 @@ import java.sql.SQLException;
  * @author Bohan Yang, Ian Mclean, Qinyu Tao
  * @version May 22nd 2022
  */
-public class Controller
+public class Controller implements Serializable
 {
     /** trivia maze instance*/
-    private final TriviaMaze myGameMaze;
+    private TriviaMaze myGameMaze;
 
     /**
      * Constructor controller by instantiating with a certain size
@@ -75,4 +76,6 @@ public class Controller
         }
         return room;
     }
+
+    public void setMyGameMaze(TriviaMaze theMaze) {this.myGameMaze = theMaze;}
 }

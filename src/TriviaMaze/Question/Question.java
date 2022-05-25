@@ -5,6 +5,10 @@ package TriviaMaze.Question;
  * Instructor: Tom Capaul
  *
  * */
+
+import java.io.Serial;
+import java.io.Serializable;
+
 /**
  * This is a superclass called "Question"
  * this class will contain different type of question's body and answer.
@@ -12,7 +16,7 @@ package TriviaMaze.Question;
  * @author Bohan Yang, Ian Mclean, Qinyu Tao
  * @version May 25th 2022
  */
-public abstract class Question
+public abstract class Question implements Serializable
 {
     /** A String type of question body */
     protected String myQuestionBody;

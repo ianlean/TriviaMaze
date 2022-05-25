@@ -6,6 +6,8 @@ package TriviaMaze;
 *
 * */
 
+import java.io.Serializable;
+
 import static TriviaMaze.Cell.RoomStatus.*;
 
 /**
@@ -17,7 +19,7 @@ import static TriviaMaze.Cell.RoomStatus.*;
  * @version May 20th 2022
  */
 
-public class TriviaMaze
+public class TriviaMaze implements Serializable
 {
     /** GenerateQuestion class instance here for a room to generate questions from database */
     private final GenerateQuestion myGenerator;
@@ -173,14 +175,14 @@ public class TriviaMaze
      * a getter method to get the current row;
      * @return the current row.
      * */
-    protected int getMyX() {
+    public int getMyX() {
         return myX;
     }
     /**
      * a getter method to get the current column;
      * @return the current column.
      * */
-    protected int getMyY() {
+    public int getMyY() {
         return myY;
     }
     /**
@@ -229,10 +231,20 @@ public class TriviaMaze
         saveLocation[1]=getMyY();
         return saveLocation;
     }
-    public void setSaveLocation(final int[] saveLocation){
+//    public void setSaveLocation(final int[] saveLocation){
+//
+//        myX=saveLocation[0];
+//        myY=saveLocation[1];
+//    }
 
-        myX=saveLocation[0];
-        myY=saveLocation[1];
+    public String toString() {
+        StringBuilder s = new StringBuilder();
+        for (int row = 0; row < myMaze.length; row++) {
+            s.append("\n");
+            for (int col = 0; col < myMaze[row].length; col++) {
+                s.append(myMaze[row][col].toString()).append(" ");
+            }
+        }
+        return s.toString();
     }
-
 }

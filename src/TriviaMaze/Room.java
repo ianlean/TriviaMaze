@@ -6,6 +6,10 @@ package TriviaMaze;
  *
  * */
 import TriviaMaze.Question.Question;
+
+import java.io.Serial;
+import java.io.Serializable;
+
 /**
  * This is a class called "Room". It is a subclass of cell that
  * The room will contain a question
@@ -13,7 +17,7 @@ import TriviaMaze.Question.Question;
  * @author Bohan Yang, Ian Mclean, Qinyu Tao
  * @version May 21st 2022
  */
-public class Room extends Cell
+public class Room extends Cell implements Serializable
 {
     /** the question that will come along when entering this room. */
     private final Question myQuestion;
@@ -85,6 +89,18 @@ public class Room extends Cell
         else
         {
             this.myStatus = RoomStatus.UNLOCKED;
+        }
+    }
+    @Override
+    public String toString() {
+        if (this.hasPlayer) {
+            return "|C|";
+        } else if (this.getMyStatus() == RoomStatus.SEALED) {
+            return "|X|";
+        } else if(this.getMyStatus() == RoomStatus.LOCKED) {
+            return "|?|";
+        } else {
+            return "|_|";
         }
     }
 }

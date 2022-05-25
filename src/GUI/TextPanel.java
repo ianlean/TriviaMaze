@@ -8,6 +8,8 @@ package GUI;
 import TriviaMaze.Cell;
 import javax.swing.*;
 import java.awt.*;
+import java.io.Serializable;
+
 import static GUI.Frame.*;
 /**
  * This is a superclass called "Question"
@@ -18,7 +20,7 @@ import static GUI.Frame.*;
  */
 
 
-public class TextPanel extends JPanel
+public class TextPanel extends JPanel implements Serializable
 {
 
     private final JTextField myOutputText;

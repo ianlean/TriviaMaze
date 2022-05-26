@@ -95,6 +95,7 @@ public class ButtonPanel extends JPanel implements Serializable {
         this.add(left);
         this.add(right);
         this.add(hint);
+        this.setBackground(Color.LIGHT_GRAY);
 
     }
 
@@ -104,4 +105,6 @@ public class ButtonPanel extends JPanel implements Serializable {
         theButton.setForeground(Color.BLACK);
         theButton.setFont(new Font("Tahoma", Font.BOLD, 12));
     }
+
+
 }

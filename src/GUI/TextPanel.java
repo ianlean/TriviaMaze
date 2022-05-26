@@ -9,6 +9,7 @@ import TriviaMaze.Cell;
 import javax.swing.*;
 import java.awt.*;
 import java.io.Serializable;
+import java.util.Objects;
 
 import static GUI.Frame.*;
 /**
@@ -128,10 +129,15 @@ public class TextPanel extends JPanel implements Serializable
             this.removeAll();
             JTextField endText = new  JTextField(50);
             endText.setEnabled(true);
-            endText.setText("You won!");
+            endText.setText("You Win!");
             this.add(endText);
             validate();
             repaint();
+            final ImageIcon winImage = new ImageIcon
+                    (new ImageIcon(Objects.requireNonNull(getClass().getResource("/GUIPictures/win.png")))
+                            .getImage().getScaledInstance(300,300,Image.SCALE_DEFAULT));
+            JOptionPane.showMessageDialog(null,"",
+                    "You Win!",JOptionPane.PLAIN_MESSAGE,winImage);
         }
     }
     private void endGameLost()
@@ -141,10 +147,15 @@ public class TextPanel extends JPanel implements Serializable
             this.removeAll();
             JTextField endText = new  JTextField(50);
             endText.setEnabled(true);
-            endText.setText("You lost!");
+            endText.setText("You Lose!");
             this.add(endText);
             validate();
             repaint();
+            final ImageIcon loseImage = new ImageIcon
+                    (new ImageIcon(Objects.requireNonNull(getClass().getResource("/GUIPictures/lose.png")))
+                            .getImage().getScaledInstance(300,300,Image.SCALE_DEFAULT));
+            JOptionPane.showMessageDialog(null,"",
+                    "You Lose!",JOptionPane.PLAIN_MESSAGE,loseImage);
         }
     }
 }

@@ -6,9 +6,7 @@ import TriviaMaze.TriviaMaze;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
+import java.awt.event.*;
 import java.io.*;
 import java.sql.SQLException;
 import java.util.Objects;
@@ -20,6 +18,8 @@ public class Frame extends JFrame implements Serializable
 
     final static int MAZE_SIZE = 8;
     static TextPanel myTextBoxes;
+
+    static ButtonPanel myButtons;
 
     static Controller myController;
     static {
@@ -77,10 +77,11 @@ public class Frame extends JFrame implements Serializable
     /** volume slider initial value position. */
     private static final int VOLUME_INITIAL = 50;
 
-    /** theme choice button */
-    private final JButton Red = new JButton("Red");
-    private final JButton Yellow = new JButton("Yellow");
-    private final JButton Green = new JButton("Green");
+    /** theme choice JButton */
+    private final JButton redTheme = new JButton("Red");
+    private final JButton orangeTheme = new JButton("Orange");
+    private final JButton grayTheme = new JButton("Gray");
+
 
 
     /**
@@ -97,6 +98,7 @@ public class Frame extends JFrame implements Serializable
         this.setSize(WIDTH, HEIGHT);
         this.getContentPane().setLayout(null);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.getContentPane().setBackground(Color.WHITE);
 
         //add menu bar
         JMenuBar myMenuBar=createMenuBar();
@@ -131,7 +133,7 @@ public class Frame extends JFrame implements Serializable
      * a method to create JMenuBar
      * @return JMenuBar
      */
-    private JMenuBar createMenuBar() {
+    public JMenuBar createMenuBar() {
         final JMenuBar menuBar = new JMenuBar();
         menuBar.add(createFileMenu());
         menuBar.add(createOptionsMenu());
@@ -144,7 +146,7 @@ public class Frame extends JFrame implements Serializable
      * it has new game, save game, load game, and exit game functions
      * @return file JMenu
      */
-    private JMenu createFileMenu()
+    public JMenu createFileMenu()
     {
         JMenu myFileMenu=new JMenu("File");
         myFileMenu.setMnemonic(KeyEvent.VK_F);
@@ -170,18 +172,24 @@ public class Frame extends JFrame implements Serializable
      * a method to create new game menu item in file JMenu
      * new game menu item allows the user to start a new game
      */
-    private void createNewMenuItem() {
+    public void createNewMenuItem() {
         myNewMenuItem=new JMenuItem("New Game");
         myNewMenuItem.setMnemonic(KeyEvent.VK_N);
         myNewMenuItem.setEnabled(true);
-        myNewMenuItem.addActionListener(e -> {});  // haven't done
+        myNewMenuItem.addActionListener(e -> {
+            TriviaMaze newMaze=new TriviaMaze(MAZE_SIZE);
+            myController.setMyGameMaze(newMaze);
+            this.repaint();
+            this.validate();
+            this.repaint();
+        });
     }
 
     /**
      *  a method to create save game menu item in file JMenu
      *  save menu item allows the user to save the current game state
      */
-    private void createSaveMenuItem()
+    public void createSaveMenuItem()
     {
         mySaveMenuItem=new JMenuItem("Save Game");
         mySaveMenuItem.setMnemonic(KeyEvent.VK_S);
@@ -217,7 +225,7 @@ public class Frame extends JFrame implements Serializable
      * a method to create load game menu item in file JMenu
      * load menu item allows the user to load the previous game state
      */
-    private void createLoadMenuItem()
+    public void createLoadMenuItem()
     {
        myLoadMenuItem=new JMenuItem("Load Game");
        myLoadMenuItem.setMnemonic(KeyEvent.VK_L);
@@ -255,7 +263,7 @@ public class Frame extends JFrame implements Serializable
      * a method to create exit menu item in file JMenu
      * exit menu item allows the user to exit the game
      */
-    private void createExitMenuItem()
+    public void createExitMenuItem()
     {
        myExitMenuItem=new JMenuItem("Exit");
        myExitMenuItem.setMnemonic(KeyEvent.VK_E);
@@ -269,7 +277,7 @@ public class Frame extends JFrame implements Serializable
      * it can adjust the game volume and theme(background)
      * @return the Options menu
      */
-    private JMenu createOptionsMenu()
+    public JMenu createOptionsMenu()
     {
         final JMenu myOptionsMenu=new JMenu("Options");
         myOptionsMenu.setMnemonic(KeyEvent.VK_O);
@@ -300,34 +308,32 @@ public class Frame extends JFrame implements Serializable
         myThemeMenuItem.setMnemonic(KeyEvent.VK_T);
         myOptionsMenu.add(myThemeMenuItem);
 
-        myOptionsMenu.add(Red);
-        myOptionsMenu.add(Yellow);
-        myOptionsMenu.add(Green);
-        Red.addActionListener(e -> setBackgroundRed());
-        Yellow.addActionListener(e -> setBackgroundYellow());
-        Green.addActionListener(e -> setBackgroundGreen());
-
+        myOptionsMenu.add(redTheme);
+        myOptionsMenu.add(orangeTheme);
+        myOptionsMenu.add(grayTheme);
+        redTheme.addActionListener(e -> setBackgroundColor(Color.RED));
+        orangeTheme.addActionListener(e -> setBackgroundColor(Color.ORANGE));
+        grayTheme.addActionListener(e -> setBackgroundColor(Color.GRAY));
 
         return myOptionsMenu;
 
     }
 
-    private void setBackgroundRed() {
-        this.setBackground(Color.RED);
+
+    public void setBackgroundColor(Color color)  {
+        this.getContentPane().setBackground(color);
+        this.getMyTextPanel().setBackground(color);
+        this.getMazePanel().setBackground(color);
+        this.getMyButtonPanel().setBackground(color);
     }
-    private void setBackgroundYellow() {
-        this.setBackground(Color.YELLOW);
-    }
-    private void setBackgroundGreen() {
-        this.setBackground(Color.GREEN);
-    }
+
 
     /**
      * create the Help JMenu
      * including About and Instruction two menuitems
      * @return the Help menu
      */
-    private JMenu createHelpMenu(){
+    public JMenu createHelpMenu(){
         final JMenu myHelpMenu=new JMenu("Help");
         myHelpMenu.setMnemonic(KeyEvent.VK_H);
 
@@ -345,7 +351,7 @@ public class Frame extends JFrame implements Serializable
      * a method to create about menu item in About JMenu
      * this menu item shows the information about this maze game
      */
-    private void createAboutMenuItem()
+    public void createAboutMenuItem()
     {
         myAboutMenuItem=new JMenuItem("About");
         myAboutMenuItem.setMnemonic(KeyEvent.VK_A);
@@ -370,7 +376,7 @@ public class Frame extends JFrame implements Serializable
      * a method to create instruction menu item in About JMenu
      * this menu item shows the instruction for this maze game
      */
-    private void createInstructionMenuItem()
+    public void createInstructionMenuItem()
     {
         myInstructionMenuItem=new JMenuItem("Instruction");
         myInstructionMenuItem.setMnemonic(KeyEvent.VK_I);
@@ -393,12 +399,16 @@ public class Frame extends JFrame implements Serializable
         });
     }
 
-    public MazePanel getPan() {
+    public MazePanel getMazePanel() {
         return mazeView;
     }
 
-    public TextPanel getMyTextBoxes() {
+    public TextPanel getMyTextPanel() {
         return myTextBoxes;
+    }
+
+    public ButtonPanel getMyButtonPanel() {
+        return myButtons;
     }
 
     public Controller getController() {

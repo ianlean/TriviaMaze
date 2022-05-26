@@ -47,7 +47,7 @@ public class TriviaMaze implements Serializable
      *
      * @param theSize, the size that represents the row and column
      * */
-    TriviaMaze(final int theSize) // for developing purposes I am auto-filling rooms
+    public TriviaMaze(final int theSize) // for developing purposes I am auto-filling rooms
     {
         this.myMaze = new Room[theSize][theSize];
         this.myGenerator = new GenerateQuestion();

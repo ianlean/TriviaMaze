@@ -37,7 +37,7 @@ public class TextPanel extends JPanel implements Serializable
         makeButtonListener(myButton);
         this.myOutputText.setEnabled(true);
         this.myInputText.setEnabled(true);
-        this.setBackground(Color.black);
+        this.setBackground(Color.LIGHT_GRAY);
     }
 
     public void addText(final String theText) {

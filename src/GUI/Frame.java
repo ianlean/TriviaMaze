@@ -110,17 +110,17 @@ public class Frame extends JFrame implements Serializable
 
         //add maze Panel
         this.add(mazeView);
-        mazeView.setLocation(500, 0);
+        mazeView.setLocation(0, 0);
 
         //add button panel
         JPanel buttonPanel = new ButtonPanel();
         this.add(buttonPanel);
-        buttonPanel.setBounds(1000, 0, 300, 100);
+        buttonPanel.setBounds(500, 0, 500, 100);
 
         //add question/answer panel
         myTextBoxes = new TextPanel();
         this.add(myTextBoxes);
-        myTextBoxes.setBounds(500, 500, 800, 400);
+        myTextBoxes.setBounds(500, 100, 800, 300);
 
         this.setLocationRelativeTo(null);
         this.setVisible(true);

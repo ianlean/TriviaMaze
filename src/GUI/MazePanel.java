@@ -22,7 +22,6 @@ public class MazePanel extends JPanel implements Serializable
     private final BufferedImage myIcon;
 
     private Character myCharacter;
-    //private static Room characterSpot;
 
     private int myXCoord = Frame.myController.getGameMaze().getMyX() * 55;
     private int myYCoord = Frame.myController.getGameMaze().getMyY() * 55;

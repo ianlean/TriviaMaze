@@ -23,26 +23,49 @@ import static GUI.Frame.*;
 public class TextPanel extends JPanel implements Serializable
 {
 
-    private final JTextField myOutputText;
+    private final JTextField myQuestionText;
     private final JTextField myInputText;
+    private final JTextField myResultText;
+    private final JLabel question;
+    private final JLabel answer;
+    private final JLabel result;
     protected String myCurrentAnswer;
 
     public TextPanel() {
-        this.myOutputText = new JTextField(50);
+        this.question=new JLabel("Question:");
+        this.myQuestionText = new JTextField(50);
+        this.answer=new JLabel("Please type your answer:");
         this.myInputText = new JTextField(50);
         JButton myButton = new JButton("Enter");
-        this.add(myOutputText);
+        this.result=new JLabel("Result:");
+        this.myResultText = new JTextField(50);
+        this.add(question);
+        this.add(myQuestionText);
+        this.add(answer);
         this.add(myInputText);
         this.add(myButton);
+        this.add(result);
+        this.add(myResultText);
         makeButtonListener(myButton);
-        this.myOutputText.setEnabled(true);
+        this.myQuestionText.setEnabled(true);
         this.myInputText.setEnabled(true);
+        this.myResultText.setEnabled(true);
         this.setBackground(Color.LIGHT_GRAY);
     }
 
-    public void addText(final String theText) {
-        this.myOutputText.setText(theText);
+    public void addQuestionText(final String theText) {
+        this.myQuestionText.setText(theText);
     }
+
+    public void addResultText(final String theText) {
+        this.myResultText.setText(theText);
+    }
+
+    public void clearText(){
+        myInputText.setText("");
+        myResultText.setText("");
+    }
+
 
 //    public String getText() {
 //        return myInputText.getText();
@@ -57,25 +80,25 @@ public class TextPanel extends JPanel implements Serializable
                 {
                     case "n" ->
                             {
-                                addText("Correct!");
+                                addResultText("Correct!");
                                 myController.askDirection("n");
                                 Frame.mazeView.decrementY();
                             }
                     case "e" ->
                             {
-                                addText("Correct!");
+                                addResultText("Correct!");
                                 myController.askDirection("e");
                                 Frame.mazeView.incrementX();
                             }
                     case "s" ->
                             {
-                                addText("Correct!");
+                                addResultText("Correct!");
                                 myController.askDirection("s");
                                 Frame.mazeView.incrementY();
                             }
                     case "w" ->
                             {
-                                addText("Correct!");
+                                addResultText("Correct!");
                                 myController.askDirection("w");
                                 Frame.mazeView.decrementX();
                             }
@@ -83,11 +106,11 @@ public class TextPanel extends JPanel implements Serializable
             }
             else if (myCur == null)
             {
-                addText("You can't go this way!");
+                addResultText("You can't go this way!");
             }
             else
             {
-                addText("Wrong! This door is locked!");
+                addResultText("Wrong! This door is locked!");
                 Frame.myController.findRoom(myCur).setStatus(Cell.RoomStatus.SEALED);
                 endGameLost();
             }

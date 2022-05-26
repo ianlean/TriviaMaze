@@ -13,19 +13,22 @@ import static GUI.Frame.*;
 public class ButtonPanel extends JPanel implements Serializable {
 
     public ButtonPanel() {
+        JLabel title=new JLabel("Please choose a direction:");
         JButton up = new JButton("Up");
         JButton down = new JButton("Down");
         JButton left = new JButton("Left");
         JButton right = new JButton("Right");
+        JLabel hint=new JLabel("Hint: White room can be passed without answering questions.");
         styleButtons(up);
         styleButtons(down);
         styleButtons(left);
         styleButtons(right);
         up.addActionListener(e -> {
+            myTextBoxes.clearText();
             Room r = Frame.myController.findRoom("n");
             if (r.getMyQuestion() != null && r.getMyStatus() == Cell.RoomStatus.LOCKED)
             {
-                myTextBoxes.addText(r.getMyQuestion().getQuestion());
+                myTextBoxes.addQuestionText(r.getMyQuestion().getQuestion());
                 myTextBoxes.myCurrentAnswer = r.getMyQuestion().getCorrectAnswer();
                 myCur = "n";
             }
@@ -34,14 +37,15 @@ public class ButtonPanel extends JPanel implements Serializable {
                 mazeView.decrementY();
                 mazeView.repaint();
             } else {
-                myTextBoxes.addText("This door is sealed.");
+                myTextBoxes.addResultText("This door is sealed.");
                 myCur = null;
             }
         });
         down.addActionListener(e -> {
+            myTextBoxes.clearText();
             Room r = Frame.myController.findRoom("s");
             if (r.getMyQuestion() != null && r.getMyStatus() == Cell.RoomStatus.LOCKED) {
-                myTextBoxes.addText(r.getMyQuestion().getQuestion());
+                myTextBoxes.addQuestionText(r.getMyQuestion().getQuestion());
                 myTextBoxes.myCurrentAnswer = r.getMyQuestion().getCorrectAnswer();
                 myCur = "s";
             } else if (r.getMyStatus() == Cell.RoomStatus.UNLOCKED) {
@@ -49,14 +53,15 @@ public class ButtonPanel extends JPanel implements Serializable {
                 Frame.mazeView.incrementY();
                 Frame.mazeView.repaint();
             } else {
-                myTextBoxes.addText("This door is sealed.");
+                myTextBoxes.addResultText("This door is sealed.");
                 myCur = null;
             }
         });
         right.addActionListener(e -> {
+            myTextBoxes.clearText();
             Room r = Frame.myController.findRoom("e");
             if (r.getMyQuestion() != null && r.getMyStatus() == Cell.RoomStatus.LOCKED) {
-                myTextBoxes.addText(r.getMyQuestion().getQuestion());
+                myTextBoxes.addQuestionText(r.getMyQuestion().getQuestion());
                 myTextBoxes.myCurrentAnswer = r.getMyQuestion().getCorrectAnswer();
                 myCur = "e";
             } else if (r.getMyStatus() == Cell.RoomStatus.UNLOCKED) {
@@ -64,14 +69,15 @@ public class ButtonPanel extends JPanel implements Serializable {
                 Frame.mazeView.incrementX();
                 Frame.mazeView.repaint();
             } else {
-                myTextBoxes.addText("This door is sealed.");
+                myTextBoxes.addResultText("This door is sealed.");
                 myCur = null;
             }
         });
         left.addActionListener(e -> {
+            myTextBoxes.clearText();
             Room r = Frame.myController.findRoom("w");
             if (r.getMyQuestion() != null && r.getMyStatus() == Cell.RoomStatus.LOCKED) {
-                myTextBoxes.addText(r.getMyQuestion().getQuestion());
+                myTextBoxes.addQuestionText(r.getMyQuestion().getQuestion());
                 myTextBoxes.myCurrentAnswer = r.getMyQuestion().getCorrectAnswer();
                 myCur = "w";
             } else if (r.getMyStatus() == Cell.RoomStatus.UNLOCKED) {
@@ -79,14 +85,17 @@ public class ButtonPanel extends JPanel implements Serializable {
                 Frame.mazeView.decrementX();
                 Frame.mazeView.repaint();
             } else {
-                myTextBoxes.addText("This door is sealed.");
+                myTextBoxes.addResultText("This door is sealed.");
                 myCur = null;
             }
         });
+        this.add(title);
         this.add(up);
         this.add(down);
         this.add(left);
         this.add(right);
+        this.add(hint);
+
     }
 
     private static void styleButtons(final JButton theButton)

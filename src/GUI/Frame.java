@@ -115,7 +115,7 @@ public class Frame extends JFrame implements Serializable
         //add button panel
         JPanel buttonPanel = new ButtonPanel();
         this.add(buttonPanel);
-        buttonPanel.setBounds(500, 0, 500, 100);
+        buttonPanel.setBounds(500, 0, 800, 100);
 
         //add question/answer panel
         myTextBoxes = new TextPanel();
@@ -382,7 +382,12 @@ public class Frame extends JFrame implements Serializable
                 final ImageIcon uwImage = new ImageIcon
                         (new ImageIcon(Objects.requireNonNull(getClass().getResource("/GUIPictures/w.gif")))
                                 .getImage().getScaledInstance(60,40,Image.SCALE_DEFAULT));
-                JOptionPane.showMessageDialog(null,"<Game Instruction> \n ",
+                JOptionPane.showMessageDialog(null,"<Game Instruction> \n Choose a direction " +
+                                "to go and answer questions. \n 1. Black Room means this room is locked." +
+                                "\n 2. White Room can be passed without answering questions." +
+                                "\n 3. Blue room can be passed by answering question correctly." +
+                                "\n 4. If you answer the question wrong, the room of this direction will be locked." +
+                                "\n 5. You can go back if the room is white.",
                         "Instruction",JOptionPane.INFORMATION_MESSAGE,uwImage);
             }
         });

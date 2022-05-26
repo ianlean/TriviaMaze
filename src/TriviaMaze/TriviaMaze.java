@@ -1,10 +1,10 @@
 package TriviaMaze;
 /*
-* Assignment: Course Project "Trivia Maze"
-*
-* Instructor: Tom Capaul
-*
-* */
+ * Assignment: Course Project "Trivia Maze"
+ *
+ * Instructor: Tom Capaul
+ *
+ * */
 
 import java.io.Serializable;
 
@@ -67,8 +67,8 @@ public class TriviaMaze implements Serializable
             {
                 this.myMaze[row][col] = new Room(this.myGenerator.generateRandomQuestion(), false);
                 if (row == 0 || col == 0 ||
-                row == this.myMaze.length - 1 || col == this.myMaze.length - 1 ||
-                row - col == 0 || row - col == 1)
+                        row == this.myMaze.length - 1 || col == this.myMaze.length - 1 ||
+                        row - col == 0 || row - col == 1)
                 {
                     this.myMaze[row][col].setStatus(LOCKED);
                 }
@@ -222,20 +222,11 @@ public class TriviaMaze implements Serializable
      * @return the room in the maze location
      * */
     protected Room getRoom(final int theRow, final int theCol) {
-            return this.myMaze[theRow][theCol];
+        return this.myMaze[theRow][theCol];
     }
 
-    public int[] getSaveLocation(){
-        int[] saveLocation = new int[2];
-        saveLocation[0]=getMyX();
-        saveLocation[1]=getMyY();
-        return saveLocation;
-    }
-//    public void setSaveLocation(final int[] saveLocation){
-//
-//        myX=saveLocation[0];
-//        myY=saveLocation[1];
-//    }
+
+
 
     public String toString() {
         StringBuilder s = new StringBuilder();

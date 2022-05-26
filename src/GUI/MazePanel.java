@@ -94,12 +94,6 @@ public class MazePanel extends JPanel implements Serializable
         this.myYCoord=Frame.myController.getGameMaze().getMyY() * 55;
     }
 
-    public Character getCharacter(){
-        return myCharacter;
-    }
 
-    public void setCharacter(Character theCharacter){
-        myCharacter=theCharacter;
-    }
 
 }

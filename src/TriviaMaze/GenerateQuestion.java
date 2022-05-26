@@ -7,7 +7,6 @@ package TriviaMaze;
  * */
 import TriviaMaze.Question.Question;
 
-import java.io.Serial;
 import java.io.Serializable;
 import java.util.Random;
 /**

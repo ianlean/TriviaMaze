@@ -56,29 +56,29 @@ public class TextPanel extends JPanel implements Serializable
                 switch (Frame.myCur)
                 {
                     case "n" ->
-                    {
-                        addText("Correct!");
-                        myController.askDirection("n");
-                        Frame.mazeView.decrementY();
-                    }
+                            {
+                                addText("Correct!");
+                                myController.askDirection("n");
+                                Frame.mazeView.decrementY();
+                            }
                     case "e" ->
-                    {
-                        addText("Correct!");
-                        myController.askDirection("e");
-                        Frame.mazeView.incrementX();
-                    }
+                            {
+                                addText("Correct!");
+                                myController.askDirection("e");
+                                Frame.mazeView.incrementX();
+                            }
                     case "s" ->
-                    {
-                        addText("Correct!");
-                        myController.askDirection("s");
-                        Frame.mazeView.incrementY();
-                    }
+                            {
+                                addText("Correct!");
+                                myController.askDirection("s");
+                                Frame.mazeView.incrementY();
+                            }
                     case "w" ->
-                    {
-                        addText("Correct!");
-                        myController.askDirection("w");
-                        Frame.mazeView.decrementX();
-                    }
+                            {
+                                addText("Correct!");
+                                myController.askDirection("w");
+                                Frame.mazeView.decrementX();
+                            }
                 }
             }
             else if (myCur == null)

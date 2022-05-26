@@ -7,7 +7,6 @@ package TriviaMaze;
  * */
 import TriviaMaze.Question.Question;
 
-import java.io.Serial;
 import java.io.Serializable;
 
 /**
@@ -89,18 +88,6 @@ public class Room extends Cell implements Serializable
         else
         {
             this.myStatus = RoomStatus.UNLOCKED;
-        }
-    }
-    @Override
-    public String toString() {
-        if (this.hasPlayer) {
-            return "|C|";
-        } else if (this.getMyStatus() == RoomStatus.SEALED) {
-            return "|X|";
-        } else if(this.getMyStatus() == RoomStatus.LOCKED) {
-            return "|?|";
-        } else {
-            return "|_|";
         }
     }
 }

@@ -79,8 +79,11 @@ public class Frame extends JFrame implements Serializable
 
     /** theme choice JButton */
     private final JButton redTheme = new JButton("Red");
-    private final JButton orangeTheme = new JButton("Orange");
+    private final JButton whiteTheme = new JButton("White");
     private final JButton grayTheme = new JButton("Gray");
+
+
+    private static Music backgroundMusic = new Music("src/SoundSource/backgroundmusic.wav");
 
 
 
@@ -91,6 +94,7 @@ public class Frame extends JFrame implements Serializable
      */
     public Frame() throws IOException, SQLException {
 
+        backgroundMusic.loop();
         this.setTitle("Maze Game");
         final ImageIcon uwImage = new ImageIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource("/GUIPictures/w.gif")))
                 .getImage().getScaledInstance(60, 40, Image.SCALE_DEFAULT));
@@ -293,15 +297,17 @@ public class Frame extends JFrame implements Serializable
         volumeSlider.setMinorTickSpacing(MINOR_SPACING);
         volumeSlider.setPaintLabels(true);
         volumeSlider.setPaintTicks(true);
+        volumeSlider.addChangeListener(theEvent -> {
+            try {
+                Music.changeVolume(volumeSlider.getValue());
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+
+        });
         myOptionsMenu.add(volumeSlider);
         myOptionsMenu.addSeparator();
-        // haven't finished
-        volumeSlider.addChangeListener(theEvent -> {
-            final JSlider volume = (JSlider) theEvent.getSource();
-            if (!volume.getValueIsAdjusting()) {
-                final int volumeValue = volume.getValue();
-            }
-        });
+
 
         // theme menu item to change the background
         JMenuItem myThemeMenuItem = new JMenuItem("Theme");
@@ -309,10 +315,10 @@ public class Frame extends JFrame implements Serializable
         myOptionsMenu.add(myThemeMenuItem);
 
         myOptionsMenu.add(redTheme);
-        myOptionsMenu.add(orangeTheme);
+        myOptionsMenu.add(whiteTheme);
         myOptionsMenu.add(grayTheme);
         redTheme.addActionListener(e -> setBackgroundColor(Color.RED));
-        orangeTheme.addActionListener(e -> setBackgroundColor(Color.ORANGE));
+        whiteTheme.addActionListener(e -> setBackgroundColor(Color.WHITE));
         grayTheme.addActionListener(e -> setBackgroundColor(Color.GRAY));
 
         return myOptionsMenu;
@@ -399,6 +405,8 @@ public class Frame extends JFrame implements Serializable
         });
     }
 
+
+
     public MazePanel getMazePanel() {
         return mazeView;
     }
@@ -413,6 +421,10 @@ public class Frame extends JFrame implements Serializable
 
     public Controller getController() {
         return myController;
+    }
+
+    public static Music getBackgroundMusic() {
+        return backgroundMusic;
     }
 
     public static void main(String[] args) {

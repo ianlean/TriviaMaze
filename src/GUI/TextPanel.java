@@ -32,6 +32,7 @@ public class TextPanel extends JPanel implements Serializable
     private final JLabel result;
     protected String myCurrentAnswer;
 
+
     public TextPanel() {
         this.question=new JLabel("Question:");
         this.myQuestionText = new JTextField(50);
@@ -151,6 +152,7 @@ public class TextPanel extends JPanel implements Serializable
 //            endText.setText("You Lose!");
 //            this.add(endText);
             myResultText.setText("You Lose!");
+
             validate();
             repaint();
             final ImageIcon loseImage = new ImageIcon

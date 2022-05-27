@@ -126,11 +126,12 @@ public class TextPanel extends JPanel implements Serializable
     {
         if (myController.getGameMaze().isGameOver())
         {
-            this.removeAll();
-            JTextField endText = new  JTextField(50);
-            endText.setEnabled(true);
-            endText.setText("You Win!");
-            this.add(endText);
+//            this.removeAll();
+//            JTextField endText = new  JTextField(50);
+//            endText.setEnabled(true);
+//            endText.setText("You Win!");
+//            this.add(endText);
+            myResultText.setText("You Win!");
             validate();
             repaint();
             final ImageIcon winImage = new ImageIcon
@@ -144,11 +145,12 @@ public class TextPanel extends JPanel implements Serializable
     {
         if (!myController.getGameMaze().hasRoute())
         {
-            this.removeAll();
-            JTextField endText = new  JTextField(50);
-            endText.setEnabled(true);
-            endText.setText("You Lose!");
-            this.add(endText);
+//            this.removeAll();
+//            JTextField endText = new  JTextField(50);
+//            endText.setEnabled(true);
+//            endText.setText("You Lose!");
+//            this.add(endText);
+            myResultText.setText("You Lose!");
             validate();
             repaint();
             final ImageIcon loseImage = new ImageIcon

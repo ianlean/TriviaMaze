@@ -330,7 +330,6 @@ public class Frame extends JFrame implements Serializable
         this.getContentPane().setBackground(color);
         this.getMyTextPanel().setBackground(color);
         this.getMazePanel().setBackground(color);
-        this.getMyButtonPanel().setBackground(color);
     }
 
 

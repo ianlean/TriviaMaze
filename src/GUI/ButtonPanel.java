@@ -95,9 +95,11 @@ public class ButtonPanel extends JPanel implements Serializable {
         this.add(left);
         this.add(right);
         this.add(hint);
-        this.setBackground(Color.LIGHT_GRAY);
-
+        this.setOpaque(false);
     }
+
+
+
 
     private static void styleButtons(final JButton theButton)
     {

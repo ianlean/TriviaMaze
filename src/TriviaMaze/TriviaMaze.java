@@ -16,7 +16,7 @@ import static TriviaMaze.Cell.RoomStatus.*;
  * current location with a character in the spot.
  *
  * @author Bohan Yang, Ian Mclean, Qinyu Tao
- * @version May 20th 2022
+ * @version June 1st 2022
  */
 
 public class TriviaMaze implements Serializable
@@ -33,13 +33,9 @@ public class TriviaMaze implements Serializable
     /** the current location y to keep tracking */
     private int myY;
 
-    /** a room object but represents a character */
-    private static Room myCharacterSpot;
-
     /** a boolean value to record if the game is over yet */
     private boolean myGameOver = false;
 
-    private boolean myHasLost = false;
 
     /**
      * Construct the trivia maze by accepting the size that is passing in
@@ -65,7 +61,7 @@ public class TriviaMaze implements Serializable
         {
             for (int col = 0; col < this.myMaze.length; col++)
             {
-                this.myMaze[row][col] = new Room(this.myGenerator.generateRandomQuestion(), false);
+                this.myMaze[row][col] = new Room(this.myGenerator.generateRandomQuestion());
                 if (row == 0 || col == 0 ||
                         row == this.myMaze.length - 1 || col == this.myMaze.length - 1 ||
                         row - col == 0 || row - col == 1)
@@ -78,8 +74,6 @@ public class TriviaMaze implements Serializable
                 }
             }
         }
-        myCharacterSpot = myMaze[0][0] = new Room(null, true);
-        myCharacterSpot.setHasPlayer(true);
         this.myMaze[0][0].unlock();
         this.myX = 0;
         this.myY = 0;
@@ -96,11 +90,8 @@ public class TriviaMaze implements Serializable
     {
         if (validMove(theRow, theCol))
         {
-            myCharacterSpot.setHasPlayer(false);
-            myCharacterSpot = this.myMaze[theRow][theCol]; //this method means we have confirmed
             this.myX = theCol;                           // the direction we want to move in
             this.myY = theRow;
-            myCharacterSpot.setHasPlayer(true);
             this.myMaze[this.myY][this.myX].setStatus(UNLOCKED);
         }
         if (this.myX == 7 && this.myY == 7)
@@ -108,11 +99,26 @@ public class TriviaMaze implements Serializable
             this.myGameOver = true;
         }
     }
+    /**
+     * It checks if there is still a route to end point from current location
+     *
+     * @return boolean value if the game ends or not yet
+     * */
     public boolean hasRoute()
     {
         int[][] maze = getMaze();
         return gameOverHelper(maze, this.myX, this.myY);
     }
+
+    /**
+     * private helper method to take a transformed int maze and current position
+     * to check entire int maze
+     *
+     * @param theMaze, the int maze that sealed cells are 0, otherwise 1
+     * @param theX, the current x coordinate
+     * @param theY, the current y coordinate
+     * @return boolean type if the game ends or not yet
+     * */
     private boolean gameOverHelper(final int[][] theMaze, final int theX, final int theY)
     {
         if (!((theX >= 0 && theX < theMaze.length) && (theY >= 0 && theY < theMaze.length)) || theMaze[theX][theY] == 0)
@@ -127,6 +133,12 @@ public class TriviaMaze implements Serializable
         return gameOverHelper(theMaze, theX + 1, theY) || gameOverHelper(theMaze, theX - 1, theY)
                 || gameOverHelper(theMaze, theX, theY + 1) || gameOverHelper(theMaze, theX, theY - 1);
     }
+
+    /**
+     * The maze get transformed to be a int maze, Sealed cell is 0, otherwise 1
+     *
+     * @return int[][], an int 2-D array
+     * */
     private int[][] getMaze()
     {
         int[][] maze = new int[TriviaMaze.this.myMaze.length][TriviaMaze.this.myMaze.length];
@@ -168,8 +180,6 @@ public class TriviaMaze implements Serializable
     {
         return myGameOver;
     }
-
-    public boolean isGameLost() { return hasRoute(); }
 
     /**
      * a getter method to get the current row;
@@ -228,14 +238,14 @@ public class TriviaMaze implements Serializable
 
 
 
-    public String toString() {
-        StringBuilder s = new StringBuilder();
-        for (int row = 0; row < myMaze.length; row++) {
-            s.append("\n");
-            for (int col = 0; col < myMaze[row].length; col++) {
-                s.append(myMaze[row][col].toString()).append(" ");
-            }
-        }
-        return s.toString();
-    }
+//    public String toString() {
+//        StringBuilder s = new StringBuilder();
+//        for (int row = 0; row < myMaze.length; row++) {
+//            s.append("\n");
+//            for (int col = 0; col < myMaze[row].length; col++) {
+//                s.append(myMaze[row][col].toString()).append(" ");
+//            }
+//        }
+//        return s.toString();
+//    }
 }

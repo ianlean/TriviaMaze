@@ -12,7 +12,7 @@ import java.io.Serializable;
  * This is a class called "Cell", each cell is a room in the m by n maze
  *
  * @author Bohan Yang, Ian Mclean, Qinyu Tao
- * @version May 25th 2022
+ * @version June 1st 2022
  */
 public class Cell implements Serializable
 {
@@ -23,6 +23,7 @@ public class Cell implements Serializable
     {
         UNLOCKED, LOCKED, SEALED
     }
+
     /** The cell status of that also means the room status */
     protected RoomStatus myStatus;
 

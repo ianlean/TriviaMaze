@@ -12,7 +12,7 @@ import java.sql.SQLException;
  * and change the state of the rooms
  *
  * @author Bohan Yang, Ian Mclean, Qinyu Tao
- * @version May 22nd 2022
+ * @version June 1st, 2022
  */
 public class Controller implements Serializable
 {

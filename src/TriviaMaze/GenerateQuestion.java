@@ -6,7 +6,6 @@ package TriviaMaze;
  *
  * */
 import TriviaMaze.Question.Question;
-
 import java.io.Serializable;
 import java.util.Random;
 /**
@@ -15,12 +14,13 @@ import java.util.Random;
  * short answer question
  *
  * @author Bohan Yang, Ian Mclean, Qinyu Tao
- * @version May 21st 2022
+ * @version June 1st 2022
  */
 public class GenerateQuestion implements Serializable
 {
     /** database instance */
     private static final Database myDatabase = new Database();
+
     /** a random instance to randomize the question type */
     private static Random myRandom;
 
@@ -29,6 +29,7 @@ public class GenerateQuestion implements Serializable
     {
         myRandom = new Random();
     }
+
     /**
      * generate a random type of question
      *
@@ -43,14 +44,16 @@ public class GenerateQuestion implements Serializable
                     default -> null;
                 };
     }
+
     /**
      * a private helper method that will help to generate a question by passing in type
      *
      * @param theType, the type is either by the true or false question or short answer
      *
-     * @return, the question that is pulled from database
+     * @return Question, the question that is pulled from database
      * */
-    private Question createQuestion(final String theType) {
+    private Question createQuestion(final String theType)
+    {
         return switch (theType) {
             case "tf" -> myDatabase.getTrueFalseQuestion();
             case "sa" -> myDatabase.getShortAnswerQuestion();

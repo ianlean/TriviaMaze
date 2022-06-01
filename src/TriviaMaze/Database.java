@@ -9,7 +9,6 @@ import TriviaMaze.Question.Question;
 import TriviaMaze.Question.ShortAnswer;
 import TriviaMaze.Question.TrueFalseType;
 import org.sqlite.SQLiteDataSource;
-
 import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -20,11 +19,10 @@ import java.sql.Statement;
  * allows necessary classes to pull question.
  *
  * @author Bohan Yang, Ian Mclean, Qinyu Tao
- * @version May 21st 2022
+ * @version June 1st 2022
  */
 public class Database implements Serializable
 {
-    // private static final Database myInstance = new Database();
     /** The connection instance to connect "jdbc:sqlite:trivia.db" */
     private Connection myConn = null;
 
@@ -34,7 +32,7 @@ public class Database implements Serializable
     /** The ResultSet instance to save the result after executing the query */
     private ResultSet myRs = null;
 
-
+    /** The SQLiteDataSource the class we connect the SQLite database */
     private final SQLiteDataSource myDataSource = new SQLiteDataSource();
 
     /**
@@ -50,40 +48,22 @@ public class Database implements Serializable
         {
             theE.printStackTrace();
         }
-
     }
     /**
      * a helper method to connect the SQLite our trivia.db file
+     *
+     * @throws SQLException
      * */
     private void connect() throws SQLException
     {
         this.myDataSource.setUrl("jdbc:sqlite:trivia.db");
         this.myConn = this.myDataSource.getConnection();
     }
-//    public int getRandomID()
-//    {
-//        int id = 0;
-//        try
-//        {
-//            this.myStmt = this.myConn.createStatement();
-//            this.myRs = this.myStmt.executeQuery("SELECT * FROM truefalse ORDER BY RANDOM() LIMIT 1;");
-//            this.myRs.getString("question");
-//            while (this.myRs.next())
-//            {
-//                id = this.myRs.getInt("answer");
-//            }
-//        }
-//        catch (SQLException e)
-//        {
-//            e.printStackTrace();
-//        }
-//        return id;
-//    }
 
     /**
      * Selecting a True or False question from the database
      *
-     * @return a true or false question instance
+     * @return Question a true or false question instance
      * */
     protected Question getTrueFalseQuestion()
     {
@@ -106,7 +86,7 @@ public class Database implements Serializable
     /**
      * Selecting a Short answer question from the database
      *
-     * @return a short question instance
+     * @return Question, a short question instance
      * */
     protected Question getShortAnswerQuestion()
     {

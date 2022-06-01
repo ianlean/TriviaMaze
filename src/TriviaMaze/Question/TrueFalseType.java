@@ -9,11 +9,11 @@ package TriviaMaze.Question;
 import java.io.Serializable;
 
 /**
- * This is a subclass called "Question" extended Question class,
+ * This is a subclass called "Question" extended Question class implement Serializable
  * this class will contain a true false question and the question answer.
  *
  * @author Bohan Yang, Ian Mclean, Qinyu Tao
- * @version May 25th 2022
+ * @version June 1st 2022
  */
 public class TrueFalseType extends Question implements Serializable
 {

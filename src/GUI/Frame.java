@@ -1,6 +1,10 @@
 package GUI;
-
-
+/*
+ * Assignment: Course Project "Trivia Maze"
+ *
+ * Instructor: Tom Capaul
+ *
+ * */
 import TriviaMaze.Controller;
 import TriviaMaze.TriviaMaze;
 
@@ -10,39 +14,60 @@ import java.awt.event.*;
 import java.io.*;
 import java.sql.SQLException;
 import java.util.Objects;
-
+/**
+ * This is a subclass called "Frame" extended JFrame class implement Serializable
+ * The Frame of the whole GUI, that will contain the Maze Panel, Text label, Menus, Buttons
+ * and any other useful utilities
+ *
+ * @author Bohan Yang, Ian Mclean, Qinyu Tao
+ * @version June 1st 2022
+ */
 public class Frame extends JFrame implements Serializable
 {
+    /** The width of the JFrame window */
     private final static int WIDTH = 2000;
+
+    /** The height of the JFrame window */
     private final static int HEIGHT = 2000;
 
-    final static int MAZE_SIZE = 8;
-    static TextPanel myTextBoxes;
+    /** The maze width and height of the trivia maze*/
+    private final static int MAZE_SIZE = 8;
 
-    static ButtonPanel myButtons;
+    /** The text panel that allows user be able to put answer in the text box */
+    protected static TextPanel myTextBoxes;
 
+    /**
+     * Making the controller be static and allow the manipulation.
+     * */
     static Controller myController;
-    static {
-        try {
+    static
+    {
+        try
+        {
             myController = new Controller(MAZE_SIZE);
-        } catch (SQLException e) {
+        }
+        catch (SQLException e)
+        {
             throw new RuntimeException(e);
         }
     }
-
-
-    static MazePanel mazeView;
-    static {
-        try {
-            mazeView = new MazePanel(myController.getGameMaze());
-        } catch (IOException e) {
+    /**
+     * Making the Maze Panel of the entire trivia maze to be static
+     * */
+    static MazePanel myMazeView;
+    static
+    {
+        try
+        {
+            myMazeView = new MazePanel(myController.getGameMaze());
+        }
+        catch (IOException e)
+        {
             throw new RuntimeException(e);
         }
     }
-
-
+    /** The current direction you are going */
     static String myCur;
-
 
     /** the new game menu item */
     private JMenuItem myNewMenuItem;
@@ -63,10 +88,10 @@ public class Frame extends JFrame implements Serializable
     private JMenuItem myInstructionMenuItem;
 
     /** volume slider minimum */
-    private static final int VOLUME_MINIMUM=0;
+    private static final int VOLUME_MINIMUM = 0;
 
     /** volume slider maximum */
-    private static final int VOLUME_MAXIMUM=100;
+    private static final int VOLUME_MAXIMUM = 100;
 
     /** volume slider major spacing */
     private static final int MAJOR_SPACING = 25;
@@ -78,12 +103,12 @@ public class Frame extends JFrame implements Serializable
     private static final int VOLUME_INITIAL = 50;
 
     /** theme choice JButton */
-    private final JButton redTheme = new JButton("Red");
-    private final JButton whiteTheme = new JButton("White");
-    private final JButton grayTheme = new JButton("Gray");
+    private final JButton myRedTheme = new JButton("Red");
+    private final JButton myWhiteTheme = new JButton("White");
+    private final JButton myGrayTheme = new JButton("Gray");
 
 
-    private static Music backgroundMusic = new Music("src/SoundSource/backgroundmusic.wav");
+    private static final Music backgroundMusic = new Music("src/SoundSource/backgroundmusic.wav");
 
 
 
@@ -92,8 +117,8 @@ public class Frame extends JFrame implements Serializable
      * @throws IOException
      * @throws SQLException
      */
-    public Frame() throws IOException, SQLException {
-
+    public Frame() throws IOException, SQLException
+    {
         backgroundMusic.loop();
         this.setTitle("Maze Game");
         final ImageIcon uwImage = new ImageIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource("/GUIPictures/w.gif")))
@@ -109,14 +134,8 @@ public class Frame extends JFrame implements Serializable
         this.add(myMenuBar);
         this.setJMenuBar(myMenuBar);
 
-        // add room panel
-//        RoomPanel roomView = new RoomPanel();
-//        this.add(roomView);
-//        roomView.setLocation(0, 0);
-
-        //add maze Panel
-        this.add(mazeView);
-        mazeView.setLocation(0, 0);
+        this.add(myMazeView);
+        myMazeView.setLocation(0, 0);
 
         //add button panel
         JPanel buttonPanel = new ButtonPanel();
@@ -137,7 +156,8 @@ public class Frame extends JFrame implements Serializable
      * a method to create JMenuBar
      * @return JMenuBar
      */
-    public JMenuBar createMenuBar() {
+    public JMenuBar createMenuBar()
+    {
         final JMenuBar menuBar = new JMenuBar();
         menuBar.add(createFileMenu());
         menuBar.add(createOptionsMenu());
@@ -156,19 +176,19 @@ public class Frame extends JFrame implements Serializable
         myFileMenu.setMnemonic(KeyEvent.VK_F);
 
         createNewMenuItem();
-        myFileMenu.add(myNewMenuItem);
+        myFileMenu.add(this.myNewMenuItem);
         myFileMenu.addSeparator();
 
         createSaveMenuItem();
-        myFileMenu.add(mySaveMenuItem);
+        myFileMenu.add(this.mySaveMenuItem);
         myFileMenu.addSeparator();
 
         createLoadMenuItem();
-        myFileMenu.add(myLoadMenuItem);
+        myFileMenu.add(this.myLoadMenuItem);
         myFileMenu.addSeparator();
 
         createExitMenuItem();
-        myFileMenu.add(myExitMenuItem);
+        myFileMenu.add(this.myExitMenuItem);
 
         return myFileMenu;
     }
@@ -176,11 +196,13 @@ public class Frame extends JFrame implements Serializable
      * a method to create new game menu item in file JMenu
      * new game menu item allows the user to start a new game
      */
-    public void createNewMenuItem() {
-        myNewMenuItem=new JMenuItem("New Game");
-        myNewMenuItem.setMnemonic(KeyEvent.VK_N);
-        myNewMenuItem.setEnabled(true);
-        myNewMenuItem.addActionListener(e -> {
+    public void createNewMenuItem()
+    {
+        this.myNewMenuItem=new JMenuItem("New Game");
+        this.myNewMenuItem.setMnemonic(KeyEvent.VK_N);
+        this.myNewMenuItem.setEnabled(true);
+        this.myNewMenuItem.addActionListener(e ->
+        {
             TriviaMaze newMaze=new TriviaMaze(MAZE_SIZE);
             myController.setMyGameMaze(newMaze);
             this.repaint();
@@ -195,16 +217,17 @@ public class Frame extends JFrame implements Serializable
      */
     public void createSaveMenuItem()
     {
-        mySaveMenuItem=new JMenuItem("Save Game");
-        mySaveMenuItem.setMnemonic(KeyEvent.VK_S);
-        mySaveMenuItem.setEnabled(true);
-        mySaveMenuItem.addActionListener(event -> saveActionListener());
+        this.mySaveMenuItem=new JMenuItem("Save Game");
+        this.mySaveMenuItem.setMnemonic(KeyEvent.VK_S);
+        this.mySaveMenuItem.setEnabled(true);
+        this.mySaveMenuItem.addActionListener(event -> saveActionListener());
     }
 
     /**
      * actionListen for save menuitem
      */
-    public void saveActionListener(){
+    public void saveActionListener()
+    {
         FileDialog fd = new FileDialog(new JFrame(), "Save Game", FileDialog.SAVE);
         fd.setVisible(true);
         if (fd.getFile() == null) return;
@@ -231,17 +254,18 @@ public class Frame extends JFrame implements Serializable
      */
     public void createLoadMenuItem()
     {
-       myLoadMenuItem=new JMenuItem("Load Game");
-       myLoadMenuItem.setMnemonic(KeyEvent.VK_L);
-       myLoadMenuItem.setEnabled(true);
-       myLoadMenuItem.addActionListener(e -> loadActionListener());
+        this.myLoadMenuItem=new JMenuItem("Load Game");
+        this.myLoadMenuItem.setMnemonic(KeyEvent.VK_L);
+        this.myLoadMenuItem.setEnabled(true);
+        this.myLoadMenuItem.addActionListener(e -> loadActionListener());
     }
 
 
     /**
      * actionListen for load menuitem
      */
-    public void loadActionListener(){
+    public void loadActionListener()
+    {
         FileDialog fd = new FileDialog(new JFrame(), "Load Game", FileDialog.LOAD);
         fd.setVisible(true);
         if (fd.getFile() == null) return;
@@ -257,7 +281,8 @@ public class Frame extends JFrame implements Serializable
             this.repaint();
             in.close();
             file.close();
-        } catch (ClassNotFoundException | IOException ex)
+        }
+        catch (ClassNotFoundException | IOException ex)
         {
             ex.printStackTrace();
         }
@@ -297,13 +322,16 @@ public class Frame extends JFrame implements Serializable
         volumeSlider.setMinorTickSpacing(MINOR_SPACING);
         volumeSlider.setPaintLabels(true);
         volumeSlider.setPaintTicks(true);
-        volumeSlider.addChangeListener(theEvent -> {
-            try {
+        volumeSlider.addChangeListener(theEvent ->
+        {
+            try
+            {
                 Music.changeVolume(volumeSlider.getValue());
-            } catch (IllegalAccessException e) {
+            }
+            catch (IllegalAccessException e)
+            {
                 e.printStackTrace();
             }
-
         });
         myOptionsMenu.add(volumeSlider);
         myOptionsMenu.addSeparator();
@@ -314,31 +342,29 @@ public class Frame extends JFrame implements Serializable
         myThemeMenuItem.setMnemonic(KeyEvent.VK_T);
         myOptionsMenu.add(myThemeMenuItem);
 
-        myOptionsMenu.add(redTheme);
-        myOptionsMenu.add(whiteTheme);
-        myOptionsMenu.add(grayTheme);
-        redTheme.addActionListener(e -> setBackgroundColor(Color.RED));
-        whiteTheme.addActionListener(e -> setBackgroundColor(Color.WHITE));
-        grayTheme.addActionListener(e -> setBackgroundColor(Color.GRAY));
+        myOptionsMenu.add(this.myRedTheme);
+        myOptionsMenu.add(this.myWhiteTheme);
+        myOptionsMenu.add(this.myGrayTheme);
+        this.myRedTheme.addActionListener(e -> setBackgroundColor(Color.RED));
+        this.myWhiteTheme.addActionListener(e -> setBackgroundColor(Color.WHITE));
+        this.myGrayTheme.addActionListener(e -> setBackgroundColor(Color.GRAY));
 
         return myOptionsMenu;
-
     }
-
-
-    public void setBackgroundColor(Color color)  {
+    public void setBackgroundColor(Color color)
+    {
         this.getContentPane().setBackground(color);
         this.getMyTextPanel().setBackground(color);
         this.getMazePanel().setBackground(color);
     }
 
-
     /**
      * create the Help JMenu
-     * including About and Instruction two menuitems
+     * including About and Instruction two menu items
      * @return the Help menu
      */
-    public JMenu createHelpMenu(){
+    public JMenu createHelpMenu()
+    {
         final JMenu myHelpMenu=new JMenu("Help");
         myHelpMenu.setMnemonic(KeyEvent.VK_H);
 
@@ -358,9 +384,9 @@ public class Frame extends JFrame implements Serializable
      */
     public void createAboutMenuItem()
     {
-        myAboutMenuItem=new JMenuItem("About");
-        myAboutMenuItem.setMnemonic(KeyEvent.VK_A);
-        myAboutMenuItem.addActionListener(new ActionListener()
+        this.myAboutMenuItem=new JMenuItem("About");
+        this.myAboutMenuItem.setMnemonic(KeyEvent.VK_A);
+        this.myAboutMenuItem.addActionListener(new ActionListener()
         {
             @Override
             public void actionPerformed(ActionEvent e)
@@ -383,9 +409,9 @@ public class Frame extends JFrame implements Serializable
      */
     public void createInstructionMenuItem()
     {
-        myInstructionMenuItem=new JMenuItem("Instruction");
-        myInstructionMenuItem.setMnemonic(KeyEvent.VK_I);
-        myInstructionMenuItem.addActionListener(new ActionListener()
+        this.myInstructionMenuItem=new JMenuItem("Instruction");
+        this.myInstructionMenuItem.setMnemonic(KeyEvent.VK_I);
+        this.myInstructionMenuItem.addActionListener(new ActionListener()
         {
             @Override
             public void actionPerformed(ActionEvent e)
@@ -403,35 +429,24 @@ public class Frame extends JFrame implements Serializable
             }
         });
     }
-
-
-
     public MazePanel getMazePanel() {
-        return mazeView;
+        return myMazeView;
     }
 
     public TextPanel getMyTextPanel() {
         return myTextBoxes;
     }
 
-    public ButtonPanel getMyButtonPanel() {
-        return myButtons;
-    }
-
-    public Controller getController() {
-        return myController;
-    }
-
-    public static Music getBackgroundMusic() {
-        return backgroundMusic;
-    }
-
-    public static void main(String[] args) {
+    public static void main(String[] args)
+    {
         EventQueue.invokeLater(() ->
         {
-            try {
+            try
+            {
                 new Frame();
-            } catch (IOException | SQLException e) {
+            }
+            catch (IOException | SQLException e)
+            {
                 e.printStackTrace();
             }
         });

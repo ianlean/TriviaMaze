@@ -8,10 +8,8 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
-
 import TriviaMaze.Cell;
 import TriviaMaze.TriviaMaze;
-//import TriviaMaze.*;
 
 public class MazePanel extends JPanel implements Serializable
 {
@@ -32,15 +30,13 @@ public class MazePanel extends JPanel implements Serializable
         this.setSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);
         this.myIcon = ImageIO.read(new File("src/GUIPictures/Icon.png"));
         this.myGreenFlag = ImageIO.read(new File("src/GUIPictures/GreenFlag.png"));
-        TexturePaint myIconTexture = new TexturePaint
-                (this.myIcon, new Rectangle(0, 0, 50, 50));
-        TexturePaint myGreenFlagTexture = new TexturePaint
-                (this.myGreenFlag, new Rectangle(0, 0, 50, 50));
+        new TexturePaint(this.myIcon, new Rectangle(0, 0, 50, 50));
+        new TexturePaint(this.myGreenFlag, new Rectangle(0, 0, 50, 50));
     }
     private void drawMaze(Graphics theG)
     {
-        myXCoord= Frame.myController.getGameMaze().getMyX() * 55;
-        myYCoord=Frame.myController.getGameMaze().getMyY() * 55;
+        this.myXCoord = Frame.myController.getGameMaze().getMyX() * 55;
+        this.myYCoord = Frame.myController.getGameMaze().getMyY() * 55;
         Graphics2D graphics2D = (Graphics2D) theG;
 
         for (int i = 0; i < Frame.myController.getGameMaze().row(); i++)
@@ -62,10 +58,10 @@ public class MazePanel extends JPanel implements Serializable
                 graphics2D.fill(rectangle);
                 graphics2D.setPaint(Color.ORANGE);
                 graphics2D.draw(rectangle);
-                Image resizeFlag = this.myGreenFlag.getScaledInstance(50, 50, Image.SCALE_DEFAULT);
-                graphics2D.drawImage(resizeFlag, 500, 500, null);
+                Image resizeFlag = this.myGreenFlag.getScaledInstance(45, 45, Image.SCALE_DEFAULT);
+                graphics2D.drawImage(resizeFlag, 385, 385, null);
                 Image resizeIcon = this.myIcon.getScaledInstance(50, 50, Image.SCALE_DEFAULT);
-                graphics2D.drawImage(resizeIcon, myXCoord, myYCoord, null);
+                graphics2D.drawImage(resizeIcon, this.myXCoord, this.myYCoord, null);
             }
         }
         graphics2D.fillRect(55 * (Frame.myController.getGameMaze().row() - 1),
@@ -74,7 +70,7 @@ public class MazePanel extends JPanel implements Serializable
     public void paintComponent(Graphics theGraphics)
     {
         super.paintComponent(theGraphics);
-        drawMaze(theGraphics);
+        this.drawMaze(theGraphics);
     }
 
     public void incrementX() {
@@ -92,7 +88,5 @@ public class MazePanel extends JPanel implements Serializable
     public void decrementY() {
         this.myYCoord=Frame.myController.getGameMaze().getMyY() * 55;
     }
-
-
 
 }

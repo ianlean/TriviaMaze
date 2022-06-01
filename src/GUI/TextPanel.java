@@ -10,7 +10,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.Serializable;
 import java.util.Objects;
-
 import static GUI.Frame.*;
 /**
  * This is a superclass called "Question"
@@ -23,31 +22,30 @@ import static GUI.Frame.*;
 
 public class TextPanel extends JPanel implements Serializable
 {
-
     private final JTextField myQuestionText;
     private final JTextField myInputText;
     private final JTextField myResultText;
-    private final JLabel question;
-    private final JLabel answer;
-    private final JLabel result;
+    private final JLabel myQuestion;
+    private final JLabel myAnswer;
+    private final JLabel myResult;
     protected String myCurrentAnswer;
 
-
-    public TextPanel() {
-        this.question=new JLabel("Question:");
+    public TextPanel()
+    {
+        this.myQuestion = new JLabel("Question:");
         this.myQuestionText = new JTextField(50);
-        this.answer=new JLabel("Please type your answer:");
+        this.myAnswer=new JLabel("Please type your answer:");
         this.myInputText = new JTextField(50);
         JButton myButton = new JButton("Enter");
-        this.result=new JLabel("Result:");
+        this.myResult = new JLabel("Result:");
         this.myResultText = new JTextField(50);
-        this.add(question);
-        this.add(myQuestionText);
-        this.add(answer);
-        this.add(myInputText);
+        this.add(this.myQuestion);
+        this.add(this.myQuestionText);
+        this.add(this.myAnswer);
+        this.add(this.myInputText);
         this.add(myButton);
-        this.add(result);
-        this.add(myResultText);
+        this.add(this.myResult);
+        this.add(this.myResultText);
         makeButtonListener(myButton);
         this.myQuestionText.setEnabled(true);
         this.myInputText.setEnabled(true);
@@ -63,19 +61,16 @@ public class TextPanel extends JPanel implements Serializable
         this.myResultText.setText(theText);
     }
 
-    public void clearText(){
-        myInputText.setText("");
-        myResultText.setText("");
+    public void clearText()
+    {
+        this.myInputText.setText("");
+        this.myResultText.setText("");
     }
-
-
-//    public String getText() {
-//        return myInputText.getText();
-//    }
 
     public void makeButtonListener(final JButton theButton)
     {
-        theButton.addActionListener(e -> {
+        theButton.addActionListener(e ->
+        {
             if (this.myInputText.getText().equalsIgnoreCase(this.myCurrentAnswer))
             {
                 switch (Frame.myCur)
@@ -84,25 +79,25 @@ public class TextPanel extends JPanel implements Serializable
                             {
                                 addResultText("Correct!");
                                 myController.askDirection("n");
-                                Frame.mazeView.decrementY();
+                                Frame.myMazeView.decrementY();
                             }
                     case "e" ->
                             {
                                 addResultText("Correct!");
                                 myController.askDirection("e");
-                                Frame.mazeView.incrementX();
+                                Frame.myMazeView.incrementX();
                             }
                     case "s" ->
                             {
                                 addResultText("Correct!");
                                 myController.askDirection("s");
-                                Frame.mazeView.incrementY();
+                                Frame.myMazeView.incrementY();
                             }
                     case "w" ->
                             {
                                 addResultText("Correct!");
                                 myController.askDirection("w");
-                                Frame.mazeView.decrementX();
+                                Frame.myMazeView.decrementX();
                             }
                 }
             }
@@ -117,8 +112,8 @@ public class TextPanel extends JPanel implements Serializable
                 endGameLost();
             }
             endGameWon();
-            Frame.mazeView.validate();
-            Frame.mazeView.repaint();
+            Frame.myMazeView.validate();
+            Frame.myMazeView.repaint();
             Frame.myCur = null;
         });
     }
@@ -127,12 +122,7 @@ public class TextPanel extends JPanel implements Serializable
     {
         if (myController.getGameMaze().isGameOver())
         {
-//            this.removeAll();
-//            JTextField endText = new  JTextField(50);
-//            endText.setEnabled(true);
-//            endText.setText("You Win!");
-//            this.add(endText);
-            myResultText.setText("You Win!");
+            this.myResultText.setText("You Win!");
             validate();
             repaint();
             final ImageIcon winImage = new ImageIcon
@@ -146,13 +136,7 @@ public class TextPanel extends JPanel implements Serializable
     {
         if (!myController.getGameMaze().hasRoute())
         {
-//            this.removeAll();
-//            JTextField endText = new  JTextField(50);
-//            endText.setEnabled(true);
-//            endText.setText("You Lose!");
-//            this.add(endText);
-            myResultText.setText("You Lose!");
-
+            this.myResultText.setText("You Lose!");
             validate();
             repaint();
             final ImageIcon loseImage = new ImageIcon

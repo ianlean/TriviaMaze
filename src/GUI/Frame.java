@@ -8,9 +8,11 @@ package GUI;
 import TriviaMaze.Controller;
 import TriviaMaze.TriviaMaze;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.image.BufferedImage;
 import java.io.*;
 import java.sql.SQLException;
 import java.util.Objects;
@@ -108,7 +110,8 @@ public class Frame extends JFrame implements Serializable
     private final JButton myGrayTheme = new JButton("Gray");
 
 
-    private static final Music backgroundMusic = new Music("src/SoundSource/backgroundmusic.wav");
+
+    private Music backgroundMusic = new Music(getClass().getResource("/SoundSource/dungeonsound.wav"));
 
 
 
@@ -121,6 +124,8 @@ public class Frame extends JFrame implements Serializable
     {
         backgroundMusic.loop();
         this.setTitle("Maze Game");
+        BufferedImage myImage = ImageIO.read(getClass().getResource("/GUIPictures/door2.jpg"));
+        this.setContentPane(new ImagePanel(myImage));
         final ImageIcon uwImage = new ImageIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource("/GUIPictures/w.gif")))
                 .getImage().getScaledInstance(60, 40, Image.SCALE_DEFAULT));
         this.setIconImage(uwImage.getImage());

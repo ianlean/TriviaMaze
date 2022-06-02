@@ -3,16 +3,17 @@ package GUI;
 import javax.sound.sampled.*;
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 
 class Music
 {
     private static Clip myClip;
-    public Music(String thePath)
+    public Music(URL thePath)
     {
         try
         {
-            File file = new File(thePath);
-            AudioInputStream audioStream = AudioSystem.getAudioInputStream(file);
+            //File file = new File(thePath);
+            AudioInputStream audioStream = AudioSystem.getAudioInputStream(thePath);
             myClip = AudioSystem.getClip();
             myClip.open(audioStream);
         }

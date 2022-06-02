@@ -139,7 +139,7 @@ public class TriviaMaze implements Serializable
      *
      * @return int[][], an int 2-D array
      * */
-    private int[][] getMaze()
+    public int[][] getMaze()
     {
         int[][] maze = new int[TriviaMaze.this.myMaze.length][TriviaMaze.this.myMaze.length];
         for (int i = 0; i < maze.length; i++)

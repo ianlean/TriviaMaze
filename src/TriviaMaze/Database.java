@@ -10,10 +10,8 @@ import TriviaMaze.Question.ShortAnswer;
 import TriviaMaze.Question.TrueFalseType;
 import org.sqlite.SQLiteDataSource;
 import java.io.Serializable;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
+
 /**
  * This is a class called "Database", that connects to the SQLite database that
  * allows necessary classes to pull question.
@@ -56,8 +54,11 @@ public class Database implements Serializable
      * */
     private void connect() throws SQLException
     {
-        this.myDataSource.setUrl("jdbc:sqlite:trivia.db");
-        this.myConn = this.myDataSource.getConnection();
+        //this.myDataSource.setUrl("jdbc:sqlite::resource:trivia.db");
+        this.myConn = DriverManager.getConnection("jdbc:sqlite:trivia.db");
+        this.myStmt = this.myConn.createStatement();
+
+        //this.myConn = this.myDataSource.getConnection();
     }
 
     /**

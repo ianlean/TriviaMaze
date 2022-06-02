@@ -13,10 +13,10 @@ import TriviaMaze.TriviaMaze;
 
 public class MazePanel extends JPanel implements Serializable
 {
-    private static final int DEFAULT_WIDTH = 500;
-    private static final int DEFAULT_HEIGHT = 500;
+    private static final int DEFAULT_WIDTH = 440;
+    private static final int DEFAULT_HEIGHT = 440;
     private final TriviaMaze myMaze;
-    private final BufferedImage myGreenFlag;
+   // private final BufferedImage myGreenFlag;
     private final BufferedImage myIcon;
 
     private Character myCharacter;
@@ -28,10 +28,10 @@ public class MazePanel extends JPanel implements Serializable
     {
         this.myMaze = theMaze;
         this.setSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);
-        this.myIcon = ImageIO.read(new File("src/GUIPictures/Icon.png"));
-        this.myGreenFlag = ImageIO.read(new File("src/GUIPictures/GreenFlag.png"));
+        this.myIcon = ImageIO.read(getClass().getResource("/GUIPictures/Icon.png"));
+       // this.myGreenFlag = ImageIO.read(new File("GUIPictures/GreenFlag.png"));
         new TexturePaint(this.myIcon, new Rectangle(0, 0, 50, 50));
-        new TexturePaint(this.myGreenFlag, new Rectangle(0, 0, 50, 50));
+        //new TexturePaint(this.myGreenFlag, new Rectangle(0, 0, 50, 50));
     }
     private void drawMaze(Graphics theG)
     {
@@ -58,8 +58,8 @@ public class MazePanel extends JPanel implements Serializable
                 graphics2D.fill(rectangle);
                 graphics2D.setPaint(Color.ORANGE);
                 graphics2D.draw(rectangle);
-                Image resizeFlag = this.myGreenFlag.getScaledInstance(45, 45, Image.SCALE_DEFAULT);
-                graphics2D.drawImage(resizeFlag, 385, 385, null);
+                //Image resizeFlag = this.myGreenFlag.getScaledInstance(45, 45, Image.SCALE_DEFAULT);
+                //graphics2D.drawImage(resizeFlag, 385, 385, null);
                 Image resizeIcon = this.myIcon.getScaledInstance(50, 50, Image.SCALE_DEFAULT);
                 graphics2D.drawImage(resizeIcon, this.myXCoord, this.myYCoord, null);
             }

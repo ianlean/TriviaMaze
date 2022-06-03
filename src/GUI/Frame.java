@@ -104,13 +104,7 @@ public class Frame extends JFrame implements Serializable
     /** volume slider initial value position. */
     private static final int VOLUME_INITIAL = 50;
 
-    /** theme choice JButton */
-    private final JButton myRedTheme = new JButton("Red");
-    private final JButton myWhiteTheme = new JButton("White");
-    private final JButton myGrayTheme = new JButton("Gray");
-
-
-
+    /** background music */
     private Music backgroundMusic = new Music(getClass().getResource("/SoundSource/dungeonsound.wav"));
 
 
@@ -165,7 +159,7 @@ public class Frame extends JFrame implements Serializable
     {
         final JMenuBar menuBar = new JMenuBar();
         menuBar.add(createFileMenu());
-        menuBar.add(createOptionsMenu());
+        menuBar.add(createOptionMenu());
         menuBar.add(createHelpMenu());
         return menuBar;
     }
@@ -307,13 +301,13 @@ public class Frame extends JFrame implements Serializable
 
     /**
      * create the option JMenu
-     * it has Volume and Theme two menuitems
-     * it can adjust the game volume and theme(background)
+     * it has Volume menu item
+     * it can adjust the game volume
      * @return the Options menu
      */
-    public JMenu createOptionsMenu()
+    public JMenu createOptionMenu()
     {
-        final JMenu myOptionsMenu=new JMenu("Options");
+        final JMenu myOptionsMenu=new JMenu("Option");
         myOptionsMenu.setMnemonic(KeyEvent.VK_O);
 
         JMenuItem myVolumeMenuItem = new JMenuItem("Volume");
@@ -339,29 +333,10 @@ public class Frame extends JFrame implements Serializable
             }
         });
         myOptionsMenu.add(volumeSlider);
-        myOptionsMenu.addSeparator();
-
-
-        // theme menu item to change the background
-        JMenuItem myThemeMenuItem = new JMenuItem("Theme");
-        myThemeMenuItem.setMnemonic(KeyEvent.VK_T);
-        myOptionsMenu.add(myThemeMenuItem);
-
-        myOptionsMenu.add(this.myRedTheme);
-        myOptionsMenu.add(this.myWhiteTheme);
-        myOptionsMenu.add(this.myGrayTheme);
-        this.myRedTheme.addActionListener(e -> setBackgroundColor(Color.RED));
-        this.myWhiteTheme.addActionListener(e -> setBackgroundColor(Color.WHITE));
-        this.myGrayTheme.addActionListener(e -> setBackgroundColor(Color.GRAY));
 
         return myOptionsMenu;
     }
-    public void setBackgroundColor(Color color)
-    {
-        this.getContentPane().setBackground(color);
-        this.getMyTextPanel().setBackground(color);
-        this.getMazePanel().setBackground(color);
-    }
+
 
     /**
      * create the Help JMenu
@@ -434,13 +409,7 @@ public class Frame extends JFrame implements Serializable
             }
         });
     }
-    public MazePanel getMazePanel() {
-        return myMazeView;
-    }
 
-    public TextPanel getMyTextPanel() {
-        return myTextBoxes;
-    }
 
     public static void main(String[] args)
     {

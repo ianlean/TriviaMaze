@@ -105,7 +105,7 @@ public class Frame extends JFrame implements Serializable
     private static final int VOLUME_INITIAL = 50;
 
     /** background music */
-    private Music backgroundMusic = new Music(getClass().getResource("/SoundSource/dungeonsound.wav"));
+    private Music backgroundMusic = new Music(getClass().getResource("/SoundSource/hobbits.wav"));
 
 
 
@@ -118,7 +118,7 @@ public class Frame extends JFrame implements Serializable
     {
         backgroundMusic.loop();
         this.setTitle("Maze Game");
-        BufferedImage myImage = ImageIO.read(getClass().getResource("/GUIPictures/door2.jpg"));
+        BufferedImage myImage = ImageIO.read(getClass().getResource("/GUIPictures/map.jpeg"));
         this.setContentPane(new ImagePanel(myImage));
         final ImageIcon uwImage = new ImageIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource("/GUIPictures/w.gif")))
                 .getImage().getScaledInstance(60, 40, Image.SCALE_DEFAULT));

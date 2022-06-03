@@ -55,7 +55,7 @@ public class Database implements Serializable
     private void connect() throws SQLException
     {
         //this.myDataSource.setUrl("jdbc:sqlite::resource:trivia.db");
-        this.myConn = DriverManager.getConnection("jdbc:sqlite:trivia.db");
+        this.myConn = DriverManager.getConnection("jdbc:sqlite::resource:trivia.db");
         this.myStmt = this.myConn.createStatement();
 
         //this.myConn = this.myDataSource.getConnection();

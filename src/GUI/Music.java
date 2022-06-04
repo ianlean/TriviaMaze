@@ -12,7 +12,6 @@ class Music
     {
         try
         {
-            //File file = new File(thePath);
             AudioInputStream audioStream = AudioSystem.getAudioInputStream(thePath);
             myClip = AudioSystem.getClip();
             myClip.open(audioStream);

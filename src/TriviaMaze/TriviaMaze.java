@@ -27,6 +27,8 @@ public class TriviaMaze implements Serializable
     /** a 2-D array of rooms to form the maze */
     private final Room[][] myMaze;
 
+    private final int mySize;
+
     /** the current location x to keep tracking */
     private int myX;
 
@@ -45,7 +47,8 @@ public class TriviaMaze implements Serializable
      * */
     public TriviaMaze(final int theSize) // for developing purposes I am auto-filling rooms
     {
-        this.myMaze = new Room[theSize][theSize];
+        this.mySize = theSize;
+        this.myMaze = new Room[mySize][mySize];
         this.myGenerator = new GenerateQuestion();
         generateMaze();
     }
@@ -86,7 +89,7 @@ public class TriviaMaze implements Serializable
      * @param theRow, the new row that we are moving to
      * @param theCol, the new column that we are moving to
      * */
-    protected void changeDirection(final int theRow, final int theCol)
+    void changeDirection(final int theRow, final int theCol)
     {
         if (validMove(theRow, theCol))
         {
@@ -94,7 +97,7 @@ public class TriviaMaze implements Serializable
             this.myY = theRow;
             this.myMaze[this.myY][this.myX].setStatus(UNLOCKED);
         }
-        if (this.myX == 7 && this.myY == 7)
+        if (this.myX == mySize-1 && this.myY == mySize-1)
         {
             this.myGameOver = true;
         }
@@ -139,7 +142,7 @@ public class TriviaMaze implements Serializable
      *
      * @return int[][], an int 2-D array
      * */
-    public int[][] getMaze()
+    int[][] getMaze()
     {
         int[][] maze = new int[TriviaMaze.this.myMaze.length][TriviaMaze.this.myMaze.length];
         for (int i = 0; i < maze.length; i++)
@@ -235,17 +238,7 @@ public class TriviaMaze implements Serializable
         return this.myMaze[theRow][theCol];
     }
 
-
-
-
-//    public String toString() {
-//        StringBuilder s = new StringBuilder();
-//        for (int row = 0; row < myMaze.length; row++) {
-//            s.append("\n");
-//            for (int col = 0; col < myMaze[row].length; col++) {
-//                s.append(myMaze[row][col].toString()).append(" ");
-//            }
-//        }
-//        return s.toString();
-//    }
+    public int getMySize() {
+        return this.mySize;
+    }
 }

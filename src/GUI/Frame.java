@@ -33,7 +33,7 @@ public class Frame extends JFrame implements Serializable
     private final static int HEIGHT = 2000;
 
     /** The maze width and height of the trivia maze*/
-    private final static int MAZE_SIZE = 8;
+    public final static int MAZE_SIZE = 8;
 
     /** The text panel that allows user be able to put answer in the text box */
     protected static TextPanel myTextBoxes;

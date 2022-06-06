@@ -30,13 +30,15 @@ public class ButtonPanel extends JPanel implements Serializable
     public ButtonPanel()
     {
         JLabel title = new JLabel("Please choose a direction:");
-        title.setForeground(Color.BLACK);
+        title.setForeground(Color.BLUE);
+        title.setFont(new Font("Tahoma",Font.BOLD,14));
         JButton up = upButton();
         JButton down = downButton();
         JButton right = rightButton();
         JButton left = leftButton();
-        JLabel hint = new JLabel("Hint: White room can be passed without answering questions.");
-        hint.setForeground(Color.BLACK);
+        JLabel hint = new JLabel("Hint: You can go back to any White Room without answering questions.");
+        hint.setForeground(Color.BLUE);
+        hint.setFont(new Font("Tahoma",Font.BOLD,14));
         this.add(title);
         this.add(up);
         this.add(down);

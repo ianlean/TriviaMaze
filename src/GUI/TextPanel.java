@@ -33,14 +33,18 @@ public class TextPanel extends JPanel implements Serializable
     public TextPanel()
     {
         this.myQuestion = new JLabel("Question:");
-        this.myQuestionText = new JTextField(55);
         this.myAnswer=new JLabel("Please type your answer:");
-        myAnswer.setForeground(Color.BLACK);
-        myQuestion.setForeground(Color.BLACK);
+        this.myResult = new JLabel("Result:");
+        Font font=new Font("Tahoma",Font.BOLD,14);
+        myAnswer.setForeground(Color.BLUE);
+        myAnswer.setFont(font);
+        myQuestion.setForeground(Color.BLUE);
+        myQuestion.setFont(font);
+        myResult.setForeground(Color.BLUE);
+        myResult.setFont(font);
+        this.myQuestionText = new JTextField(55);
         this.myInputText = new JTextField(50);
         JButton myButton = new JButton("Enter");
-        this.myResult = new JLabel("Result:");
-        myResult.setForeground(Color.BLACK);
         this.myResultText = new JTextField(50);
         this.add(this.myQuestion);
         this.add(this.myQuestionText);

@@ -26,11 +26,6 @@ import java.util.Objects;
  */
 public class Frame extends JFrame implements Serializable
 {
-    /** The width of the JFrame window */
-    private final static int WIDTH = 2000;
-
-    /** The height of the JFrame window */
-    private final static int HEIGHT = 2000;
 
     /** The maze width and height of the trivia maze*/
     public final static int MAZE_SIZE = 8;
@@ -123,10 +118,13 @@ public class Frame extends JFrame implements Serializable
         final ImageIcon uwImage = new ImageIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource("/GUIPictures/w.gif")))
                 .getImage().getScaledInstance(60, 40, Image.SCALE_DEFAULT));
         this.setIconImage(uwImage.getImage());
-        this.setSize(WIDTH, HEIGHT);
+        Dimension screenSize= Toolkit.getDefaultToolkit().getScreenSize();
+        int height=screenSize.height*4/5;
+        int width=screenSize.width;
+        this.setPreferredSize( new Dimension(width,height));
+        this.setResizable(true);
         this.getContentPane().setLayout(null);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.getContentPane().setBackground(Color.WHITE);
 
         //add menu bar
         JMenuBar myMenuBar=createMenuBar();
@@ -146,9 +144,9 @@ public class Frame extends JFrame implements Serializable
         this.add(myTextBoxes);
         myTextBoxes.setBounds(500, 100, 800, 300);
 
-        this.setLocationRelativeTo(null);
         this.setVisible(true);
         this.pack();
+        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -401,10 +399,12 @@ public class Frame extends JFrame implements Serializable
                                 .getImage().getScaledInstance(60,40,Image.SCALE_DEFAULT));
                 JOptionPane.showMessageDialog(null,"<Game Instruction> \n Choose a direction " +
                                 "to go and answer questions. \n 1. Black Room means this room is locked." +
-                                "\n 2. White Room can be passed without answering questions." +
-                                "\n 3. Blue room can be passed by answering question correctly." +
-                                "\n 4. If you answer the question wrong, the room of this direction will be locked." +
-                                "\n 5. You can go back if the room is white.",
+                                "\n 2. Blue Room can be passed by answering question." +
+                                "\n     If the answer is correct, you can unlock the door and this room will be White Room." +
+                                "\n     If the answer is wrong, you seal the door and this room will be Black Room." +
+                                "\n 3. You can go back to any White Room without answering questions." +
+                                "\n 4. If you have exhausted all directions, you lose."+
+                                "\n 5. If you go to the end, you win.",
                         "Instruction",JOptionPane.INFORMATION_MESSAGE,uwImage);
             }
         });

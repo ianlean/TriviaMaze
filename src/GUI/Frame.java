@@ -410,6 +410,14 @@ public class Frame extends JFrame implements Serializable
         });
     }
 
+    /**
+     * this method can get the maze size and used for maze Panel size
+     * @return int MAZE_SIZE
+     */
+    public static int getMazeSize(){
+        return MAZE_SIZE;
+    }
+
 
     public static void main(String[] args)
     {

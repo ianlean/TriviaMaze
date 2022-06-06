@@ -13,8 +13,7 @@ import TriviaMaze.TriviaMaze;
 
 public class MazePanel extends JPanel implements Serializable
 {
-    private static final int DEFAULT_WIDTH = 440;
-    private static final int DEFAULT_HEIGHT = 440;
+
     private final TriviaMaze myMaze;
     private final BufferedImage myDoor;
     private final BufferedImage myIcon;
@@ -27,7 +26,7 @@ public class MazePanel extends JPanel implements Serializable
     MazePanel(TriviaMaze theMaze) throws IOException
     {
         this.myMaze = theMaze;
-        this.setSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);
+        this.setSize(Frame.getMazeSize()*55, Frame.getMazeSize()*55);
         this.myIcon = ImageIO.read(getClass().getResource("/GUIPictures/Icon.png"));
         this.myDoor = ImageIO.read(getClass().getResource("/GUIPictures/door.jpeg"));
         new TexturePaint(this.myIcon, new Rectangle(0, 0, 50, 50));
@@ -39,6 +38,7 @@ public class MazePanel extends JPanel implements Serializable
         this.myYCoord = Frame.myController.getGameMaze().getMyY() * 55;
         Graphics2D graphics2D = (Graphics2D) theG;
 
+        Image resizedDoor = null;
         for (int i = 0; i < Frame.myController.getGameMaze().row(); i++)
         {
             for (int j = 0; j < Frame.myController.getGameMaze().column(); j++)
@@ -58,14 +58,15 @@ public class MazePanel extends JPanel implements Serializable
                 graphics2D.fill(rectangle);
                 graphics2D.setPaint(Color.ORANGE);
                 graphics2D.draw(rectangle);
-                Image resizedDoor = this.myDoor.getScaledInstance(45, 45, Image.SCALE_DEFAULT);
-                graphics2D.drawImage(resizedDoor, 385, 385, null);
+               resizedDoor = this.myDoor.getScaledInstance(55, 55, Image.SCALE_DEFAULT);
+                
                 Image resizeIcon = this.myIcon.getScaledInstance(50, 50, Image.SCALE_DEFAULT);
                 graphics2D.drawImage(resizeIcon, this.myXCoord, this.myYCoord, null);
             }
         }
         graphics2D.fillRect(55 * (Frame.myController.getGameMaze().row() - 1),
                 55 * (Frame.myController.getGameMaze().column() - 1), 55, 55);
+        graphics2D.drawImage(resizedDoor, (Frame.getMazeSize()-1)*55, (Frame.getMazeSize()-1)*55, null);
     }
     public void paintComponent(Graphics theGraphics)
     {

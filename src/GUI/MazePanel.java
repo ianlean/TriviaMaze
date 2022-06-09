@@ -118,22 +118,26 @@ public class MazePanel extends JPanel implements Serializable
     }
     
     /**
-     * 
-     *
-     *
+     * increment x coordinate from the updates in Frame controller
      */
     public void incrementX() {
         this.myXCoord = Frame.myController.getGameMaze().getMyX() * 55;
     }
-
+    /**
+     * decrement x coordinate from the updates in Frame controller
+     */
     public void decrementX() {
         this.myXCoord = Frame.myController.getGameMaze().getMyX() * 55;
     }
-
+    /**
+     * increment y coordinate from the updates in Frame controller
+     */
     public void incrementY() {
         this.myYCoord =Frame.myController.getGameMaze().getMyY() * 55;
     }
-
+    /**
+     * decrement y coordinate from the updates in Frame controller
+     */
     public void decrementY() {
         this.myYCoord=Frame.myController.getGameMaze().getMyY() * 55;
     }

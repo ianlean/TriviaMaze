@@ -418,7 +418,11 @@ public class Frame extends JFrame implements Serializable
         return MAZE_SIZE;
     }
 
-
+    /**
+     * Main method to execute this project
+     *
+     * @param args, command line args, not used here
+     * */
     public static void main(String[] args)
     {
         EventQueue.invokeLater(() ->

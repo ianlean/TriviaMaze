@@ -12,22 +12,34 @@ import java.io.Serializable;
 import java.util.Objects;
 import static GUI.Frame.*;
 /**
- * This is a superclass called "Question"
- * this class will contain different type of question's body and answer.
+ * This is a subclass TextPanel that extends JPanel
+ * This panel mainly will display the question and the correctness of the question
  *
  * @author Bohan Yang, Ian Mclean, Qinyu Tao
- * @version May 25th 2022
+ * @version June 9th 2022
  */
-
 
 public class TextPanel extends JPanel implements Serializable
 {
+    /** the literal "question" to indicate a question goes here*/
     private final JTextField myQuestionText;
+
+    /** the literal "Please type your answer" to indicate the answer goes here*/
     private final JTextField myInputText;
+
+    /** the literal "Result" to indicate the answer result*/
     private final JTextField myResultText;
+
+    /** The question body*/
     private final JLabel myQuestion;
+
+    /** The field that user should user put the answer */
     private final JLabel myAnswer;
+
+    /** the result text label will display the correctness of the result*/
     private final JLabel myResult;
+
+    /** the correct answer from the database that will compare against with user answer*/
     protected String myCurrentAnswer;
 
     public TextPanel()

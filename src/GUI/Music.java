@@ -41,7 +41,7 @@ class Music
     /**
      * this method allows us user to change the background music volumn
      * 
-     * @param theNewVolumn, the volumn that user wants to set up
+     * @param theNewVolume, the volumn that user wants to set up
      * @throw IllegalAccessException, now allow the volumn is less 0 or greater than 100
      */
     public static void changeVolume(int theNewVolume) throws IllegalAccessException

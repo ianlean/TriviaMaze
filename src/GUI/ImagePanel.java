@@ -1,13 +1,38 @@
 package GUI;
-
+/*
+ * Assignment: Course Project "Trivia Maze"
+ *
+ * Instructor: Tom Capaul
+ *
+ * */
 import javax.swing.*;
 import java.awt.*;
+/**
+ * This is a ImagePanel class that extends JComponent
+ * ImagePanel will be painted as the background in the frame
+ *
+ * @author Bohan Yang, Ian Mclean, Qinyu Tao
+ * @version June 9th 2022
+ */
+class ImagePanel extends JComponent
+{
+    /** a final Image instance that for background image*/
+    private final Image myImage;
 
-class ImagePanel extends JComponent {
-    private Image myImage;
-    public ImagePanel(Image theImage) {
+    /**
+     * Constructs the ImagePanel by passing in an image
+     * @param theImage, the background image
+     * */
+    public ImagePanel(Image theImage)
+    {
         this.myImage = theImage;
     }
+
+    /**
+     * the background image will be got painted in Frame with a size
+     *
+     * @param theG, the graphic is used to draw the background image
+     * */
     @Override
     protected void paintComponent(Graphics theG) {
         super.paintComponent(theG);

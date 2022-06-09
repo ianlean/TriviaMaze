@@ -1,5 +1,10 @@
 package GUI;
-
+/*
+ * Assignment: Course Project "Trivia Maze"
+ *
+ * Instructor: Tom Capaul
+ *
+ * */
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -10,19 +15,43 @@ import java.io.IOException;
 import java.io.Serializable;
 import TriviaMaze.Cell;
 import TriviaMaze.TriviaMaze;
+/**
+ * This is a MazePanel class that extends JPanel
+ * MazePanel is mainly displaying the Maze as GUI, showing the locked room, 
+ * available path, and current character
+ *
+ * @author Bohan Yang, Ian Mclean, Qinyu Tao
+ * @version June 9th 2022
+ */
 
 public class MazePanel extends JPanel implements Serializable
 {
-
+    /** the trivia maze that from the model */
     private final TriviaMaze myMaze;
+    
+    /** an image that present the door */
     private final BufferedImage myDoor;
+    
+    /** an image icon to present the current location*/
     private final BufferedImage myIcon;
 
+    /** the player character */
     private Character myCharacter;
 
+    /** the x coordinate*/
     private int myXCoord = Frame.myController.getGameMaze().getMyX() * 55;
+    
+    /** the y coordinate*/
     private int myYCoord = Frame.myController.getGameMaze().getMyY() * 55;
 
+    /**
+     * Constructs the MazePanel with a certain size,
+     * an image icon to present the current location, an image to present the end maze
+     * it will be size by size maze where the size can be decided. Usually is 8 by 8
+     * 
+     * @param theMaze, theMaze that is the model, trivia maze.
+     * @throw IOException, that will be the exception of file input exception
+     */
     MazePanel(TriviaMaze theMaze) throws IOException
     {
         this.myMaze = theMaze;
@@ -32,6 +61,14 @@ public class MazePanel extends JPanel implements Serializable
         new TexturePaint(this.myIcon, new Rectangle(0, 0, 50, 50));
         new TexturePaint(this.myDoor, new Rectangle(0, 0, 50, 50));
     }
+    
+    /**
+     * draw the maze by painting each block one by one, white is unlocked,
+     * blue is locked but needed to answer question corrected to unlocked it,
+     * black is sealed, or answer question wrong will get sealed too
+     * 
+     * @param theG, the graphic that we are going to paint on.
+     */
     private void drawMaze(Graphics theG)
     {
         this.myXCoord = Frame.myController.getGameMaze().getMyX() * 55;
@@ -68,12 +105,23 @@ public class MazePanel extends JPanel implements Serializable
                 55 * (Frame.myController.getGameMaze().column() - 1), 55, 55);
         graphics2D.drawImage(resizedDoor, (Frame.getMazeSize()-1)*55, (Frame.getMazeSize()-1)*55, null);
     }
+    
+    /**
+     * Paint each component on the frame and panel
+     * 
+     * @param theGraphics, the graphic that we are going to paint on.
+     */
     public void paintComponent(Graphics theGraphics)
     {
         super.paintComponent(theGraphics);
         this.drawMaze(theGraphics);
     }
-
+    
+    /**
+     * 
+     *
+     *
+     */
     public void incrementX() {
         this.myXCoord = Frame.myController.getGameMaze().getMyX() * 55;
     }

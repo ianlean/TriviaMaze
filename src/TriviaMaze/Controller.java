@@ -29,11 +29,21 @@ public class Controller implements Serializable
     {
         this.myGameMaze = new TriviaMaze(theSize);
     }
-
-    public TriviaMaze getGameMaze() {
+    /**
+     * Getter method to return the game maze
+     *
+     * @return the game maze
+     * */
+    public TriviaMaze getGameMaze()
+    {
         return this.myGameMaze;
     }
 
+    /**
+     * getting a direction from the user to go either up down left and right
+     *
+     * @param theDirection,, String type direction
+     * */
     public void askDirection(final String theDirection)
     {
         if (theDirection.equalsIgnoreCase("w"))
@@ -55,6 +65,12 @@ public class Controller implements Serializable
         System.out.println(this.myGameMaze);
     }
 
+    /**
+     * To get the room that is moving next to by getting the direction
+     *
+     * @param theDirection, the direction that is moving to
+     * @return a room that is going to move to
+     * */
     public Room findRoom(final String theDirection)
     {
         Room room = null;
@@ -76,6 +92,6 @@ public class Controller implements Serializable
         }
         return room;
     }
-
+    /** Setter method to set the maze*/
     public void setMyGameMaze(TriviaMaze theMaze) {this.myGameMaze = theMaze;}
 }

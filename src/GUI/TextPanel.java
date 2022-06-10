@@ -24,7 +24,7 @@ public class TextPanel extends JPanel implements Serializable
     /** the literal "question" to indicate a question goes here*/
     private final JTextField myQuestionText;
 
-    /** the literal "Please type your answer" to indicate the answer goes here*/
+    /** The field that user should user put the answer */
     private final JTextField myInputText;
 
     /** the literal "Result" to indicate the answer result*/
@@ -33,7 +33,7 @@ public class TextPanel extends JPanel implements Serializable
     /** The question body*/
     private final JLabel myQuestion;
 
-    /** The field that user should user put the answer */
+    /** the literal "Please type your answer" to indicate the answer goes here*/
     private final JLabel myAnswer;
 
     /** the result text label will display the correctness of the result*/
@@ -42,6 +42,9 @@ public class TextPanel extends JPanel implements Serializable
     /** the correct answer from the database that will compare against with user answer*/
     protected String myCurrentAnswer;
 
+    /**
+     * Construct the TextPanel for user to read and type
+     * */
     public TextPanel()
     {
         this.myQuestion = new JLabel("Question:");
@@ -73,20 +76,41 @@ public class TextPanel extends JPanel implements Serializable
         this.setBackground(new Color(0.0f, 0.0f, 0.0f, 0.0f));
     }
 
-    public void addQuestionText(final String theText) {
+    /**
+     * Add question text, the literal "Question: " is added
+     *
+     * @param theText, the "Question" literal
+     * */
+    public void addQuestionText(final String theText)
+    {
         this.myQuestionText.setText(theText);
     }
 
+    /**
+     * Add result text, the literal "Result: " is added
+     *
+     * @param theText, the "Result: " literal
+     * */
     public void addResultText(final String theText) {
         this.myResultText.setText(theText);
     }
 
+    /**
+     * Reset the text label to none, clear the text label
+     * */
     public void clearText()
     {
         this.myInputText.setText("");
         this.myResultText.setText("");
     }
 
+    /**
+     * ActionListener implemented here that to check if the answer is correct
+     * or not, then display the proper text to the user, display the information
+     * like user can't go painted black cell will display certain information
+     *
+     * @param theButton, the button that will be left, right, up, and down
+     * */
     public void makeButtonListener(final JButton theButton)
     {
         theButton.addActionListener(e ->
@@ -138,6 +162,9 @@ public class TextPanel extends JPanel implements Serializable
         });
     }
 
+    /**
+     * when the game is won, will display "You win" with a picture.
+     * */
     private void endGameWon()
     {
         if (myController.getGameMaze().isGameOver())
@@ -152,6 +179,10 @@ public class TextPanel extends JPanel implements Serializable
                     "You Win!",JOptionPane.PLAIN_MESSAGE,winImage);
         }
     }
+
+    /**
+     * When lost, will display "you lost" with a picture
+     * */
     private void endGameLost()
     {
         if (!myController.getGameMaze().hasRoute())
